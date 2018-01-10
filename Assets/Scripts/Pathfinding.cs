@@ -6,11 +6,13 @@ using CreativeSpore.SuperTilemapEditor;
 
 public class Pathfinding : MonoBehaviour
 {
+    public int startGridX;
+    public int startGridY;
 
     private float interpolationSpeed = 2.50F;
     private int range = 5;
     private Vector2 nextLocation;
-    public bool exhausted = false;
+    private Unit unit;
 
     private int currentGridX;
     private int currentGridY;
@@ -25,8 +27,6 @@ public class Pathfinding : MonoBehaviour
     private List<Node> closedTiles = new List<Node>();
     private List<Node> pathTiles = new List<Node>();
 
-    private bool selected = false;
-    private bool moving = false;
     private List<Transform> existingMoveTiles = new List<Transform>();
     private List<Transform> existingPathTiles = new List<Transform>();
     private Stack<Node> pathToTarget = new Stack<Node>();
@@ -50,11 +50,13 @@ public class Pathfinding : MonoBehaviour
 
     private void Start()
     {
+        unit = GetComponent<Unit>();
         targetGridX = 1;
         targetGridY = 1;
-        currentGridX = 1;
-        currentGridY = 1;
+        currentGridX = startGridX;
+        currentGridY = startGridY;
         targetLocation = TilemapUtils.GetGridWorldPos(MoveCursor.instance.ground, currentGridX, currentGridY);
+        transform.position = TilemapUtils.GetGridWorldPos(MoveCursor.instance.ground, startGridX, startGridY);
         lastCursorTile = MoveCursor.instance.currentTile;
         GameManager.i.units.Add(gameObject);
     }
@@ -68,15 +70,14 @@ public class Pathfinding : MonoBehaviour
             {
                 var nextTile = pathToTarget.Pop();
                 nextLocation = TilemapUtils.GetGridWorldPos(MoveCursor.instance.ground, (int)nextTile.position.x, (int)nextTile.position.y);
-            }
-
+            }else if (Vector2.Distance(transform.position, nextLocation) < Mathf.Epsilon && pathToTarget.Count == 0)
+                unit.state = Unit.States.waiting;
         }
     }
 
     private void selectUnit()
     {
-        moving = false;
-        selected = true;
+        unit.state = Unit.States.selected;
         findReachableTiles();
         foreach (Node reachableTile in closedTiles)
         {
@@ -133,10 +134,8 @@ public class Pathfinding : MonoBehaviour
         openTiles.Remove(centre);
     }
 
-    private void deselectUnit()
+    public void deselectUnit()
     {
-        selected = false;
-        exhausted = true;
         GetComponent<SpriteRenderer>().color = Color.grey;
         clearTiles(existingMoveTiles);
         clearTiles(existingPathTiles);
@@ -160,14 +159,14 @@ public class Pathfinding : MonoBehaviour
 
     private void Update()
     {
-        if (moving)
+        if (unit.state == Unit.States.moving)
         {
             MoveAlongPath();
         }
 
         if (Input.GetMouseButtonDown(0))
         {
-            if (!selected && !exhausted && MoveCursor.instance.transform.position == transform.position)
+            if (unit.state == Unit.States.fresh && MoveCursor.instance.transform.position == transform.position)
             {
                 selectUnit();
             }
@@ -179,11 +178,11 @@ public class Pathfinding : MonoBehaviour
                 deselectUnit();
                 currentGridX = targetGridX;
                 currentGridY = targetGridY;
-                moving = true;
+                unit.state = Unit.States.moving;
             }
         }
 
-        if (selected)
+        if (unit.state == Unit.States.selected)
         {
             if (existingMoveTiles.Exists(t => MoveCursor.instance.transform.position == t.position))
             {

@@ -339,6 +339,16 @@ Prefab:
       propertyPath: foreGround
       value: 
       objectReference: {fileID: 1078027762}
+    - target: {fileID: 114366020918179352, guid: 7ea0c55a5ef59424eb42744ef30c3928,
+        type: 2}
+      propertyPath: startGridY
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114366020918179352, guid: 7ea0c55a5ef59424eb42744ef30c3928,
+        type: 2}
+      propertyPath: startGridX
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7ea0c55a5ef59424eb42744ef30c3928, type: 2}
   m_IsPrefabParent: 0
@@ -1091,6 +1101,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ab318c7e5a5a1d4e8726dd8122fcaa0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  units: []
 --- !u!4 &1284119573
 Transform:
   m_ObjectHideFlags: 0
@@ -1407,6 +1418,16 @@ Prefab:
       propertyPath: foreGround
       value: 
       objectReference: {fileID: 1078027762}
+    - target: {fileID: 114366020918179352, guid: 7ea0c55a5ef59424eb42744ef30c3928,
+        type: 2}
+      propertyPath: startGridY
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114366020918179352, guid: 7ea0c55a5ef59424eb42744ef30c3928,
+        type: 2}
+      propertyPath: startGridX
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7ea0c55a5ef59424eb42744ef30c3928, type: 2}
   m_IsPrefabParent: 0
