@@ -349,12 +349,17 @@ Prefab:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
-    - target: {fileID: 114366020918179352, guid: 7ea0c55a5ef59424eb42744ef30c3928,
-        type: 2}
+    - target: {fileID: 0}
       propertyPath: foreGround
       value: 
       objectReference: {fileID: 1078027762}
-    m_RemovedComponents: []
+    - target: {fileID: 114702742456488016, guid: 7ea0c55a5ef59424eb42744ef30c3928,
+        type: 2}
+      propertyPath: startGridX
+      value: 4
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 0}
   m_ParentPrefab: {fileID: 100100000, guid: 7ea0c55a5ef59424eb42744ef30c3928, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &715697957 stripped
@@ -367,6 +372,22 @@ Transform:
   m_PrefabParentObject: {fileID: 4430998295840580, guid: 7ea0c55a5ef59424eb42744ef30c3928,
     type: 2}
   m_PrefabInternal: {fileID: 1625389059}
+--- !u!114 &715697960
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 715697957}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9b7b7ca3190bcf49a8051d717418230, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startGridX: 2
+  startGridY: 1
+  moveTile: {fileID: 0}
+  pathTile: {fileID: 0}
+  foreGround: {fileID: 0}
 --- !u!1 &778109129
 GameObject:
   m_ObjectHideFlags: 1
@@ -1107,6 +1128,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   units: []
+  moveTilePrefab: {fileID: 1550904879648724, guid: cb785675b2958c147bdf443368c86983,
+    type: 2}
+  pathTilePrefab: {fileID: 1214826334653930, guid: 51bd067aeb1d1544faf705f12bbb2a71,
+    type: 2}
 --- !u!4 &1284119573
 Transform:
   m_ObjectHideFlags: 0
@@ -1433,22 +1458,25 @@ Prefab:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
-    - target: {fileID: 114366020918179352, guid: 7ea0c55a5ef59424eb42744ef30c3928,
-        type: 2}
+    - target: {fileID: 0}
       propertyPath: foreGround
       value: 
       objectReference: {fileID: 1078027762}
-    - target: {fileID: 114366020918179352, guid: 7ea0c55a5ef59424eb42744ef30c3928,
+    - target: {fileID: 0}
+      propertyPath: startGridX
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: startGridY
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114843301575749786, guid: 7ea0c55a5ef59424eb42744ef30c3928,
         type: 2}
       propertyPath: startGridX
       value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 114366020918179352, guid: 7ea0c55a5ef59424eb42744ef30c3928,
-        type: 2}
-      propertyPath: startGridY
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 0}
   m_ParentPrefab: {fileID: 100100000, guid: 7ea0c55a5ef59424eb42744ef30c3928, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &1677588857 stripped
@@ -1566,6 +1594,22 @@ Transform:
   m_PrefabParentObject: {fileID: 4430998295840580, guid: 7ea0c55a5ef59424eb42744ef30c3928,
     type: 2}
   m_PrefabInternal: {fileID: 660405046}
+--- !u!114 &1722183372
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1722183369}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9b7b7ca3190bcf49a8051d717418230, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startGridX: 4
+  startGridY: 0
+  moveTile: {fileID: 0}
+  pathTile: {fileID: 0}
+  foreGround: {fileID: 0}
 --- !u!1 &1935351078
 GameObject:
   m_ObjectHideFlags: 0
@@ -1667,6 +1711,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 114702742456488016, guid: 7ea0c55a5ef59424eb42744ef30c3928,
+        type: 2}
+      propertyPath: foreGround
+      value: 
+      objectReference: {fileID: 1078027762}
     - target: {fileID: 114352825600277962, guid: 7ea0c55a5ef59424eb42744ef30c3928,
         type: 2}
       propertyPath: m_havePropertiesChanged
@@ -1682,20 +1731,15 @@ Prefab:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
-    - target: {fileID: 114366020918179352, guid: 7ea0c55a5ef59424eb42744ef30c3928,
-        type: 2}
-      propertyPath: foreGround
-      value: 
-      objectReference: {fileID: 1078027762}
-    - target: {fileID: 114366020918179352, guid: 7ea0c55a5ef59424eb42744ef30c3928,
+    - target: {fileID: 114843301575749786, guid: 7ea0c55a5ef59424eb42744ef30c3928,
         type: 2}
       propertyPath: startGridX
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 114366020918179352, guid: 7ea0c55a5ef59424eb42744ef30c3928,
+    - target: {fileID: 114843301575749786, guid: 7ea0c55a5ef59424eb42744ef30c3928,
         type: 2}
       propertyPath: startGridY
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7ea0c55a5ef59424eb42744ef30c3928, type: 2}

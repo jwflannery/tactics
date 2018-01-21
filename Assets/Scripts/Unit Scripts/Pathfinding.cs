@@ -12,7 +12,7 @@ public class Pathfinding : MonoBehaviour
     private float interpolationSpeed = 2.50F;
     private int range = 5;
     private Vector2 nextLocation;
-    private Unit unit;
+    private PlayerUnit unit;
 
     private int currentGridX;
     private int currentGridY;
@@ -50,15 +50,14 @@ public class Pathfinding : MonoBehaviour
 
     private void Start()
     {
-        unit = GetComponent<Unit>();
+        unit = GetComponent<PlayerUnit>();
         targetGridX = 1;
         targetGridY = 1;
         currentGridX = startGridX;
         currentGridY = startGridY;
         targetLocation = TilemapUtils.GetGridWorldPos(MoveCursor.instance.ground, currentGridX, currentGridY);
-        transform.position = TilemapUtils.GetGridWorldPos(MoveCursor.instance.ground, startGridX, startGridY);
+        //transform.position = TilemapUtils.GetGridWorldPos(MoveCursor.instance.ground, startGridX, startGridY);
         lastCursorTile = MoveCursor.instance.currentTile;
-        GameManager.i.units.Add(gameObject);
     }
 
     private void MoveAlongPath()
@@ -70,15 +69,15 @@ public class Pathfinding : MonoBehaviour
             {
                 var nextTile = pathToTarget.Pop();
                 nextLocation = TilemapUtils.GetGridWorldPos(MoveCursor.instance.ground, (int)nextTile.position.x, (int)nextTile.position.y);
-            }else if (Vector2.Distance(transform.position, nextLocation) < Mathf.Epsilon && pathToTarget.Count == 0)
-                unit.state = Unit.States.waiting;
+            }
+            else if (Vector2.Distance(transform.position, nextLocation) < Mathf.Epsilon && pathToTarget.Count == 0)
+                unit.state = PlayerUnit.States.waiting;
         }
     }
 
-    private void selectUnit()
+    public void EnterState()
     {
-        unit.state = Unit.States.selected;
-        findReachableTiles();
+        //findReachableTiles();
         foreach (Node reachableTile in closedTiles)
         {
             createMoveTile(TilemapUtils.GetGridWorldPos(MoveCursor.instance.ground, (int)reachableTile.position.x, (int)reachableTile.position.y));
@@ -87,52 +86,52 @@ public class Pathfinding : MonoBehaviour
         closedTiles.Clear();
     }
 
-    private void findReachableTiles()
-    {
-        openTiles.Add(new Node(new Vector2(currentGridX, currentGridY), null, 0));
-        addAdjacent(new Node(new Vector2(currentGridX, currentGridY), null, 0));
-        while (openTiles.Count > 0)
-        {
-            addAdjacent(getMinNode());
-        }
-    }
+    //private void findReachableTiles()
+    //{
+    //    openTiles.Add(new Node(new Vector2(currentGridX, currentGridY), null, 0));
+    //    addAdjacent(new Node(new Vector2(currentGridX, currentGridY), null, 0));
+    //    while (openTiles.Count > 0)
+    //    {
+    //        addAdjacent(getMinNode());
+    //    }
+    //}
 
-    private void addAdjacent(Node centre)
-    {
-        if (centre.cost < range && !closedTiles.Exists(t => t.position == centre.position))
-        {
-            var newPos = new Vector2(centre.position.x, centre.position.y - 1);
-            var tile = foreGround.GetTile((int)newPos.x, (int)newPos.y);
-            var impassable = tile != null && tile.collData.type != eTileCollider.None;
-            if (!closedTiles.Exists(t => t.position == newPos) && !impassable)
-            {
-                openTiles.Add(new Node(newPos, centre, centre.cost + 1));
-            }
-            newPos = new Vector2(centre.position.x, centre.position.y + 1);
-            tile = foreGround.GetTile((int)newPos.x, (int)newPos.y);
-            impassable = tile != null && tile.collData.type != eTileCollider.None;
-            if (!closedTiles.Exists(t => t.position == newPos) && !impassable)
-            {
-                openTiles.Add(new Node(newPos, centre, centre.cost + 1));
-            }
-            newPos = new Vector2(centre.position.x + 1, centre.position.y);
-            tile = foreGround.GetTile((int)newPos.x, (int)newPos.y);
-            impassable = tile != null && tile.collData.type != eTileCollider.None;
-            if (!closedTiles.Exists(t => t.position == newPos) && !impassable)
-            {
-                openTiles.Add(new Node(newPos, centre, centre.cost + 1));
-            }
-            newPos = new Vector2(centre.position.x - 1, centre.position.y);
-            tile = foreGround.GetTile((int)newPos.x, (int)newPos.y);
-            impassable = tile != null && tile.collData.type != eTileCollider.None;
-            if (!closedTiles.Exists(t => t.position == newPos) && !impassable)
-            {
-                openTiles.Add(new Node(newPos, centre, centre.cost + 1));
-            }
-        }
-        closedTiles.Add(centre);
-        openTiles.Remove(centre);
-    }
+    //private void addAdjacent(Node centre)
+    //{
+    //    if (centre.cost < range && !closedTiles.Exists(t => t.position == centre.position))
+    //    {
+    //        var newPos = new Vector2(centre.position.x, centre.position.y - 1);
+    //        var tile = foreGround.GetTile((int)newPos.x, (int)newPos.y);
+    //        var impassable = tile != null && tile.collData.type != eTileCollider.None;
+    //        if (!closedTiles.Exists(t => t.position == newPos) && !impassable)
+    //        {
+    //            openTiles.Add(new Node(newPos, centre, centre.cost + 1));
+    //        }
+    //        newPos = new Vector2(centre.position.x, centre.position.y + 1);
+    //        tile = foreGround.GetTile((int)newPos.x, (int)newPos.y);
+    //        impassable = tile != null && tile.collData.type != eTileCollider.None;
+    //        if (!closedTiles.Exists(t => t.position == newPos) && !impassable)
+    //        {
+    //            openTiles.Add(new Node(newPos, centre, centre.cost + 1));
+    //        }
+    //        newPos = new Vector2(centre.position.x + 1, centre.position.y);
+    //        tile = foreGround.GetTile((int)newPos.x, (int)newPos.y);
+    //        impassable = tile != null && tile.collData.type != eTileCollider.None;
+    //        if (!closedTiles.Exists(t => t.position == newPos) && !impassable)
+    //        {
+    //            openTiles.Add(new Node(newPos, centre, centre.cost + 1));
+    //        }
+    //        newPos = new Vector2(centre.position.x - 1, centre.position.y);
+    //        tile = foreGround.GetTile((int)newPos.x, (int)newPos.y);
+    //        impassable = tile != null && tile.collData.type != eTileCollider.None;
+    //        if (!closedTiles.Exists(t => t.position == newPos) && !impassable)
+    //        {
+    //            openTiles.Add(new Node(newPos, centre, centre.cost + 1));
+    //        }
+    //    }
+    //    closedTiles.Add(centre);
+    //    openTiles.Remove(centre);
+    //}
 
     public void deselectUnit()
     {
@@ -159,43 +158,33 @@ public class Pathfinding : MonoBehaviour
 
     private void Update()
     {
-        if (unit.state == Unit.States.moving)
+        if (unit.state == PlayerUnit.States.moving)
         {
             MoveAlongPath();
         }
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(1))
         {
-            if (unit.state == Unit.States.fresh && MoveCursor.instance.transform.position == transform.position)
-            {
-                selectUnit();
-            }
-            else
-            {
-                if (!existingMoveTiles.Exists(t => MoveCursor.instance.transform.position == t.position))
-                    return;
-                updateTarget();
-                deselectUnit();
-                currentGridX = targetGridX;
-                currentGridY = targetGridY;
-                unit.state = Unit.States.moving;
-            }
+            if (!existingMoveTiles.Exists(t => MoveCursor.instance.transform.position == t.position))
+                return;
+            updateTarget();
+            deselectUnit();
+            unit.state = PlayerUnit.States.moving;
         }
 
-        if (unit.state == Unit.States.selected)
-        {
-            if (existingMoveTiles.Exists(t => MoveCursor.instance.transform.position == t.position))
-            {
-                currentCursorTile = MoveCursor.instance.currentTile;
-                if (lastCursorTile != currentCursorTile)
-                {
-                    clearTiles(existingPathTiles);
-                    pathToTarget.Clear();
-                }
-                
-                findPathToTarget(new Vector2(currentGridX, currentGridY), new Vector2(MoveCursor.instance.currentGridX, MoveCursor.instance.currentGridY));
-            }
-        }
+        //if (unit.state == PlayerUnit.States.selected)
+        //{
+        //    if (existingMoveTiles.Exists(t => MoveCursor.instance.transform.position == t.position))
+        //    {
+        //        currentCursorTile = MoveCursor.instance.currentTile;
+        //        if (lastCursorTile != currentCursorTile)
+        //        {
+        //            clearTiles(existingPathTiles);
+        //            pathToTarget.Clear();
+        //        }
+        //        findPathToTarget(new Vector2(currentGridX, currentGridY), new Vector2(MoveCursor.instance.currentGridX, MoveCursor.instance.currentGridY));
+        //    }
+        //}
     }
 
     private void createMoveTile(Vector3 position)
@@ -213,7 +202,7 @@ public class Pathfinding : MonoBehaviour
 
         while (openTiles.Count > 0)
         {
-            addAdjacent(getMinNode());
+            //addAdjacent(getMinNode());
             if (closedTiles.Exists(t => t.position == target))
             {
                 createPathTiles(closedTiles.Find(n => n.position == target));
@@ -231,7 +220,7 @@ public class Pathfinding : MonoBehaviour
         {
             if (node.cost <= lowestCostNode.cost)
             {
-                lowestCostNode= node;
+                lowestCostNode = node;
             }
         }
         return lowestCostNode;
@@ -246,7 +235,7 @@ public class Pathfinding : MonoBehaviour
             var tile = Instantiate(pathTile, TilemapUtils.GetGridWorldPos(MoveCursor.instance.ground, (int)current.position.x, (int)current.position.y), Quaternion.identity);
             existingPathTiles.Add(tile.transform);
             current = current.parent;
-        } while(current.parent != null);
+        } while (current.parent != null);
         nextLocation = TilemapUtils.GetGridWorldPos(MoveCursor.instance.ground, (int)pathToTarget.Peek().position.x, (int)pathToTarget.Peek().position.y);
     }
 }
