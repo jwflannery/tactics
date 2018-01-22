@@ -21,12 +21,11 @@ public class GameManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (!units.Exists(u => u.GetComponent<PlayerUnit>().state != PlayerUnit.States.exhausted))
+		if (!units.Exists(u => u.GetComponent<UnitStateManager>().stateMachine.TopState.GetType() != typeof(PlayerUnitExhaustedState)))
         {
             foreach (GameObject unit in units)
             {
-                unit.GetComponent<PlayerUnit>().state = PlayerUnit.States.fresh;
-                unit.GetComponent<SpriteRenderer>().color = Color.white;
+                unit.GetComponent<UnitStateManager>().stateMachine.ReplaceTop(new PlayerUnitFreshState());
             }
         }
 	}

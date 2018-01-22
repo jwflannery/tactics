@@ -5,7 +5,7 @@ using TMPro;
 using CreativeSpore.SuperTilemapEditor;
 
 public class PlayerUnit : MonoBehaviour {
-
+    #region Variable Declarations
     private int health = 100;
     private int damage = 25;
     private int attackRange = 1;
@@ -109,6 +109,7 @@ public class PlayerUnit : MonoBehaviour {
         }
     }
 
+    #endregion
     // Use this for initialization
     void Start () {
         text = GetComponentInChildren<TextMeshPro>();
@@ -123,55 +124,8 @@ public class PlayerUnit : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         text.text = Health.ToString();
-
-        if (Input.GetMouseButtonDown(1) && state == States.selected)
-        {
-            //FindUnitsInRange(AttackRange, currentGridX, currentGridY);
-        }
-
-        if (MoveCursor.instance.transform.position == transform.position && state == States.waiting && Input.GetMouseButtonDown(0))
-        {
-            state = States.exhausted;
-        }        
     }
 
-    //void FindUnitsInRange(int range, int targetGridX, int targetGridY)
-    //{
-    //    List <GameObject> units = new List<GameObject>();
-
-    //    foreach (GameObject u in GameManager.instance.units)
-    //    {
-    //        PlayerUnit unitInfo = u.GetComponent<PlayerUnit>();
-    //        if (unitInfo.CurrentGridX == targetGridX + 1 && unitInfo.currentGridY == targetGridY)
-    //        {
-    //            units.Add(u);
-    //        }
-    //        if (unitInfo.CurrentGridX == targetGridX - 1 && unitInfo.currentGridY == targetGridY)
-    //        {
-    //            units.Add(u);
-    //        }
-    //        if (unitInfo.CurrentGridX == targetGridX && unitInfo.currentGridY == targetGridY + 1)
-    //        {
-    //            units.Add(u);
-    //        }
-    //        if (unitInfo.CurrentGridX == targetGridX && unitInfo.currentGridY == targetGridY - 1)
-    //        {
-    //            units.Add(u);
-    //        }
-    //    }
-
-    //    if (units.Exists(u => u != null))
-    //    {
-    //        foreach (GameObject unit in units)
-    //        {
-    //            unit.GetComponent<PlayerUnit>().health -= 10;
-    //            state = States.exhausted;
-    //            //pathfinding.deselectUnit();
-    //            Debug.Log("Adjacent unit found");
-    //        }
-    //        units.Clear();
-    //    }
-    //}
 
     GameObject GetUnitOnTile(Vector2 transform)
     {

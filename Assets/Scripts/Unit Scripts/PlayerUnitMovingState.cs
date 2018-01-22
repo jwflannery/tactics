@@ -35,7 +35,6 @@ public class PlayerUnitMovingState : PlayerUnitState {
             }
             else if (Vector2.Distance(unitDetails.gameObject.transform.position, nextLocation) < Mathf.Epsilon && pathToTarget.Count == 0)
                 Machine.ReplaceTop(new PlayerUnitWaitingState());
-                //Machine.Pop();
         }
         return base.Tick();
     }

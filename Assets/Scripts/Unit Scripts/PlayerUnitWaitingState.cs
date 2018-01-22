@@ -71,7 +71,7 @@ public class PlayerUnitWaitingState : PlayerUnitState {
         unitDetails.CurrentGridY = TilemapUtils.GetGridY(unitTilemap, unitDetails.transform.position);
         OnExit();
         Machine.Clear();
-        Machine.Push(new PlayerUnitFreshState());
+        Machine.Push(new PlayerUnitExhaustedState());
     }
 
     public override void OnExit()
