@@ -1132,6 +1132,8 @@ MonoBehaviour:
     type: 2}
   pathTilePrefab: {fileID: 1214826334653930, guid: 51bd067aeb1d1544faf705f12bbb2a71,
     type: 2}
+  attackTilePrefab: {fileID: 1456528026379326, guid: 267b76a6de832744b96ae093403e57ca,
+    type: 2}
 --- !u!4 &1284119573
 Transform:
   m_ObjectHideFlags: 0

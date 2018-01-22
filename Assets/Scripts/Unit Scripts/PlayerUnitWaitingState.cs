@@ -6,6 +6,7 @@ using CreativeSpore.SuperTilemapEditor;
 public class PlayerUnitWaitingState : PlayerUnitState {
 
     private List<GameObject> unitsInRange = new List<GameObject>();
+    private List<Transform> existingAttackTiles = new List<Transform>();
     private int tempGridX;
     private int tempGridY;
 
@@ -16,7 +17,6 @@ public class PlayerUnitWaitingState : PlayerUnitState {
         unitTilemap = Machine.actor.transform.parent.GetComponent<STETilemap>();
         tempGridX = TilemapUtils.GetGridX(unitTilemap, unitDetails.transform.position);
         tempGridY = TilemapUtils.GetGridY(unitTilemap, unitDetails.transform.position);
-
         unitsInRange = FindUnitsInRange(unitDetails.AttackRange, tempGridX, tempGridY);
 
         if (unitsInRange.Exists(u => u != null))
@@ -25,7 +25,9 @@ public class PlayerUnitWaitingState : PlayerUnitState {
             {
                 //unit.GetComponent<PlayerUnit>().Health -= 10;
                 //Debug.Log("Adjacent unit found");
-                unit.GetComponent<SpriteRenderer>().color = Color.red;
+                //unit.GetComponent<SpriteRenderer>().color = Color.red;
+                var tile = GameObject.Instantiate(GameManager.instance.attackTilePrefab, unit.transform.position, Quaternion.identity);
+                existingAttackTiles.Add(tile.transform);
             }
         }
 
@@ -76,13 +78,18 @@ public class PlayerUnitWaitingState : PlayerUnitState {
 
     public override void OnExit()
     {
-        foreach (GameObject unit in unitsInRange)
-        {
-            unit.GetComponent<SpriteRenderer>().color = Color.white;
-        }
-
+        clearTiles(existingAttackTiles);
         unitsInRange.Clear();
         base.OnExit();
+    }
+
+    private void clearTiles(List<Transform> tiles)
+    {
+        foreach (Transform tile in tiles)
+        {
+            GameObject.Destroy(tile.gameObject);
+        }
+        tiles.Clear();
     }
 
 }

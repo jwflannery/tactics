@@ -5,9 +5,6 @@ using CreativeSpore.SuperTilemapEditor;
 
 public class PlayerUnitSelectedState : PlayerUnitState {
 
-    //public PlayerUnitSelectedState() : base()
-    //{}
-    
     public GameObject moveTile;
     private List<Node> openTiles = new List<Node>();
     private List<Node> closedTiles = new List<Node>();

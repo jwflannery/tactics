@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour {
     public List<GameObject> units = new List<GameObject>();
     public GameObject moveTilePrefab;
     public GameObject pathTilePrefab;
+    public GameObject attackTilePrefab;
 
 
     private void Awake()
