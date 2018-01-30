@@ -20,13 +20,5 @@ public class UnitStateManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		//if (Input.GetMouseButtonDown(0))
-  //      {
-  //          stateMachine.OnAccept();
-  //      }
-  //      if (Input.GetMouseButtonDown(1))
-  //      {
-  //          stateMachine.OnCancel();
-  //      }
 	}
 }

@@ -67,7 +67,10 @@ public class PlayerUnitSelectedState : PlayerUnitState {
     private void findPathToTarget(Vector2 source, Vector2 target)
     {
         if (source == target)
+        {
+            pathToTarget.Push(new Node(source, null, 0));
             return;
+        }
 
         openTiles.Add(new Node(new Vector2(unitDetails.CurrentGridX, unitDetails.CurrentGridY), null, 0));
 
@@ -115,28 +118,28 @@ public class PlayerUnitSelectedState : PlayerUnitState {
         {
             var newPos = new Vector2(centre.position.x, centre.position.y - 1);
             var tile = unitTilemap.GetTile((int)newPos.x, (int)newPos.y);
-            var impassable = tile != null && tile.collData.type != eTileCollider.None;
+            var impassable = (tile != null && tile.collData.type != eTileCollider.None || GameManager.instance.FindUnitOnTile((int)newPos.x, (int)newPos.y));
             if (!closedTiles.Exists(t => t.position == newPos) && !impassable)
             {
                 openTiles.Add(new Node(newPos, centre, centre.cost + 1));
             }
             newPos = new Vector2(centre.position.x, centre.position.y + 1);
             tile = unitTilemap.GetTile((int)newPos.x, (int)newPos.y);
-            impassable = tile != null && tile.collData.type != eTileCollider.None;
+            impassable = (tile != null && tile.collData.type != eTileCollider.None || GameManager.instance.FindUnitOnTile((int)newPos.x, (int)newPos.y));
             if (!closedTiles.Exists(t => t.position == newPos) && !impassable)
             {
                 openTiles.Add(new Node(newPos, centre, centre.cost + 1));
             }
             newPos = new Vector2(centre.position.x + 1, centre.position.y);
             tile = unitTilemap.GetTile((int)newPos.x, (int)newPos.y);
-            impassable = tile != null && tile.collData.type != eTileCollider.None;
+            impassable = (tile != null && tile.collData.type != eTileCollider.None || GameManager.instance.FindUnitOnTile((int)newPos.x, (int)newPos.y));
             if (!closedTiles.Exists(t => t.position == newPos) && !impassable)
             {
                 openTiles.Add(new Node(newPos, centre, centre.cost + 1));
             }
             newPos = new Vector2(centre.position.x - 1, centre.position.y);
             tile = unitTilemap.GetTile((int)newPos.x, (int)newPos.y);
-            impassable = tile != null && tile.collData.type != eTileCollider.None;
+            impassable = (tile != null && tile.collData.type != eTileCollider.None || GameManager.instance.FindUnitOnTile((int)newPos.x, (int)newPos.y));
             if (!closedTiles.Exists(t => t.position == newPos) && !impassable)
             {
                 openTiles.Add(new Node(newPos, centre, centre.cost + 1));

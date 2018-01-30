@@ -19,6 +19,12 @@ public class GameManager : MonoBehaviour {
             instance = this;
         }
     }
+
+    public GameObject FindUnitOnTile(int gridX, int gridY)
+    {
+        GameObject unit = units.Find(x => x.GetComponent<PlayerUnit>().CurrentGridX == gridX && x.GetComponent<PlayerUnit>().CurrentGridY == gridY);
+        return unit;
+    }
 	
 	// Update is called once per frame
 	void Update () {
