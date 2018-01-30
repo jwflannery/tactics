@@ -5,6 +5,7 @@ using UnityEngine;
 public class UnitStateManager : MonoBehaviour {
 
     public StateMachine stateMachine;
+    public bool Active = false;
 
     private void OnEnable()
     {
@@ -19,13 +20,13 @@ public class UnitStateManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetMouseButtonDown(0))
-        {
-            stateMachine.OnAccept();
-        }
-        if (Input.GetMouseButtonDown(1))
-        {
-            stateMachine.OnCancel();
-        }
+		//if (Input.GetMouseButtonDown(0))
+  //      {
+  //          stateMachine.OnAccept();
+  //      }
+  //      if (Input.GetMouseButtonDown(1))
+  //      {
+  //          stateMachine.OnCancel();
+  //      }
 	}
 }

@@ -127,7 +127,7 @@ public class PlayerUnit : MonoBehaviour {
     }
 
 
-    GameObject GetUnitOnTile(Vector2 transform)
+    public GameObject GetUnitOnTile(Vector2 transform)
     {
         Collider2D[] colliders = Physics2D.OverlapBoxAll(transform, Vector2.one, 0);
 

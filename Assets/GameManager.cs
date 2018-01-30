@@ -29,5 +29,40 @@ public class GameManager : MonoBehaviour {
                 unit.GetComponent<UnitStateManager>().stateMachine.ReplaceTop(new PlayerUnitFreshState());
             }
         }
+
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (units.Exists(x => x.GetComponent<UnitStateManager>().Active)) {
+                foreach (GameObject u in units.FindAll(x => x.GetComponent<UnitStateManager>().Active))
+                {
+                    u.GetComponent<UnitStateManager>().stateMachine.OnAccept();
+                }
+            }
+            else
+            {
+                foreach (GameObject u in units)
+                {
+                    u.GetComponent<UnitStateManager>().stateMachine.OnAccept();
+                }
+            }
+
+        }
+        if (Input.GetMouseButtonDown(1))
+        {
+            if (units.Exists(x => x.GetComponent<UnitStateManager>().Active)) {
+                foreach (GameObject u in units.FindAll(x => x.GetComponent<UnitStateManager>().Active))
+                {
+                    u.GetComponent<UnitStateManager>().stateMachine.OnCancel();
+                }
+            }
+            else
+            {
+                foreach (GameObject u in units)
+                {
+                    u.GetComponent<UnitStateManager>().stateMachine.OnCancel();
+                }
+            }
+        }
 	}
 }

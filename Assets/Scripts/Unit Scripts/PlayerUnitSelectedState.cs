@@ -33,6 +33,7 @@ public class PlayerUnitSelectedState : PlayerUnitState {
 
     public override void OnEnter()
     {
+        Machine.actor.GetComponent<UnitStateManager>().Active = true;
         moveTile = GameManager.instance.moveTilePrefab;
         unitDetails = Machine.actor.GetComponent<PlayerUnit>();
         unitTilemap = Machine.actor.transform.parent.GetComponent<STETilemap>();
@@ -182,6 +183,7 @@ public class PlayerUnitSelectedState : PlayerUnitState {
         closedTiles.Clear();
         clearTiles(existingMoveTiles);
         clearTiles(existingPathTiles);
+        Machine.actor.GetComponent<UnitStateManager>().Active = false;
     }
     private void clearTiles(List<Transform> tiles)
     {

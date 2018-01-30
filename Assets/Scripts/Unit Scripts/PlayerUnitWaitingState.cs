@@ -69,6 +69,14 @@ public class PlayerUnitWaitingState : PlayerUnitState {
 
     public override void OnAcceptInput()
     {
+
+        if (existingAttackTiles.Exists(t => MoveCursor.instance.transform.position == t.position))
+        {
+            var target = GameManager.instance.units.Find(
+                x => x.GetComponent<PlayerUnit>().CurrentGridX == MoveCursor.instance.currentGridX && x.GetComponent<PlayerUnit>().CurrentGridY == MoveCursor.instance.currentGridY);
+            target.gameObject.GetComponent<PlayerUnit>().Health -= 10;
+        }
+        
         unitDetails.CurrentGridX = TilemapUtils.GetGridX(unitTilemap, unitDetails.transform.position);
         unitDetails.CurrentGridY = TilemapUtils.GetGridY(unitTilemap, unitDetails.transform.position);
         OnExit();
