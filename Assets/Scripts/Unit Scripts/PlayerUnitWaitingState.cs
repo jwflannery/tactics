@@ -22,9 +22,6 @@ public class PlayerUnitWaitingState : PlayerUnitState {
         {
             foreach (GameObject unit in unitsInRange)
             {
-                //unit.GetComponent<PlayerUnit>().Health -= 10;
-                //Debug.Log("Adjacent unit found");
-                //unit.GetComponent<SpriteRenderer>().color = Color.red;
                 var tile = GameObject.Instantiate(GameManager.instance.attackTilePrefab, unit.transform.position, Quaternion.identity);
                 existingAttackTiles.Add(tile.transform);
             }
@@ -41,19 +38,19 @@ public class PlayerUnitWaitingState : PlayerUnitState {
             if (u == unitDetails.gameObject)
                 continue;
             PlayerUnit unitInfo = u.GetComponent<PlayerUnit>();
-            if (unitInfo.CurrentGridX == originGridX + 1 && unitInfo.CurrentGridY == originGridY)
+            if (unitInfo.CurrentGridX == originGridX + 1 && unitInfo.CurrentGridY == originGridY && unitInfo.TeamNumber != unitDetails.TeamNumber)
             {
                 units.Add(u);
             }
-            if (unitInfo.CurrentGridX == originGridX - 1 && unitInfo.CurrentGridY == originGridY)
+            if (unitInfo.CurrentGridX == originGridX - 1 && unitInfo.CurrentGridY == originGridY && unitInfo.TeamNumber != unitDetails.TeamNumber)
             {
                 units.Add(u);
             }
-            if (unitInfo.CurrentGridX == originGridX && unitInfo.CurrentGridY == originGridY + 1)
+            if (unitInfo.CurrentGridX == originGridX && unitInfo.CurrentGridY == originGridY + 1 && unitInfo.TeamNumber != unitDetails.TeamNumber)
             {
                 units.Add(u);
             }
-            if (unitInfo.CurrentGridX == originGridX && unitInfo.CurrentGridY == originGridY - 1)
+            if (unitInfo.CurrentGridX == originGridX && unitInfo.CurrentGridY == originGridY - 1 && unitInfo.TeamNumber != unitDetails.TeamNumber)
             {
                 units.Add(u);
             }
