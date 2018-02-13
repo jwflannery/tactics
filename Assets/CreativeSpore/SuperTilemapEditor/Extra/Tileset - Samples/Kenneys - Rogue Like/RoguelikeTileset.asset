@@ -8456,11 +8456,11 @@ MonoBehaviour:
     paramContainer:
       m_paramList: []
     prefabData:
-      prefab: {fileID: 0}
+      prefab: {fileID: 1484657513128502, guid: cd29ce9bbced03b45abd956e96a1f9fd, type: 2}
       offset: {x: 0, y: 0, z: 0}
       offsetMode: 0
       showTileWithPrefab: 0
-      showPrefabPreviewInTilePalette: 0
+      showPrefabPreviewInTilePalette: 1
     autilingGroup: 0
   - uv:
       serializedVersion: 2
@@ -8478,7 +8478,7 @@ MonoBehaviour:
       offset: {x: 0, y: 0, z: 0}
       offsetMode: 0
       showTileWithPrefab: 0
-      showPrefabPreviewInTilePalette: 0
+      showPrefabPreviewInTilePalette: 1
     autilingGroup: 0
   - uv:
       serializedVersion: 2
