@@ -358,8 +358,29 @@ Prefab:
       propertyPath: startGridX
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 114843301575749786, guid: 7ea0c55a5ef59424eb42744ef30c3928,
+        type: 2}
+      propertyPath: team
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 212310879868933804, guid: 7ea0c55a5ef59424eb42744ef30c3928,
+        type: 2}
+      propertyPath: m_Color.r
+      value: 0.88235295
+      objectReference: {fileID: 0}
+    - target: {fileID: 212310879868933804, guid: 7ea0c55a5ef59424eb42744ef30c3928,
+        type: 2}
+      propertyPath: m_Color.g
+      value: 0.37629756
+      objectReference: {fileID: 0}
+    - target: {fileID: 212310879868933804, guid: 7ea0c55a5ef59424eb42744ef30c3928,
+        type: 2}
+      propertyPath: m_Color.b
+      value: 0.37629756
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 0}
+    - {fileID: 114702742456488016, guid: 7ea0c55a5ef59424eb42744ef30c3928, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 7ea0c55a5ef59424eb42744ef30c3928, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &715697957 stripped
@@ -372,22 +393,6 @@ Transform:
   m_PrefabParentObject: {fileID: 4430998295840580, guid: 7ea0c55a5ef59424eb42744ef30c3928,
     type: 2}
   m_PrefabInternal: {fileID: 1625389059}
---- !u!114 &715697960
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 715697957}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9b7b7ca3190bcf49a8051d717418230, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startGridX: 2
-  startGridY: 1
-  moveTile: {fileID: 0}
-  pathTile: {fileID: 0}
-  foreGround: {fileID: 0}
 --- !u!1 &778109129
 GameObject:
   m_ObjectHideFlags: 1
@@ -1127,13 +1132,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ab318c7e5a5a1d4e8726dd8122fcaa0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  units: []
+  AllUnits: []
   moveTilePrefab: {fileID: 1550904879648724, guid: cb785675b2958c147bdf443368c86983,
     type: 2}
   pathTilePrefab: {fileID: 1214826334653930, guid: 51bd067aeb1d1544faf705f12bbb2a71,
     type: 2}
   attackTilePrefab: {fileID: 1456528026379326, guid: 267b76a6de832744b96ae093403e57ca,
     type: 2}
+  currentActiveTeamNumber: 1
 --- !u!4 &1284119573
 Transform:
   m_ObjectHideFlags: 0
@@ -1477,8 +1483,34 @@ Prefab:
       propertyPath: startGridX
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 114843301575749786, guid: 7ea0c55a5ef59424eb42744ef30c3928,
+        type: 2}
+      propertyPath: team
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 212310879868933804, guid: 7ea0c55a5ef59424eb42744ef30c3928,
+        type: 2}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 212310879868933804, guid: 7ea0c55a5ef59424eb42744ef30c3928,
+        type: 2}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 212310879868933804, guid: 7ea0c55a5ef59424eb42744ef30c3928,
+        type: 2}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114843301575749786, guid: 7ea0c55a5ef59424eb42744ef30c3928,
+        type: 2}
+      propertyPath: TeamNumber
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 0}
+    - {fileID: 114702742456488016, guid: 7ea0c55a5ef59424eb42744ef30c3928, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 7ea0c55a5ef59424eb42744ef30c3928, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &1677588857 stripped
@@ -1596,22 +1628,6 @@ Transform:
   m_PrefabParentObject: {fileID: 4430998295840580, guid: 7ea0c55a5ef59424eb42744ef30c3928,
     type: 2}
   m_PrefabInternal: {fileID: 660405046}
---- !u!114 &1722183372
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1722183369}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9b7b7ca3190bcf49a8051d717418230, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startGridX: 4
-  startGridY: 0
-  moveTile: {fileID: 0}
-  pathTile: {fileID: 0}
-  foreGround: {fileID: 0}
 --- !u!1 &1935351078
 GameObject:
   m_ObjectHideFlags: 0
@@ -1743,7 +1759,33 @@ Prefab:
       propertyPath: startGridY
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 114843301575749786, guid: 7ea0c55a5ef59424eb42744ef30c3928,
+        type: 2}
+      propertyPath: team
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 212310879868933804, guid: 7ea0c55a5ef59424eb42744ef30c3928,
+        type: 2}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 212310879868933804, guid: 7ea0c55a5ef59424eb42744ef30c3928,
+        type: 2}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 212310879868933804, guid: 7ea0c55a5ef59424eb42744ef30c3928,
+        type: 2}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114843301575749786, guid: 7ea0c55a5ef59424eb42744ef30c3928,
+        type: 2}
+      propertyPath: TeamNumber
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 114702742456488016, guid: 7ea0c55a5ef59424eb42744ef30c3928, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 7ea0c55a5ef59424eb42744ef30c3928, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &2133727891

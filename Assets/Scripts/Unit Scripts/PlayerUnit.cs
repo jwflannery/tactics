@@ -28,6 +28,9 @@ public class PlayerUnit : MonoBehaviour {
     };
     public States state = 0;
 
+    private GameManager.Team team;
+    public int TeamNumber = 0;
+
     public int Health
     {
         get
@@ -113,9 +116,12 @@ public class PlayerUnit : MonoBehaviour {
     // Use this for initialization
     void Start () {
         text = GetComponentInChildren<TextMeshPro>();
+
         unitTilemap = transform.parent.gameObject.GetComponent<STETilemap>();
         unitLayerMask = LayerMask.GetMask("Units");
-        GameManager.instance.units.Add(gameObject);
+        GameManager.instance.AllUnits.Add(gameObject);
+        GameManager.instance.AddUnitToTeam(transform.gameObject, TeamNumber);
+
         CurrentGridX = startGridX;
         CurrentGridY = startGridY;
         transform.position = TilemapUtils.GetGridWorldPos(MoveCursor.instance.ground, startGridX, startGridY);

@@ -16,7 +16,6 @@ public class PlayerUnitFreshState : PlayerUnitState {
         unitTilemap = Machine.actor.transform.parent.GetComponent<STETilemap>();
         //unitDetails.CurrentGridX = TilemapUtils.GetGridX(unitTilemap, unitDetails.transform.position);
         //unitDetails.CurrentGridY = TilemapUtils.GetGridY(unitTilemap, unitDetails.transform.position);
-        Debug.Log("Entered Fresh State.");
     }
 
     public override void OnAcceptInput()

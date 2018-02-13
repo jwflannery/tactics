@@ -37,7 +37,7 @@ public class PlayerUnitWaitingState : PlayerUnitState {
     {
         List<GameObject> units = new List<GameObject>();
 
-        foreach (GameObject u in GameManager.instance.units)
+        foreach (GameObject u in GameManager.instance.AllUnits)
         {
             if (u == unitDetails.gameObject)
                 continue;
@@ -72,7 +72,7 @@ public class PlayerUnitWaitingState : PlayerUnitState {
 
         if (existingAttackTiles.Exists(t => MoveCursor.instance.transform.position == t.position))
         {
-            var target = GameManager.instance.units.Find(
+            var target = GameManager.instance.AllUnits.Find(
                 x => x.GetComponent<PlayerUnit>().CurrentGridX == MoveCursor.instance.currentGridX && x.GetComponent<PlayerUnit>().CurrentGridY == MoveCursor.instance.currentGridY);
             target.gameObject.GetComponent<PlayerUnit>().Health -= 10;
         }
