@@ -122,9 +122,8 @@ public class PlayerUnit : MonoBehaviour {
         GameManager.instance.AllUnits.Add(gameObject);
         GameManager.instance.AddUnitToTeam(transform.gameObject, TeamNumber);
 
-        CurrentGridX = startGridX;
-        CurrentGridY = startGridY;
-        transform.position = TilemapUtils.GetGridWorldPos(MoveCursor.instance.ground, startGridX, startGridY);
+        CurrentGridX = TilemapUtils.GetGridX(unitTilemap, transform.position); ;
+        CurrentGridY = TilemapUtils.GetGridY(unitTilemap, transform.position); ;
     }
 	
 	// Update is called once per frame

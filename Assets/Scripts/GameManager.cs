@@ -61,6 +61,7 @@ public class GameManager : MonoBehaviour {
         }
         AllTeams.Add(playerTeam);
         AllTeams.Add(enemyTeam);
+
         currentActiveTeam = playerTeam;
         teamOrder.Enqueue(enemyTeam);
     }
