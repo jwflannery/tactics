@@ -40,7 +40,6 @@ GameObject:
   - component: {fileID: 4430998295840580}
   - component: {fileID: 212310879868933804}
   - component: {fileID: 114843301575749786}
-  - component: {fileID: 114702742456488016}
   - component: {fileID: 114482386976834564}
   m_Layer: 8
   m_Name: Unit
@@ -228,22 +227,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Active: 0
---- !u!114 &114702742456488016
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1502246974637374}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9b7b7ca3190bcf49a8051d717418230, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startGridX: 0
-  startGridY: 0
-  moveTile: {fileID: 1550904879648724, guid: cb785675b2958c147bdf443368c86983, type: 2}
-  pathTile: {fileID: 1214826334653930, guid: 51bd067aeb1d1544faf705f12bbb2a71, type: 2}
-  foreGround: {fileID: 0}
 --- !u!114 &114843301575749786
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -257,8 +240,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   state: 0
   TeamNumber: 0
-  startGridX: 1
-  startGridY: 1
+  startGridX: 0
+  startGridY: 0
 --- !u!212 &212310879868933804
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -16,7 +16,7 @@ public class PlayerUnit : MonoBehaviour {
     private TextMeshPro text;
     private STETilemap unitTilemap;
     private LayerMask unitLayerMask;
-
+    private Animator animator;
     public enum States
     {
         fresh = 0,
@@ -116,6 +116,7 @@ public class PlayerUnit : MonoBehaviour {
     // Use this for initialization
     void Start () {
         text = GetComponentInChildren<TextMeshPro>();
+        animator = GetComponent<Animator>();
 
         unitTilemap = transform.parent.gameObject.GetComponent<STETilemap>();
         unitLayerMask = LayerMask.GetMask("Units");
@@ -129,8 +130,12 @@ public class PlayerUnit : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         text.text = Health.ToString();
-    }
 
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+            //animator.Play("unit_attack_north");
+        }
+    }
 
     public GameObject GetUnitOnTile(Vector2 transform)
     {

@@ -54,7 +54,7 @@ public class GameManager : MonoBehaviour {
     {
         currentActiveTeam = teamOrder.Dequeue();
         turnText.DisplayText(currentActiveTeam.teamName);
-        foreach (GameObject unit in currentActiveTeam.teamUnits)
+        foreach (GameObject unit in AllUnits)
         {
             unit.GetComponent<UnitStateManager>().stateMachine.ReplaceTop(new PlayerUnitFreshState());
         }
