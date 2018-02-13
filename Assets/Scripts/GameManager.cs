@@ -12,7 +12,9 @@ public class GameManager : MonoBehaviour {
     public GameObject moveTilePrefab;
     public GameObject pathTilePrefab;
     public GameObject attackTilePrefab;
+    public TurnTextScript turnText;
     public Team currentActiveTeam;
+    
 
     public class Team
     {
@@ -21,11 +23,22 @@ public class GameManager : MonoBehaviour {
             teamUnits = new List<GameObject>();
             active = false;
             teamNumber = _teamNumber;
+            teamName = _teamNumber.ToString();
+        }
+        
+        public Team(int _teamNumber, string _teamName)
+        {
+            teamUnits = new List<GameObject>();
+            active = false;
+            teamNumber = _teamNumber;
+            teamName = _teamName;
+
         }
         
         public List<GameObject> teamUnits = new List<GameObject>();
         public bool active;
         public int teamNumber;
+        public string teamName;
     }
 
     public void AddUnitToTeam(GameObject unit, int _teamNumber)
@@ -34,17 +47,19 @@ public class GameManager : MonoBehaviour {
         correctTeam.teamUnits.Add(unit);
     }
 
-    public Team playerTeam = new Team(0);
-    public Team enemyTeam = new Team(1);
+    public Team playerTeam = new Team(0, "Player");
+    public Team enemyTeam = new Team(1, "Enemy");
 
     public void RefreshNextTeam(Team OldTeam)
     {
         currentActiveTeam = teamOrder.Dequeue();
+        turnText.DisplayText(currentActiveTeam.teamName);
         foreach (GameObject unit in currentActiveTeam.teamUnits)
         {
             unit.GetComponent<UnitStateManager>().stateMachine.ReplaceTop(new PlayerUnitFreshState());
         }
         teamOrder.Enqueue(OldTeam);
+
     }
 
     public GameObject FindUnitOnTile(int gridX, int gridY)

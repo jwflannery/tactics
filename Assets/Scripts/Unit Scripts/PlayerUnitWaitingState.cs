@@ -12,7 +12,6 @@ public class PlayerUnitWaitingState : PlayerUnitState {
 
     public override void OnEnter()
     {
-        Debug.Log("Entered Waiting State.");
         unitDetails = Machine.actor.GetComponent<PlayerUnit>();
         unitTilemap = Machine.actor.transform.parent.GetComponent<STETilemap>();
         tempGridX = TilemapUtils.GetGridX(unitTilemap, unitDetails.transform.position);
