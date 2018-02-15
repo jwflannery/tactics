@@ -55,7 +55,7 @@ public class UnitPathingState : UnitState
             addAdjacent(getMinNode());
             if (closedTiles.Exists(t => t.position == target))
             {
-                closedTiles.Find(n => n.position == target);
+                CreatePathTiles(closedTiles.Find(n => n.position == target));
                 openTiles.Clear();
                 closedTiles.Clear();
                 break;

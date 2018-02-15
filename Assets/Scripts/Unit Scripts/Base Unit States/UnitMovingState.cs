@@ -18,7 +18,7 @@ public class UnitMovingState : UnitState
     public override void OnEnter()
     {
         base.OnEnter();
-        unitDetails = Machine.actor.GetComponent<PlayerUnit>();
+        unitDetails = Machine.actor.GetComponent<UnitDetails>();
         unitTilemap = Machine.actor.transform.parent.GetComponent<STETilemap>();
         nextLocation = TilemapUtils.GetGridWorldPos(MoveCursor.instance.ground, (int)pathToTarget.Peek().position.x, (int)pathToTarget.Peek().position.y);
     }

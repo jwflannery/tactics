@@ -6,6 +6,7 @@ using CreativeSpore.SuperTilemapEditor;
 public class EnemyUnitPathingState : UnitPathingState {
 
     private Node closestTarget;
+    List<GameObject> possibleAttackTargets = new List<GameObject>();
 
     public override void OnEnter()
     {
@@ -18,23 +19,32 @@ public class EnemyUnitPathingState : UnitPathingState {
         findReachableTiles();
         closestTarget = FindClosestTarget();
         findPathToTarget(new Vector2(unitDetails.CurrentGridX, unitDetails.CurrentGridY), closestTarget.position);
-        Machine.Push(new EnemyUnitMovingState(pathToTarget));
+        if (possibleAttackTargets.Count == 0)
+        {
+            Machine.Push(new EnemyUnitExhaustedState());
+        }
+        else
+        {
+            Machine.Push(new EnemyUnitMovingState(pathToTarget, possibleAttackTargets[0]));
+        }
     }
 
     Node FindClosestTarget()
     {
         Node lowestCostNode = new Node(new Vector2(unitDetails.CurrentGridX, unitDetails.CurrentGridY), null, 0);
         int lowestCost = 10000;
-        List<GameObject> units = new List<GameObject>();
+        List<GameObject> adjacentUnits = new List<GameObject>();
+
 
         foreach (Node n in closedTiles)
         {
-            units = FindAdjacentUnits(n);
-            if (units.Count > 0)
+            adjacentUnits = FindAdjacentUnits(n);
+            if (adjacentUnits.Count > 0)
             {
                 if (n.cost < lowestCost)
                 {
                     lowestCostNode = n;
+                    possibleAttackTargets = adjacentUnits;
                 }
             }
         } 

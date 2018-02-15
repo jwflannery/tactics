@@ -1830,7 +1830,7 @@ MonoBehaviour:
   m_tilemaps:
   - {fileID: 973772476}
   - {fileID: 1078027762}
-  m_selectedIndex: 1
+  m_selectedIndex: 0
   m_unselectedColorMultiplier: 1
   m_displayTilemapRList: 1
 --- !u!4 &1935351080

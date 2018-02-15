@@ -65,11 +65,17 @@ public class PlayerUnitWaitingState : UnitState {
 
     public override void OnAcceptInput()
     {
-        if (existingAttackTiles.Exists(t => MoveCursor.instance.transform.position == t.position))
+        if (existingAttackTiles.Count == 0)
+        {
+            unitDetails.CurrentGridX = TilemapUtils.GetGridX(unitTilemap, unitDetails.transform.position);
+            unitDetails.CurrentGridY = TilemapUtils.GetGridY(unitTilemap, unitDetails.transform.position);
+            Machine.Push(new PlayerUnitExhaustedState());
+        }
+
+        else if (existingAttackTiles.Exists(t => MoveCursor.instance.transform.position == t.position))
         {
             var target = GameManager.instance.AllUnits.Find(
                 x => x.GetComponent<UnitDetails>().CurrentGridX == MoveCursor.instance.currentGridX && x.GetComponent<UnitDetails>().CurrentGridY == MoveCursor.instance.currentGridY);
-            //target.gameObject.GetComponent<PlayerUnit>().Health -= 10;
             unitDetails.CurrentGridX = TilemapUtils.GetGridX(unitTilemap, unitDetails.transform.position);
             unitDetails.CurrentGridY = TilemapUtils.GetGridY(unitTilemap, unitDetails.transform.position);
             Machine.Push(new PlayerUnitAttackingState(target));

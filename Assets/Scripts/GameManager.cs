@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour {
     public List<GameObject> AllUnits = new List<GameObject>();
     public List<Team> AllTeams = new List<Team>();
     public Queue<Team> teamOrder = new Queue<Team>();
+    public Stack<GameObject> unitOrder = new Stack<GameObject>();
     public GameObject moveTilePrefab;
     public GameObject pathTilePrefab;
     public GameObject attackTilePrefab;
@@ -26,11 +27,17 @@ public class GameManager : MonoBehaviour {
 
     public void RefreshNextTeam(Team OldTeam)
     {
+        unitOrder.Clear();
         currentActiveTeam = teamOrder.Dequeue();
         turnText.DisplayText(currentActiveTeam.teamName);
         foreach (GameObject unit in AllUnits)
         {
             unit.GetComponent<UnitStateManager>().RefreshUnit();
+            unitOrder.Push(unit);
+        }
+        if (currentActiveTeam == enemyTeam)
+        {
+            ActivateNextEnemyUnit();
         }
         teamOrder.Enqueue(OldTeam);
     }
@@ -53,9 +60,15 @@ public class GameManager : MonoBehaviour {
         currentActiveTeam = playerTeam;
         teamOrder.Enqueue(enemyTeam);
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    public void ActivateNextEnemyUnit()
+    {
+        if (unitOrder.Count > 0)
+            unitOrder.Pop().GetComponent<UnitStateManager>().stateMachine.OnAccept();
+    }
+
+    // Update is called once per frame
+    void Update () {
 		if (!currentActiveTeam.teamUnits.Exists(u => !u.GetComponent<UnitStateManager>().stateMachine.TopState.GetType().IsSubclassOf(typeof(UnitExhaustedState))))
         {
             RefreshNextTeam(currentActiveTeam);
@@ -101,16 +114,7 @@ public class GameManager : MonoBehaviour {
         }
 
         else if (currentActiveTeam == enemyTeam)
-        {
-            if (Input.GetMouseButtonDown(0))
-            {
-
-                foreach (GameObject u in currentActiveTeam.teamUnits)
-                {
-                    u.GetComponent<UnitStateManager>().stateMachine.OnAccept();
-                }
-            }
-
+        {            
             foreach (GameObject unit in enemyTeam.teamUnits)
             {
                 unit.GetComponent<EnemyUnitStateManager>();
