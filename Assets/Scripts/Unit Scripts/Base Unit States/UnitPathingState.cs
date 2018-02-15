@@ -6,7 +6,6 @@ using CreativeSpore.SuperTilemapEditor;
 public class UnitPathingState : UnitState
 {
 
-    public GameObject moveTile;
     protected List<Node> openTiles = new List<Node>();
     protected List<Node> closedTiles = new List<Node>();
     protected Stack<Node> pathToTarget = new Stack<Node>();
@@ -29,8 +28,7 @@ public class UnitPathingState : UnitState
     public override void OnEnter()
     {
         Machine.actor.GetComponent<UnitStateManager>().Active = true;
-        moveTile = GameManager.instance.moveTilePrefab;
-        unitDetails = Machine.actor.GetComponent<PlayerUnit>();
+        unitDetails = Machine.actor.GetComponent<UnitDetails>();
         unitTilemap = Machine.actor.transform.parent.GetComponent<STETilemap>();
         findReachableTiles();
         openTiles.Clear();
@@ -57,11 +55,22 @@ public class UnitPathingState : UnitState
             addAdjacent(getMinNode());
             if (closedTiles.Exists(t => t.position == target))
             {
+                closedTiles.Find(n => n.position == target);
                 openTiles.Clear();
                 closedTiles.Clear();
                 break;
             }
         }
+    }
+
+    protected virtual void CreatePathTiles(Node target)
+    {
+        Node current = target;
+        do
+        {
+            pathToTarget.Push(current);
+            current = current.parent;
+        } while (current.parent != null);
     }
 
 
@@ -128,7 +137,6 @@ public class UnitPathingState : UnitState
     public override void OnAcceptInput()
     {
         base.OnAcceptInput();
-        Machine.Push(new PlayerUnitMovingState(pathToTarget));
     }
     public override void OnExit()
     {

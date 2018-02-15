@@ -3,9 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using CreativeSpore.SuperTilemapEditor;
 
-public class PlayerUnitMovingState : UnitMovingState {
+public class UnitMovingState : UnitState
+{
 
-    public PlayerUnitMovingState(Stack<UnitPathingState.Node> _pathToTarget) : base(_pathToTarget)
+    protected Vector2 nextLocation;
+    protected Stack<UnitPathingState.Node> pathToTarget;
+    protected float moveSpeed = 2f;
+
+    public UnitMovingState(Stack<UnitPathingState.Node> _pathToTarget)
     {
         pathToTarget = _pathToTarget;
     }
@@ -36,10 +41,4 @@ public class PlayerUnitMovingState : UnitMovingState {
         }
         return base.Tick();
     }
-
-    public override void OnCancelInput()
-    {
-        Machine.Pop();
-    }
-
 }

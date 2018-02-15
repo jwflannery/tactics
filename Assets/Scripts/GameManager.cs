@@ -80,7 +80,6 @@ public class GameManager : MonoBehaviour {
                         u.GetComponent<UnitStateManager>().stateMachine.OnAccept();
                     }
                 }
-
             }
             if (Input.GetMouseButtonDown(1))
             {
@@ -103,6 +102,15 @@ public class GameManager : MonoBehaviour {
 
         else if (currentActiveTeam == enemyTeam)
         {
+            if (Input.GetMouseButtonDown(0))
+            {
+
+                foreach (GameObject u in currentActiveTeam.teamUnits)
+                {
+                    u.GetComponent<UnitStateManager>().stateMachine.OnAccept();
+                }
+            }
+
             foreach (GameObject unit in enemyTeam.teamUnits)
             {
                 unit.GetComponent<EnemyUnitStateManager>();

@@ -7,15 +7,18 @@ public class PlayerUnitSelectedState : UnitPathingState {
 
     private Tile lastCursorTile;
     private Tile currentCursorTile;
+    public GameObject moveTile;
     protected List<Transform> existingMoveTiles = new List<Transform>();
     protected List<Transform> existingPathTiles = new List<Transform>();
 
     public override void OnEnter()
     {
-        Machine.actor.GetComponent<UnitStateManager>().Active = true;
         moveTile = GameManager.instance.moveTilePrefab;
+
+        Machine.actor.GetComponent<UnitStateManager>().Active = true;
         unitDetails = Machine.actor.GetComponent<PlayerUnit>();
         unitTilemap = Machine.actor.transform.parent.GetComponent<STETilemap>();
+
         findReachableTiles();
         foreach (Node reachableTile in closedTiles)
         {
@@ -56,7 +59,7 @@ public class PlayerUnitSelectedState : UnitPathingState {
             addAdjacent(getMinNode());
             if (closedTiles.Exists(t => t.position == target))
             {
-                createPathTiles(closedTiles.Find(n => n.position == target));
+                CreatePathTiles(closedTiles.Find(n => n.position == target));
                 openTiles.Clear();
                 closedTiles.Clear();
                 break;
@@ -64,7 +67,7 @@ public class PlayerUnitSelectedState : UnitPathingState {
         }
     }
 
-    private void createPathTiles(Node target)
+    protected override void CreatePathTiles(Node target)
     {
         Node current = target;
         do
