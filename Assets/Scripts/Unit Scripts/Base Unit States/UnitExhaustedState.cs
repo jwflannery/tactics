@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using CreativeSpore.SuperTilemapEditor;
 
-public class PlayerUnitExhaustedState : PlayerUnitState {
+public class UnitExhaustedState : UnitState {
 
     public override void OnEnter()
     {

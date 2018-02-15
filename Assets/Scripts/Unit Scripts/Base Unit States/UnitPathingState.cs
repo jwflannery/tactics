@@ -3,19 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using CreativeSpore.SuperTilemapEditor;
 
-public class PlayerUnitSelectedState : PlayerUnitState {
+public class UnitPathingState : UnitState
+{
 
     public GameObject moveTile;
-    private List<Node> openTiles = new List<Node>();
-    private List<Node> closedTiles = new List<Node>();
-
-    private List<Transform> existingMoveTiles = new List<Transform>();
-    private List<Transform> existingPathTiles = new List<Transform>();
-    private Stack<Node> pathToTarget = new Stack<Node>();
-
-    private Tile lastCursorTile;
-    private Tile currentCursorTile;
-    private Vector2 initialPosition = new Vector2();
+    protected List<Node> openTiles = new List<Node>();
+    protected List<Node> closedTiles = new List<Node>();
+    protected Stack<Node> pathToTarget = new Stack<Node>();
+    protected Vector2 initialPosition = new Vector2();
 
     public class Node
     {
@@ -37,34 +32,17 @@ public class PlayerUnitSelectedState : PlayerUnitState {
         moveTile = GameManager.instance.moveTilePrefab;
         unitDetails = Machine.actor.GetComponent<PlayerUnit>();
         unitTilemap = Machine.actor.transform.parent.GetComponent<STETilemap>();
-
-        Debug.Log("Entered Selected State.");
         findReachableTiles();
-        foreach (Node reachableTile in closedTiles)
-        {
-            createMoveTile(TilemapUtils.GetGridWorldPos(MoveCursor.instance.ground, (int)reachableTile.position.x, (int)reachableTile.position.y));
-        }
         openTiles.Clear();
         closedTiles.Clear();
     }
-    #region Display path to current target
 
     public override IEnumerator Tick()
     {
-        if (existingMoveTiles.Exists(t => MoveCursor.instance.transform.position == t.position))
-        {
-            currentCursorTile = MoveCursor.instance.currentTile;
-            if (lastCursorTile != currentCursorTile)
-            {
-                clearTiles(existingPathTiles);
-                pathToTarget.Clear();
-            }
-            findPathToTarget(new Vector2(unitDetails.CurrentGridX, unitDetails.CurrentGridY), new Vector2(MoveCursor.instance.currentGridX, MoveCursor.instance.currentGridY));
-        }
         return base.Tick();
     }
 
-    private void findPathToTarget(Vector2 source, Vector2 target)
+    protected virtual void findPathToTarget(Vector2 source, Vector2 target)
     {
         if (source == target)
         {
@@ -79,7 +57,6 @@ public class PlayerUnitSelectedState : PlayerUnitState {
             addAdjacent(getMinNode());
             if (closedTiles.Exists(t => t.position == target))
             {
-                createPathTiles(closedTiles.Find(n => n.position == target));
                 openTiles.Clear();
                 closedTiles.Clear();
                 break;
@@ -87,22 +64,8 @@ public class PlayerUnitSelectedState : PlayerUnitState {
         }
     }
 
-    private void createPathTiles(Node target)
-    {
-        Node current = target;
-        do
-        {
-            pathToTarget.Push(current);
-            var tile = GameObject.Instantiate(GameManager.instance.pathTilePrefab, TilemapUtils.GetGridWorldPos(MoveCursor.instance.ground, (int)current.position.x, (int)current.position.y), Quaternion.identity);
-            existingPathTiles.Add(tile.transform);
-            current = current.parent;
-        } while (current.parent != null);
-    }
-    #endregion
 
-    #region Display all tiles reachable by the unit.
-
-    private void findReachableTiles()
+    protected void findReachableTiles()
     {
         openTiles.Add(new Node(new Vector2(unitDetails.CurrentGridX, unitDetails.CurrentGridY), null, 0));
         addAdjacent(new Node(new Vector2(unitDetails.CurrentGridX, unitDetails.CurrentGridY), null, 0));
@@ -112,7 +75,7 @@ public class PlayerUnitSelectedState : PlayerUnitState {
         }
     }
 
-    private void addAdjacent(Node centre)
+    protected void addAdjacent(Node centre)
     {
         if (centre.cost < unitDetails.MoveRange && !closedTiles.Exists(t => t.position == centre.position))
         {
@@ -149,7 +112,7 @@ public class PlayerUnitSelectedState : PlayerUnitState {
         openTiles.Remove(centre);
     }
 
-    private Node getMinNode()
+    protected Node getMinNode()
     {
         Node lowestCostNode = new Node(new Vector2(), null, 1000);
         foreach (Node node in openTiles)
@@ -162,45 +125,23 @@ public class PlayerUnitSelectedState : PlayerUnitState {
         return lowestCostNode;
     }
 
-    private void createMoveTile(Vector3 position)
-    {
-        var tile = GameObject.Instantiate(moveTile, position, Quaternion.identity);
-        existingMoveTiles.Add(tile.transform);
-    }
-    #endregion
-
     public override void OnAcceptInput()
     {
         base.OnAcceptInput();
-        if (!existingMoveTiles.Exists(t => MoveCursor.instance.transform.position == t.position))
-            return;
-        clearTiles(existingMoveTiles);
-        clearTiles(existingPathTiles);
         Machine.Push(new PlayerUnitMovingState(pathToTarget));
     }
     public override void OnExit()
     {
-        Debug.Log("Exiting Selected State");
         base.OnExit();
         openTiles.Clear();
         closedTiles.Clear();
-        clearTiles(existingMoveTiles);
-        clearTiles(existingPathTiles);
         Machine.actor.GetComponent<UnitStateManager>().Active = false;
-    }
-    private void clearTiles(List<Transform> tiles)
-    {
-        foreach (Transform tile in tiles)
-        {
-            GameObject.Destroy(tile.gameObject);
-        }
-        tiles.Clear();
     }
 
     public override void OnCancelInput()
     {
         base.OnCancelInput();
-        Machine.ReplaceTop(new PlayerUnitFreshState());
+        Machine.ReplaceTop(new UnitFreshState());
     }
 
     public override void OnPaused()

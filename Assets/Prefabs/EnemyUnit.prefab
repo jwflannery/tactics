@@ -39,8 +39,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4178458093631102}
   - component: {fileID: 212118812691549500}
-  - component: {fileID: 114266050434604254}
-  - component: {fileID: 114546547692686390}
+  - component: {fileID: 114250798704419684}
+  - component: {fileID: 114312163396377744}
   m_Layer: 8
   m_Name: EnemyUnit
   m_TagString: Untagged
@@ -103,7 +103,7 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1084031072549494}
   m_Mesh: {fileID: 0}
---- !u!114 &114266050434604254
+--- !u!114 &114250798704419684
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -111,14 +111,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1484657513128502}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e04d05f8ccea354f823374a76ae92a1, type: 3}
+  m_Script: {fileID: 11500000, guid: e00c9f633cb503b49a901acf963a4f71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   state: 0
   TeamNumber: 1
   startGridX: 1
   startGridY: 1
---- !u!114 &114546547692686390
+--- !u!114 &114312163396377744
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -126,7 +126,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1484657513128502}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db6837960c946c045a0549870654e977, type: 3}
+  m_Script: {fileID: 11500000, guid: 53630aa65ab59ef4ca0464fb73a31ae1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Active: 0

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using CreativeSpore.SuperTilemapEditor;
 
-public class PlayerUnitMovingState : PlayerUnitState {
+public class PlayerUnitMovingState : UnitState {
 
     private Vector2 nextLocation;
     private Stack<PlayerUnitSelectedState.Node> pathToTarget;

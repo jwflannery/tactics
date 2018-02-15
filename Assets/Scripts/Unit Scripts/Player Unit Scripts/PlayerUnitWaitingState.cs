@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using CreativeSpore.SuperTilemapEditor;
 
-public class PlayerUnitWaitingState : PlayerUnitState {
+public class PlayerUnitWaitingState : UnitState {
 
     private List<GameObject> unitsInRange = new List<GameObject>();
     private List<Transform> existingAttackTiles = new List<Transform>();
@@ -12,7 +12,7 @@ public class PlayerUnitWaitingState : PlayerUnitState {
 
     public override void OnEnter()
     {
-        unitDetails = Machine.actor.GetComponent<PlayerUnit>();
+        unitDetails = Machine.actor.GetComponent<UnitDetails>();
         unitTilemap = Machine.actor.transform.parent.GetComponent<STETilemap>();
         tempGridX = TilemapUtils.GetGridX(unitTilemap, unitDetails.transform.position);
         tempGridY = TilemapUtils.GetGridY(unitTilemap, unitDetails.transform.position);
@@ -37,7 +37,7 @@ public class PlayerUnitWaitingState : PlayerUnitState {
         {
             if (u == unitDetails.gameObject)
                 continue;
-            PlayerUnit unitInfo = u.GetComponent<PlayerUnit>();
+            UnitDetails unitInfo = u.GetComponent<UnitDetails>();
             if (unitInfo.CurrentGridX == originGridX + 1 && unitInfo.CurrentGridY == originGridY && unitInfo.TeamNumber != unitDetails.TeamNumber)
             {
                 units.Add(u);
@@ -68,18 +68,12 @@ public class PlayerUnitWaitingState : PlayerUnitState {
         if (existingAttackTiles.Exists(t => MoveCursor.instance.transform.position == t.position))
         {
             var target = GameManager.instance.AllUnits.Find(
-                x => x.GetComponent<PlayerUnit>().CurrentGridX == MoveCursor.instance.currentGridX && x.GetComponent<PlayerUnit>().CurrentGridY == MoveCursor.instance.currentGridY);
+                x => x.GetComponent<UnitDetails>().CurrentGridX == MoveCursor.instance.currentGridX && x.GetComponent<UnitDetails>().CurrentGridY == MoveCursor.instance.currentGridY);
             //target.gameObject.GetComponent<PlayerUnit>().Health -= 10;
             unitDetails.CurrentGridX = TilemapUtils.GetGridX(unitTilemap, unitDetails.transform.position);
             unitDetails.CurrentGridY = TilemapUtils.GetGridY(unitTilemap, unitDetails.transform.position);
             Machine.Push(new PlayerUnitAttackingState(target));
         }
-        
-        //unitDetails.CurrentGridX = TilemapUtils.GetGridX(unitTilemap, unitDetails.transform.position);
-        //unitDetails.CurrentGridY = TilemapUtils.GetGridY(unitTilemap, unitDetails.transform.position);
-        //OnExit();
-        //Machine.Clear();
-        //Machine.Push(new PlayerUnitExhaustedState());
     }
 
     public override void OnExit()

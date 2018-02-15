@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using CreativeSpore.SuperTilemapEditor;
 
-public class PlayerUnitAttackingState : PlayerUnitState {
+public class PlayerUnitAttackingState : UnitState {
 
     private GameObject target;
     private Vector3 originPos;
@@ -17,11 +17,10 @@ public class PlayerUnitAttackingState : PlayerUnitState {
 
     public override void OnEnter()
     {
-        unitDetails = Machine.actor.GetComponent<PlayerUnit>();
+        unitDetails = Machine.actor.GetComponent<UnitDetails>();
         unitTilemap = Machine.actor.transform.parent.GetComponent<STETilemap>();
         originPos = unitDetails.gameObject.transform.position;
         targetPos = target.transform.position;
-        Debug.Log("Entered Attacking State.");
     }
 
     public override IEnumerator Tick()
@@ -35,7 +34,7 @@ public class PlayerUnitAttackingState : PlayerUnitState {
         }
         if (unitDetails.gameObject.transform.position == originPos)
         {
-            target.gameObject.GetComponent<PlayerUnit>().Health -= 10;
+            target.gameObject.GetComponent<UnitDetails>().Health -= 10;
             OnExit();
             Machine.Clear();
             Machine.Push(new PlayerUnitExhaustedState());
@@ -45,8 +44,6 @@ public class PlayerUnitAttackingState : PlayerUnitState {
 
     public override void OnExit()
     {
-        target.gameObject.GetComponent<PlayerUnit>().Health -= 10;
-        Debug.Log("Exiting Attacking State.");
         base.OnExit();
     }
 }

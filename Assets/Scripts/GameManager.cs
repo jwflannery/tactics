@@ -15,32 +15,6 @@ public class GameManager : MonoBehaviour {
     public TurnTextScript turnText;
     public Team currentActiveTeam;
     
-
-    public class Team
-    {
-        public Team(int _teamNumber)
-        {
-            teamUnits = new List<GameObject>();
-            active = false;
-            teamNumber = _teamNumber;
-            teamName = _teamNumber.ToString();
-        }
-        
-        public Team(int _teamNumber, string _teamName)
-        {
-            teamUnits = new List<GameObject>();
-            active = false;
-            teamNumber = _teamNumber;
-            teamName = _teamName;
-
-        }
-        
-        public List<GameObject> teamUnits = new List<GameObject>();
-        public bool active;
-        public int teamNumber;
-        public string teamName;
-    }
-
     public void AddUnitToTeam(GameObject unit, int _teamNumber)
     {
         Team correctTeam = AllTeams.Find(x => x.teamNumber == _teamNumber);
@@ -56,15 +30,14 @@ public class GameManager : MonoBehaviour {
         turnText.DisplayText(currentActiveTeam.teamName);
         foreach (GameObject unit in AllUnits)
         {
-            unit.GetComponent<UnitStateManager>().stateMachine.ReplaceTop(new PlayerUnitFreshState());
+            unit.GetComponent<UnitStateManager>().RefreshUnit();
         }
         teamOrder.Enqueue(OldTeam);
-
     }
-
+    
     public GameObject FindUnitOnTile(int gridX, int gridY)
     {
-        GameObject unit = AllUnits.Find(x => x.GetComponent<PlayerUnit>().CurrentGridX == gridX && x.GetComponent<PlayerUnit>().CurrentGridY == gridY);
+        GameObject unit = AllUnits.Find(x => x.GetComponent<UnitDetails>().CurrentGridX == gridX && x.GetComponent<UnitDetails>().CurrentGridY == gridY);
         return unit;
     }
 
@@ -83,42 +56,56 @@ public class GameManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (!currentActiveTeam.teamUnits.Exists(u => u.GetComponent<UnitStateManager>().stateMachine.TopState.GetType() != typeof(PlayerUnitExhaustedState)))
+		if (!currentActiveTeam.teamUnits.Exists(u => !u.GetComponent<UnitStateManager>().stateMachine.TopState.GetType().IsSubclassOf(typeof(UnitExhaustedState))))
         {
             RefreshNextTeam(currentActiveTeam);
         }
 
-        if (Input.GetMouseButtonDown(0))
+        if (currentActiveTeam == playerTeam)
         {
-            if (currentActiveTeam.teamUnits.Exists(x => x.GetComponent<UnitStateManager>().Active)) {
-                foreach (GameObject u in currentActiveTeam.teamUnits.FindAll(x => x.GetComponent<UnitStateManager>().Active))
-                {
-                    u.GetComponent<UnitStateManager>().stateMachine.OnAccept();
-                }
-            }
-            else
-            {
-                foreach (GameObject u in currentActiveTeam.teamUnits)
-                {
-                    u.GetComponent<UnitStateManager>().stateMachine.OnAccept();
-                }
-            }
 
-        }
-        if (Input.GetMouseButtonDown(1))
-        {
-            if (currentActiveTeam.teamUnits.Exists(x => x.GetComponent<UnitStateManager>().Active)) {
-                foreach (GameObject u in currentActiveTeam.teamUnits.FindAll(x => x.GetComponent<UnitStateManager>().Active))
+            if (Input.GetMouseButtonDown(0))
+            {
+                if (currentActiveTeam.teamUnits.Exists(x => x.GetComponent<UnitStateManager>().Active))
                 {
-                    u.GetComponent<UnitStateManager>().stateMachine.OnCancel();
+                    foreach (GameObject u in currentActiveTeam.teamUnits.FindAll(x => x.GetComponent<UnitStateManager>().Active))
+                    {
+                        u.GetComponent<UnitStateManager>().stateMachine.OnAccept();
+                    }
+                }
+                else
+                {
+                    foreach (GameObject u in currentActiveTeam.teamUnits)
+                    {
+                        u.GetComponent<UnitStateManager>().stateMachine.OnAccept();
+                    }
+                }
+
+            }
+            if (Input.GetMouseButtonDown(1))
+            {
+                if (currentActiveTeam.teamUnits.Exists(x => x.GetComponent<UnitStateManager>().Active))
+                {
+                    foreach (GameObject u in currentActiveTeam.teamUnits.FindAll(x => x.GetComponent<UnitStateManager>().Active))
+                    {
+                        u.GetComponent<UnitStateManager>().stateMachine.OnCancel();
+                    }
+                }
+                else
+                {
+                    foreach (GameObject u in currentActiveTeam.teamUnits)
+                    {
+                        u.GetComponent<UnitStateManager>().stateMachine.OnCancel();
+                    }
                 }
             }
-            else
+        }
+
+        else if (currentActiveTeam == enemyTeam)
+        {
+            foreach (GameObject unit in enemyTeam.teamUnits)
             {
-                foreach (GameObject u in currentActiveTeam.teamUnits)
-                {
-                    u.GetComponent<UnitStateManager>().stateMachine.OnCancel();
-                }
+                unit.GetComponent<EnemyUnitStateManager>();
             }
         }
 	}

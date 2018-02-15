@@ -7,18 +7,19 @@ public class UnitStateManager : MonoBehaviour {
     public StateMachine stateMachine;
     public bool Active = false;
 
-    private void OnEnable()
+    protected virtual void OnEnable()
     {
         stateMachine = new StateMachine(transform.gameObject);
     }
 
-    // Use this for initialization
-    void Start () {
-        StartCoroutine(stateMachine.TickRoutine());
-        stateMachine.Push(new PlayerUnitFreshState());
+    public virtual void RefreshUnit()
+    {
+        stateMachine.ReplaceTop(new UnitFreshState());
     }
-	
-	// Update is called once per frame
-	void Update () {
-	}
+
+    // Use this for initialization
+    protected virtual void Start () {
+        StartCoroutine(stateMachine.TickRoutine());
+        stateMachine.Push(new UnitFreshState());
+    }
 }

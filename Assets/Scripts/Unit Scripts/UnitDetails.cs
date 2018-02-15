@@ -4,19 +4,8 @@ using UnityEngine;
 using TMPro;
 using CreativeSpore.SuperTilemapEditor;
 
-public class PlayerUnit : MonoBehaviour {
-    #region Variable Declarations
-    private int health = 100;
-    private int damage = 25;
-    private int attackRange = 1;
-    private int moveRange = 5;
-    private int currentGridX;
-    private int currentGridY;
-    private Tile currentTile;
-    private TextMeshPro text;
-    private STETilemap unitTilemap;
-    private LayerMask unitLayerMask;
-    private Animator animator;
+public class UnitDetails : MonoBehaviour
+{
     public enum States
     {
         fresh = 0,
@@ -26,9 +15,23 @@ public class PlayerUnit : MonoBehaviour {
         exhausted = 4,
         attacking = 5
     };
+
+    #region Variable Declarations
+    protected int health = 100;
+    protected int damage = 25;
+    protected int attackRange = 1;
+    protected int moveRange = 5;
+    protected int currentGridX;
+    protected int currentGridY;
+    protected Tile currentTile;
+    protected TextMeshPro text;
+    protected STETilemap unitTilemap;
+    protected LayerMask unitLayerMask;
+    protected Animator animator;
+
     public States state = 0;
 
-    private GameManager.Team team;
+    protected Team team;
     public int TeamNumber = 0;
 
     public int Health
@@ -114,7 +117,8 @@ public class PlayerUnit : MonoBehaviour {
 
     #endregion
     // Use this for initialization
-    void Start () {
+    protected virtual void Start()
+    {
         text = GetComponentInChildren<TextMeshPro>();
         animator = GetComponent<Animator>();
 
@@ -126,15 +130,11 @@ public class PlayerUnit : MonoBehaviour {
         CurrentGridX = TilemapUtils.GetGridX(unitTilemap, transform.position); ;
         CurrentGridY = TilemapUtils.GetGridY(unitTilemap, transform.position); ;
     }
-	
-	// Update is called once per frame
-	void Update () {
-        text.text = Health.ToString();
 
-        if (Input.GetKeyDown(KeyCode.N))
-        {
-            //animator.Play("unit_attack_north");
-        }
+    // Update is called once per frame
+    protected virtual void Update()
+    {
+        text.text = Health.ToString();
     }
 
     public GameObject GetUnitOnTile(Vector2 transform)

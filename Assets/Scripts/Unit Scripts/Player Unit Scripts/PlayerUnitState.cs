@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using CreativeSpore.SuperTilemapEditor;
 
-public class PlayerUnitState : State {
+public class UnitState : State {
 
-    protected PlayerUnit unitDetails;
+    protected UnitDetails unitDetails;
     protected STETilemap unitTilemap;
 
-    public PlayerUnitState() : base()
+    public UnitState() : base()
     {
 
     }

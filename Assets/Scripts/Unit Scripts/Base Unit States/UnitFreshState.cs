@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using CreativeSpore.SuperTilemapEditor;
 
-public class PlayerUnitFreshState : PlayerUnitState {
+public class UnitFreshState : UnitState {
 
-    public PlayerUnitFreshState() : base()
+    public UnitFreshState() : base()
     {
 
     }
@@ -14,8 +14,6 @@ public class PlayerUnitFreshState : PlayerUnitState {
     {
         unitDetails = Machine.actor.GetComponent<PlayerUnit>();
         unitTilemap = Machine.actor.transform.parent.GetComponent<STETilemap>();
-        //unitDetails.CurrentGridX = TilemapUtils.GetGridX(unitTilemap, unitDetails.transform.position);
-        //unitDetails.CurrentGridY = TilemapUtils.GetGridY(unitTilemap, unitDetails.transform.position);
     }
 
     public override void OnAcceptInput()
