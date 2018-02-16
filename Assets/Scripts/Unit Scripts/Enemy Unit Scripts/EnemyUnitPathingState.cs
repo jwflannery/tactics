@@ -44,6 +44,7 @@ public class EnemyUnitPathingState : UnitPathingState {
                 if (n.cost < lowestCost)
                 {
                     lowestCostNode = n;
+                    lowestCost = n.cost;
                     possibleAttackTargets = adjacentUnits;
                 }
             }
