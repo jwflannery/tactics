@@ -16,6 +16,10 @@ public class GameManager : MonoBehaviour {
     public GameObject attackTilePrefab;
     public TurnTextScript turnText;
     public Team currentActiveTeam;
+    public DialogueLines dummyLines;
+    public DialogueHandler dialogueHandler;
+    private Team prevTeam;
+
     
     public void AddUnitToTeam(GameObject unit, int _teamNumber)
     {
@@ -25,6 +29,7 @@ public class GameManager : MonoBehaviour {
 
     public Team playerTeam = new Team(0, "Player");
     public Team enemyTeam = new Team(1, "Enemy");
+    public Team dialogueTeam = new Team(-1, "Dialogue");
 
     public void RefreshNextTeam(Team OldTeam)
     {
@@ -68,8 +73,35 @@ public class GameManager : MonoBehaviour {
             unitOrder.Pop().GetComponent<UnitStateManager>().stateMachine.OnAccept();
     }
 
+    public void ToggleDialogue()
+    {
+        if (currentActiveTeam != dialogueTeam)
+        {
+            Debug.Log("Entering Dialogue.");
+            dialogueHandler.ReadLines(dummyLines.lines);
+            prevTeam = currentActiveTeam;
+            currentActiveTeam = dialogueTeam;
+        }
+        else if (dialogueHandler.lineQueue.Count > 0)
+        {
+            dialogueHandler.DisplayNextLine();
+        }
+        else
+        {
+            Debug.Log("Exiting Dialogue");
+            dialogueHandler.HidePanel();
+            currentActiveTeam = prevTeam;
+        }
+    }
+
+
     // Update is called once per frame
     void Update () {
+
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            ToggleDialogue();
+        }
 
         if (playerTeam.teamUnits.Count <= 0 || enemyTeam.teamUnits.Count <= 0)
         {
@@ -78,7 +110,8 @@ public class GameManager : MonoBehaviour {
 
 		if (!currentActiveTeam.teamUnits.Exists(u => !u.GetComponent<UnitStateManager>().stateMachine.TopState.GetType().IsSubclassOf(typeof(UnitExhaustedState))))
         {
-            RefreshNextTeam(currentActiveTeam);
+            if (currentActiveTeam != dialogueTeam)
+                RefreshNextTeam(currentActiveTeam);
         }
 
         if (currentActiveTeam == playerTeam)
