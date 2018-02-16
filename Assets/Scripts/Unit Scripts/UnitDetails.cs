@@ -135,6 +135,15 @@ public class UnitDetails : MonoBehaviour
     protected virtual void Update()
     {
         text.text = Health.ToString();
+        if (Health <= 0)
+        {
+            GameManager.instance.AllUnits.Remove(gameObject);
+            //TODO just get the dang team at the start, instance of calling it all the time.
+            Team correctTeam = GameManager.instance.AllTeams.Find(x => x.teamNumber == TeamNumber);
+            correctTeam.teamUnits.Remove(transform.gameObject);
+
+            GameObject.Destroy(transform.gameObject);
+        }
     }
 
     public GameObject GetUnitOnTile(Vector2 transform)

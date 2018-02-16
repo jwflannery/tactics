@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
 
@@ -69,6 +70,12 @@ public class GameManager : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
+
+        if (playerTeam.teamUnits.Count <= 0 || enemyTeam.teamUnits.Count <= 0)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+
 		if (!currentActiveTeam.teamUnits.Exists(u => !u.GetComponent<UnitStateManager>().stateMachine.TopState.GetType().IsSubclassOf(typeof(UnitExhaustedState))))
         {
             RefreshNextTeam(currentActiveTeam);
