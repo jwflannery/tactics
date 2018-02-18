@@ -3,24 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using CreativeSpore.SuperTilemapEditor;
 
-public class UnitMovingState : UnitState
+public abstract class UnitMovingState : UnitState
 {
 
     protected Vector2 nextLocation;
-    protected Stack<UnitPathingState.Node> pathToTarget;
-    protected float moveSpeed = 2f;
+    protected Stack<Vector2> pathToTarget;
+    protected float moveSpeed = 3f;
 
-    public UnitMovingState(Stack<UnitPathingState.Node> _pathToTarget)
+    public UnitMovingState(Stack<Vector2> pathToTarget)
     {
-        pathToTarget = _pathToTarget;
+        this.pathToTarget = pathToTarget;
     }
 
     public override void OnEnter()
     {
         base.OnEnter();
-        unitDetails = Machine.actor.GetComponent<UnitDetails>();
-        unitTilemap = Machine.actor.transform.parent.GetComponent<STETilemap>();
-        nextLocation = TilemapUtils.GetGridWorldPos(MoveCursor.Instance.GroundTilemap, (int)pathToTarget.Peek().position.x, (int)pathToTarget.Peek().position.y);
+        nextLocation = pathToTarget.Pop();
     }
 
     public override IEnumerator Tick()
@@ -28,17 +26,15 @@ public class UnitMovingState : UnitState
         if (pathToTarget.Count >= 0)
         {
             unitDetails.gameObject.transform.position = Vector3.MoveTowards(unitDetails.gameObject.transform.position, nextLocation, moveSpeed * Time.deltaTime);
-            if (Vector2.Distance(unitDetails.gameObject.transform.position, nextLocation) < Mathf.Epsilon && pathToTarget.Count > 0)
+            if (Vector2.Distance(unitDetails.gameObject.transform.position, nextLocation) == 0 && pathToTarget.Count > 0)
             {
-                var nextTile = pathToTarget.Pop();
-
-                //TODO take this function call outside the loop. It's way too slow to be doing mid-movement. 
-                //Probably should compute them all in the previous state, and pass the stack of transforms.
-                nextLocation = TilemapUtils.GetGridWorldPos(MoveCursor.Instance.GroundTilemap, (int)nextTile.position.x, (int)nextTile.position.y);
+                nextLocation = pathToTarget.Pop();
             }
-            else if (Vector2.Distance(unitDetails.gameObject.transform.position, nextLocation) < Mathf.Epsilon && pathToTarget.Count == 0)
-                Machine.ReplaceTop(new PlayerUnitWaitingState());
+            else if (Vector2.Distance(unitDetails.gameObject.transform.position, nextLocation) == 0 && pathToTarget.Count == 0)
+                OnReachedDestination();
         }
         return base.Tick();
     }
+
+    protected abstract void OnReachedDestination();
 }

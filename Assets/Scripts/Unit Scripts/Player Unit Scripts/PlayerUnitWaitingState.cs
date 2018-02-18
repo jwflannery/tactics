@@ -12,8 +12,8 @@ public class PlayerUnitWaitingState : UnitState {
 
     public override void OnEnter()
     {
-        unitDetails = Machine.actor.GetComponent<UnitDetails>();
-        unitTilemap = Machine.actor.transform.parent.GetComponent<STETilemap>();
+        unitDetails = Machine.Actor.GetComponent<UnitDetails>();
+        unitTilemap = Machine.Actor.transform.parent.GetComponent<STETilemap>();
         tempGridX = TilemapUtils.GetGridX(unitTilemap, unitDetails.transform.position);
         tempGridY = TilemapUtils.GetGridY(unitTilemap, unitDetails.transform.position);
         unitsInRange = FindUnitsInRange(unitDetails.AttackRange, tempGridX, tempGridY);
@@ -22,7 +22,7 @@ public class PlayerUnitWaitingState : UnitState {
         {
             foreach (GameObject unit in unitsInRange)
             {
-                var tile = GameObject.Instantiate(GameManager.instance.attackTilePrefab, unit.transform.position, Quaternion.identity);
+                var tile = GameObject.Instantiate(GameManager.Instance.AttackTilePrefab, unit.transform.position, Quaternion.identity);
                 existingAttackTiles.Add(tile.transform);
             }
         }
@@ -33,7 +33,7 @@ public class PlayerUnitWaitingState : UnitState {
     {
         List<GameObject> units = new List<GameObject>();
 
-        foreach (GameObject u in GameManager.instance.AllUnits)
+        foreach (GameObject u in GameManager.Instance.AllUnits)
         {
             if (u == unitDetails.gameObject)
                 continue;
@@ -74,7 +74,7 @@ public class PlayerUnitWaitingState : UnitState {
 
         else if (existingAttackTiles.Exists(t => MoveCursor.Instance.transform.position == t.position))
         {
-            var target = GameManager.instance.AllUnits.Find(
+            var target = GameManager.Instance.AllUnits.Find(
                 x => x.GetComponent<UnitDetails>().CurrentGridX == MoveCursor.Instance.CurrentGridX && x.GetComponent<UnitDetails>().CurrentGridY == MoveCursor.Instance.CurrentGridY);
             unitDetails.CurrentGridX = TilemapUtils.GetGridX(unitTilemap, unitDetails.transform.position);
             unitDetails.CurrentGridY = TilemapUtils.GetGridY(unitTilemap, unitDetails.transform.position);

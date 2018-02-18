@@ -1,11 +1,20 @@
 fileFormatVersion: 2
 guid: 7ab318c7e5a5a1d4e8726dd8122fcaa0
-timeCreated: 1513852910
+timeCreated: 1518930211
 licenseType: Free
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - MoveTilePrefab: {fileID: 1550904879648724, guid: cb785675b2958c147bdf443368c86983,
+      type: 2}
+  - PathTilePrefab: {fileID: 1214826334653930, guid: 51bd067aeb1d1544faf705f12bbb2a71,
+      type: 2}
+  - AttackTilePrefab: {fileID: 1456528026379326, guid: 267b76a6de832744b96ae093403e57ca,
+      type: 2}
+  - TurnText: {instanceID: 0}
+  - DummyLines: {instanceID: 0}
+  - DialogueHandler: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

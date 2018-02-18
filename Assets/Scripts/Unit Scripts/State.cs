@@ -4,15 +4,13 @@ using UnityEngine;
 
 public class State
 {
-    private StateMachine machine_;
+    private StateMachine machine;
     public StateMachine Machine
     {
-        get { return machine_; }
-        set
-        {
-            machine_ = value;
-        }
+        get { return machine; }
+        set { machine = value; }
     }
+
     private bool paused = false;
     public bool Paused
     {

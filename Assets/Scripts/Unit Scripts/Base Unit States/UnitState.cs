@@ -12,4 +12,13 @@ public class UnitState : State {
     {
 
     }
+
+    public override void OnEnter()
+    {
+        Machine.Actor.GetComponent<UnitStateManager>().Active = true;
+
+        unitDetails = Machine.Actor.GetComponent<UnitDetails>();
+        unitTilemap = Machine.Actor.transform.parent.GetComponent<STETilemap>();
+    }
+
 }

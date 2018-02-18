@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class StateMachine
 {
-    public GameObject actor { get; set; }
+    public GameObject Actor { get; set; }
+
     List<State> stack = new List<State>();
 
-    public int statecount { get { return stack.Count; } }
-    public Vector3 myFacing;
+    public int Statecount
+    {
+        get { return stack.Count; }
+    }
 
     public State TopState
     {
@@ -21,7 +24,7 @@ public class StateMachine
 
     public StateMachine(GameObject gameObject)
     {
-        actor = gameObject;
+        Actor = gameObject;
     }
 
     public IEnumerator TickRoutine()

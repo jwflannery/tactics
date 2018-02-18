@@ -3,36 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using CreativeSpore.SuperTilemapEditor;
 
-public class UnitPathingState : UnitState
+public abstract class UnitPathingState : UnitState
 {
-
     protected List<Node> openTiles = new List<Node>();
     protected List<Node> closedTiles = new List<Node>();
-    protected Stack<Node> pathToTarget = new Stack<Node>();
+    protected List<Transform> existingMoveTiles = new List<Transform>();
+    protected List<Transform> existingPathTiles = new List<Transform>();
+    protected Stack<Vector2> pathToTarget = new Stack<Vector2>();
     protected Vector2 initialPosition = new Vector2();
-
-    public class Node
-    {
-        public Vector2 position;
-        public Node parent;
-        public int cost;
-
-        public Node(Vector2 Pos, Node Parent, int Cost)
-        {
-            position = Pos;
-            parent = Parent;
-            cost = Cost;
-        }
-    }
+    protected GameObject moveTile;
 
     public override void OnEnter()
     {
-        Machine.actor.GetComponent<UnitStateManager>().Active = true;
-        unitDetails = Machine.actor.GetComponent<UnitDetails>();
-        unitTilemap = Machine.actor.transform.parent.GetComponent<STETilemap>();
-        findReachableTiles();
-        openTiles.Clear();
-        closedTiles.Clear();
+        base.OnEnter();
+        moveTile = GameManager.Instance.MoveTilePrefab;
+        Machine.Actor.GetComponent<UnitStateManager>().Active = true;
+        FindReachableTiles();
     }
 
     public override IEnumerator Tick()
@@ -40,11 +26,11 @@ public class UnitPathingState : UnitState
         return base.Tick();
     }
 
-    protected virtual void findPathToTarget(Vector2 source, Vector2 target)
+    protected virtual void FindPathToTarget(Vector2 source, Vector2 target)
     {
         if (source == target)
         {
-            pathToTarget.Push(new Node(source, null, 0));
+            pathToTarget.Push(unitDetails.transform.position);
             return;
         }
 
@@ -52,10 +38,10 @@ public class UnitPathingState : UnitState
 
         while (openTiles.Count > 0)
         {
-            addAdjacent(getMinNode());
-            if (closedTiles.Exists(t => t.position == target))
+            AddAdjacent(GetMinNode());
+            if (closedTiles.Exists(t => t.Position == target))
             {
-                CreatePathTiles(closedTiles.Find(n => n.position == target));
+                CreatePathTiles(closedTiles.Find(n => n.Position == target));
                 openTiles.Clear();
                 closedTiles.Clear();
                 break;
@@ -68,65 +54,72 @@ public class UnitPathingState : UnitState
         Node current = target;
         do
         {
-            pathToTarget.Push(current);
-            current = current.parent;
-        } while (current.parent != null);
+            pathToTarget.Push(TilemapUtils.GetGridWorldPos(unitTilemap, (int)current.Position.x, (int)current.Position.y));
+            var tile = GameObject.Instantiate(GameManager.Instance.PathTilePrefab, TilemapUtils.GetGridWorldPos(MoveCursor.Instance.GroundTilemap, (int)current.Position.x, (int)current.Position.y), Quaternion.identity);
+            existingPathTiles.Add(tile.transform);
+            current = current.Parent;
+        } while (current.Parent != null);
     }
 
-
-    protected void findReachableTiles()
+    protected virtual void FindReachableTiles()
     {
         openTiles.Add(new Node(new Vector2(unitDetails.CurrentGridX, unitDetails.CurrentGridY), null, 0));
-        addAdjacent(new Node(new Vector2(unitDetails.CurrentGridX, unitDetails.CurrentGridY), null, 0));
+        AddAdjacent(new Node(new Vector2(unitDetails.CurrentGridX, unitDetails.CurrentGridY), null, 0));
         while (openTiles.Count > 0)
         {
-            addAdjacent(getMinNode());
+            AddAdjacent(GetMinNode());
         }
     }
 
-    protected void addAdjacent(Node centre)
+    protected void AddAdjacent(Node centre)
     {
-        if (centre.cost < unitDetails.MoveRange && !closedTiles.Exists(t => t.position == centre.position))
+        if (centre.Cost < unitDetails.MoveRange && !closedTiles.Exists(t => t.Position == centre.Position))
         {
-            var newPos = new Vector2(centre.position.x, centre.position.y - 1);
+            var newPos = new Vector2(centre.Position.x, centre.Position.y - 1);
             var tile = unitTilemap.GetTile((int)newPos.x, (int)newPos.y);
-            var impassable = (tile != null && tile.collData.type != eTileCollider.None || GameManager.instance.FindUnitOnTile((int)newPos.x, (int)newPos.y));
-            if (!closedTiles.Exists(t => t.position == newPos) && !impassable)
+            var impassable = (tile != null && tile.collData.type != eTileCollider.None || GameManager.Instance.FindUnitOnTile((int)newPos.x, (int)newPos.y));
+            if (!closedTiles.Exists(t => t.Position == newPos) && !impassable)
             {
-                openTiles.Add(new Node(newPos, centre, centre.cost + 1));
+                openTiles.Add(new Node(newPos, centre, centre.Cost + 1));
             }
-            newPos = new Vector2(centre.position.x, centre.position.y + 1);
+            newPos = new Vector2(centre.Position.x, centre.Position.y + 1);
             tile = unitTilemap.GetTile((int)newPos.x, (int)newPos.y);
-            impassable = (tile != null && tile.collData.type != eTileCollider.None || GameManager.instance.FindUnitOnTile((int)newPos.x, (int)newPos.y));
-            if (!closedTiles.Exists(t => t.position == newPos) && !impassable)
+            impassable = (tile != null && tile.collData.type != eTileCollider.None || GameManager.Instance.FindUnitOnTile((int)newPos.x, (int)newPos.y));
+            if (!closedTiles.Exists(t => t.Position == newPos) && !impassable)
             {
-                openTiles.Add(new Node(newPos, centre, centre.cost + 1));
+                openTiles.Add(new Node(newPos, centre, centre.Cost + 1));
             }
-            newPos = new Vector2(centre.position.x + 1, centre.position.y);
+            newPos = new Vector2(centre.Position.x + 1, centre.Position.y);
             tile = unitTilemap.GetTile((int)newPos.x, (int)newPos.y);
-            impassable = (tile != null && tile.collData.type != eTileCollider.None || GameManager.instance.FindUnitOnTile((int)newPos.x, (int)newPos.y));
-            if (!closedTiles.Exists(t => t.position == newPos) && !impassable)
+            impassable = (tile != null && tile.collData.type != eTileCollider.None || GameManager.Instance.FindUnitOnTile((int)newPos.x, (int)newPos.y));
+            if (!closedTiles.Exists(t => t.Position == newPos) && !impassable)
             {
-                openTiles.Add(new Node(newPos, centre, centre.cost + 1));
+                openTiles.Add(new Node(newPos, centre, centre.Cost + 1));
             }
-            newPos = new Vector2(centre.position.x - 1, centre.position.y);
+            newPos = new Vector2(centre.Position.x - 1, centre.Position.y);
             tile = unitTilemap.GetTile((int)newPos.x, (int)newPos.y);
-            impassable = (tile != null && tile.collData.type != eTileCollider.None || GameManager.instance.FindUnitOnTile((int)newPos.x, (int)newPos.y));
-            if (!closedTiles.Exists(t => t.position == newPos) && !impassable)
+            impassable = (tile != null && tile.collData.type != eTileCollider.None || GameManager.Instance.FindUnitOnTile((int)newPos.x, (int)newPos.y));
+            if (!closedTiles.Exists(t => t.Position == newPos) && !impassable)
             {
-                openTiles.Add(new Node(newPos, centre, centre.cost + 1));
+                openTiles.Add(new Node(newPos, centre, centre.Cost + 1));
             }
         }
         closedTiles.Add(centre);
         openTiles.Remove(centre);
     }
 
-    protected Node getMinNode()
+    protected void CreateMoveTile(Vector3 position)
+    {
+        var tile = GameObject.Instantiate(moveTile, position, Quaternion.identity);
+        existingMoveTiles.Add(tile.transform);
+    }
+
+    protected Node GetMinNode()
     {
         Node lowestCostNode = new Node(new Vector2(), null, 1000);
         foreach (Node node in openTiles)
         {
-            if (node.cost <= lowestCostNode.cost)
+            if (node.Cost <= lowestCostNode.Cost)
             {
                 lowestCostNode = node;
             }
@@ -143,7 +136,18 @@ public class UnitPathingState : UnitState
         base.OnExit();
         openTiles.Clear();
         closedTiles.Clear();
-        Machine.actor.GetComponent<UnitStateManager>().Active = false;
+        ClearTiles(existingMoveTiles);
+        ClearTiles(existingPathTiles);
+        Machine.Actor.GetComponent<PlayerUnitStateManager>().Active = false;
+    }
+
+    protected void ClearTiles(List<Transform> tiles)
+    {
+        foreach (Transform tile in tiles)
+        {
+            GameObject.Destroy(tile.gameObject);
+        }
+        tiles.Clear();
     }
 
     public override void OnCancelInput()

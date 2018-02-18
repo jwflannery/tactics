@@ -9,6 +9,6 @@ public class EnemyUnitExhaustedState : UnitExhaustedState {
         base.OnEnter();
         unitDetails.CurrentGridX = TilemapUtils.GetGridX(unitTilemap, unitDetails.transform.position);
         unitDetails.CurrentGridY = TilemapUtils.GetGridY(unitTilemap, unitDetails.transform.position);
-        GameManager.instance.ActivateNextEnemyUnit();
+        GameManager.Instance.ActivateNextEnemyUnit();
     }
 }

@@ -5,18 +5,20 @@ using CreativeSpore.SuperTilemapEditor;
 
 public class UnitExhaustedState : UnitState {
 
+    private SpriteRenderer renderer;
+
     public override void OnEnter()
     {
-        unitDetails = Machine.actor.GetComponent<UnitDetails>();
-        unitTilemap = Machine.actor.transform.parent.GetComponent<STETilemap>();
-        Machine.actor.GetComponent<SpriteRenderer>().color = Color.grey;
-        Machine.actor.GetComponent<UnitStateManager>().Active = false;
         base.OnEnter();
+        renderer = Machine.Actor.GetComponent<SpriteRenderer>();
+        renderer.color = Color.grey;
+
+        Machine.Actor.GetComponent<UnitStateManager>().Active = false;
     }
 
     public override void OnExit()
     {
-        Machine.actor.GetComponent<SpriteRenderer>().color = Color.white;
+        renderer.color = Color.white;
         base.OnExit();
     }
 }

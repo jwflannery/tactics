@@ -10,15 +10,10 @@ public class EnemyUnitPathingState : UnitPathingState {
 
     public override void OnEnter()
     {
-        openTiles.Clear();
-        closedTiles.Clear();
+        base.OnEnter();
 
-        Machine.actor.GetComponent<UnitStateManager>().Active = true;
-        unitDetails = Machine.actor.GetComponent<EnemyUnit>();
-        unitTilemap = Machine.actor.transform.parent.GetComponent<STETilemap>();
-        findReachableTiles();
         closestTarget = FindClosestTarget();
-        findPathToTarget(new Vector2(unitDetails.CurrentGridX, unitDetails.CurrentGridY), closestTarget.position);
+        FindPathToTarget(new Vector2(unitDetails.CurrentGridX, unitDetails.CurrentGridY), closestTarget.Position);
         if (possibleAttackTargets.Count == 0)
         {
             Machine.Push(new EnemyUnitExhaustedState());
@@ -26,6 +21,8 @@ public class EnemyUnitPathingState : UnitPathingState {
         else
         {
             Machine.Push(new EnemyUnitMovingState(pathToTarget, possibleAttackTargets[0]));
+            ClearTiles(existingMoveTiles);
+            ClearTiles(existingPathTiles);
         }
     }
 
@@ -33,18 +30,16 @@ public class EnemyUnitPathingState : UnitPathingState {
     {
         Node lowestCostNode = new Node(new Vector2(unitDetails.CurrentGridX, unitDetails.CurrentGridY), null, 0);
         int lowestCost = 10000;
-        List<GameObject> adjacentUnits = new List<GameObject>();
-
-
+        List<GameObject> adjacentUnits = new List<GameObject>();        
         foreach (Node n in closedTiles)
         {
             adjacentUnits = FindAdjacentUnits(n);
             if (adjacentUnits.Count > 0)
             {
-                if (n.cost < lowestCost)
+                if (n.Cost < lowestCost)
                 {
                     lowestCostNode = n;
-                    lowestCost = n.cost;
+                    lowestCost = n.Cost;
                     possibleAttackTargets = adjacentUnits;
                 }
             }
@@ -55,10 +50,10 @@ public class EnemyUnitPathingState : UnitPathingState {
     List<GameObject> FindAdjacentUnits(Node n)
     {
         List<GameObject> units = new List<GameObject>();
-        int originGridX = (int)n.position.x;
-        int originGridY = (int)n.position.y;
+        int originGridX = (int)n.Position.x;
+        int originGridY = (int)n.Position.y;
 
-        foreach (GameObject u in GameManager.instance.playerTeam.TeamUnits)
+        foreach (GameObject u in GameManager.Instance.PlayerTeam.TeamUnits)
         {
             UnitDetails unitInfo = u.GetComponent<UnitDetails>();
             if (unitInfo.CurrentGridX == originGridX + 1 && unitInfo.CurrentGridY == originGridY && unitInfo.TeamNumber != unitDetails.TeamNumber)
@@ -80,6 +75,4 @@ public class EnemyUnitPathingState : UnitPathingState {
         }
         return units;
     }
-
-
 }

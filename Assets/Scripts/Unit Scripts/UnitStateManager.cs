@@ -2,24 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UnitStateManager : MonoBehaviour {
-
-    public StateMachine stateMachine;
+public abstract class UnitStateManager : MonoBehaviour
+{
+    public StateMachine StateMachine;
     public bool Active = false;
-
+    public abstract void RefreshUnit();
     protected virtual void OnEnable()
     {
-        stateMachine = new StateMachine(transform.gameObject);
+        StateMachine = new StateMachine(transform.gameObject);
     }
-
-    public virtual void RefreshUnit()
+    protected virtual void Start()
     {
-        stateMachine.ReplaceTop(new UnitFreshState());
-    }
-
-    // Use this for initialization
-    protected virtual void Start () {
-        StartCoroutine(stateMachine.TickRoutine());
-        stateMachine.Push(new UnitFreshState());
+        StartCoroutine(StateMachine.TickRoutine());
     }
 }

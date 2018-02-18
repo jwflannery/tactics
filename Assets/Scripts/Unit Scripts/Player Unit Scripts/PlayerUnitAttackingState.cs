@@ -17,8 +17,8 @@ public class PlayerUnitAttackingState : UnitState {
 
     public override void OnEnter()
     {
-        unitDetails = Machine.actor.GetComponent<UnitDetails>();
-        unitTilemap = Machine.actor.transform.parent.GetComponent<STETilemap>();
+        unitDetails = Machine.Actor.GetComponent<UnitDetails>();
+        unitTilemap = Machine.Actor.transform.parent.GetComponent<STETilemap>();
         originPos = unitDetails.gameObject.transform.position;
         targetPos = target.transform.position;
     }
