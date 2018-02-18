@@ -139,8 +139,8 @@ public class UnitDetails : MonoBehaviour
         {
             GameManager.instance.AllUnits.Remove(gameObject);
             //TODO just get the dang team at the start, instance of calling it all the time.
-            Team correctTeam = GameManager.instance.AllTeams.Find(x => x.teamNumber == TeamNumber);
-            correctTeam.teamUnits.Remove(transform.gameObject);
+            Team correctTeam = GameManager.instance.AllTeams.Find(x => x.TeamNumber == TeamNumber);
+            correctTeam.TeamUnits.Remove(transform.gameObject);
 
             GameObject.Destroy(transform.gameObject);
         }

@@ -5,30 +5,30 @@ using CreativeSpore.SuperTilemapEditor;
 
 public class MoveCursor : MonoBehaviour {
 
-    public STETilemap ground;
-    public Tile currentTile;
-    public int currentGridX;
-    public int currentGridY;
-    public Vector2 currentLocation;
-    public static MoveCursor instance = null;
+    public STETilemap GroundTilemap;
+    public Tile CurrentTile;
+    public int CurrentGridX;
+    public int CurrentGridY;
+    public Vector2 CurrentLocation;
+    public static MoveCursor Instance = null;
 
     private void Awake()
     {
-        if (instance == null)
+        if (Instance == null)
         {
-            instance = this;
+            Instance = this;
         }
     }
 
     // Update is called once per frame
     void Update () {
-        currentGridX = TilemapUtils.GetMouseGridX(ground, Camera.main);
-        currentGridY = TilemapUtils.GetMouseGridY(ground, Camera.main);
-        currentTile = ground.GetTile(currentGridX, currentGridY);
-        if (currentTile != null)
+        CurrentGridX = TilemapUtils.GetMouseGridX(GroundTilemap, Camera.main);
+        CurrentGridY = TilemapUtils.GetMouseGridY(GroundTilemap, Camera.main);
+        CurrentTile = GroundTilemap.GetTile(CurrentGridX, CurrentGridY);
+        if (CurrentTile != null)
         {
-            transform.position = TilemapUtils.GetGridWorldPos(ground, TilemapUtils.GetMouseGridX(ground, Camera.main), TilemapUtils.GetMouseGridY(ground, Camera.main));
+            transform.position = TilemapUtils.GetGridWorldPos(GroundTilemap, TilemapUtils.GetMouseGridX(GroundTilemap, Camera.main), TilemapUtils.GetMouseGridY(GroundTilemap, Camera.main));
         }
-        currentLocation = transform.position;
+        CurrentLocation = transform.position;
     }
 }

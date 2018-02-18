@@ -23,8 +23,8 @@ public class GameManager : MonoBehaviour {
     
     public void AddUnitToTeam(GameObject unit, int _teamNumber)
     {
-        Team correctTeam = AllTeams.Find(x => x.teamNumber == _teamNumber);
-        correctTeam.teamUnits.Add(unit);
+        Team correctTeam = AllTeams.Find(x => x.TeamNumber == _teamNumber);
+        correctTeam.TeamUnits.Add(unit);
     }
 
     public Team playerTeam = new Team(0, "Player");
@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour {
     {
         unitOrder.Clear();
         currentActiveTeam = teamOrder.Dequeue();
-        turnText.DisplayText(currentActiveTeam.teamName);
+        turnText.DisplayText(currentActiveTeam.TeamName);
         foreach (GameObject unit in AllUnits)
         {
             unit.GetComponent<UnitStateManager>().RefreshUnit();
@@ -103,12 +103,12 @@ public class GameManager : MonoBehaviour {
             ToggleDialogue();
         }
 
-        if (playerTeam.teamUnits.Count <= 0 || enemyTeam.teamUnits.Count <= 0)
+        if (playerTeam.TeamUnits.Count <= 0 || enemyTeam.TeamUnits.Count <= 0)
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
 
-		if (!currentActiveTeam.teamUnits.Exists(u => !u.GetComponent<UnitStateManager>().stateMachine.TopState.GetType().IsSubclassOf(typeof(UnitExhaustedState))))
+		if (!currentActiveTeam.TeamUnits.Exists(u => !u.GetComponent<UnitStateManager>().stateMachine.TopState.GetType().IsSubclassOf(typeof(UnitExhaustedState))))
         {
             if (currentActiveTeam != dialogueTeam)
                 RefreshNextTeam(currentActiveTeam);
@@ -119,16 +119,16 @@ public class GameManager : MonoBehaviour {
 
             if (Input.GetMouseButtonDown(0))
             {
-                if (currentActiveTeam.teamUnits.Exists(x => x.GetComponent<UnitStateManager>().Active))
+                if (currentActiveTeam.TeamUnits.Exists(x => x.GetComponent<UnitStateManager>().Active))
                 {
-                    foreach (GameObject u in currentActiveTeam.teamUnits.FindAll(x => x.GetComponent<UnitStateManager>().Active))
+                    foreach (GameObject u in currentActiveTeam.TeamUnits.FindAll(x => x.GetComponent<UnitStateManager>().Active))
                     {
                         u.GetComponent<UnitStateManager>().stateMachine.OnAccept();
                     }
                 }
                 else
                 {
-                    foreach (GameObject u in currentActiveTeam.teamUnits)
+                    foreach (GameObject u in currentActiveTeam.TeamUnits)
                     {
                         u.GetComponent<UnitStateManager>().stateMachine.OnAccept();
                     }
@@ -136,16 +136,16 @@ public class GameManager : MonoBehaviour {
             }
             if (Input.GetMouseButtonDown(1))
             {
-                if (currentActiveTeam.teamUnits.Exists(x => x.GetComponent<UnitStateManager>().Active))
+                if (currentActiveTeam.TeamUnits.Exists(x => x.GetComponent<UnitStateManager>().Active))
                 {
-                    foreach (GameObject u in currentActiveTeam.teamUnits.FindAll(x => x.GetComponent<UnitStateManager>().Active))
+                    foreach (GameObject u in currentActiveTeam.TeamUnits.FindAll(x => x.GetComponent<UnitStateManager>().Active))
                     {
                         u.GetComponent<UnitStateManager>().stateMachine.OnCancel();
                     }
                 }
                 else
                 {
-                    foreach (GameObject u in currentActiveTeam.teamUnits)
+                    foreach (GameObject u in currentActiveTeam.TeamUnits)
                     {
                         u.GetComponent<UnitStateManager>().stateMachine.OnCancel();
                     }
@@ -155,7 +155,7 @@ public class GameManager : MonoBehaviour {
 
         else if (currentActiveTeam == enemyTeam)
         {            
-            foreach (GameObject unit in enemyTeam.teamUnits)
+            foreach (GameObject unit in enemyTeam.TeamUnits)
             {
                 unit.GetComponent<EnemyUnitStateManager>();
             }

@@ -5,25 +5,26 @@ using UnityEngine;
 
 public class Team
 {
-    public Team(int _teamNumber)
+    public Team(int teamNumber)
     {
-        teamUnits = new List<GameObject>();
-        active = false;
-        teamNumber = _teamNumber;
-        teamName = _teamNumber.ToString();
+        TeamUnits = new List<GameObject>();
+        IsActive = false;
+        this.TeamNumber = teamNumber;
+        TeamName = teamNumber.ToString();
     }
 
-    public Team(int _teamNumber, string _teamName)
+    public Team(int teamNumber, string teamName)
     {
-        teamUnits = new List<GameObject>();
-        active = false;
-        teamNumber = _teamNumber;
-        teamName = _teamName;
+        TeamUnits = new List<GameObject>();
+        IsActive = false;
+        this.TeamNumber = teamNumber;
+        this.TeamName = teamName;
 
     }
 
-    public List<GameObject> teamUnits = new List<GameObject>();
-    public bool active;
-    public int teamNumber;
-    public string teamName;
+    public List<GameObject> TeamUnits = new List<GameObject>();
+
+    public bool IsActive;
+    public int TeamNumber;
+    public string TeamName;
 }

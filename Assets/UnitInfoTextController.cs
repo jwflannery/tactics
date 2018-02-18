@@ -11,13 +11,13 @@ public class UnitInfoTextController : MonoBehaviour {
 
     public void UpdateUnitInfo() 
     {
-        if (GameManager.instance.FindUnitOnTile(MoveCursor.instance.currentGridX, MoveCursor.instance.currentGridY) != null)
+        if (GameManager.instance.FindUnitOnTile(MoveCursor.Instance.CurrentGridX, MoveCursor.Instance.CurrentGridY) != null)
         {
-            GameObject unit = GameManager.instance.FindUnitOnTile(MoveCursor.instance.currentGridX, MoveCursor.instance.currentGridY);
+            GameObject unit = GameManager.instance.FindUnitOnTile(MoveCursor.Instance.CurrentGridX, MoveCursor.Instance.CurrentGridY);
             unitHealth = "Health: " + unit.GetComponent<UnitDetails>().Health;
 
-            Team correctTeam = GameManager.instance.AllTeams.Find(x => x.teamNumber == unit.GetComponent<UnitDetails>().TeamNumber);
-            unitTeam = "Team: " + correctTeam.teamName;
+            Team correctTeam = GameManager.instance.AllTeams.Find(x => x.TeamNumber == unit.GetComponent<UnitDetails>().TeamNumber);
+            unitTeam = "Team: " + correctTeam.TeamName;
         }
         else
         {

@@ -18,7 +18,7 @@ public class UnitFreshState : UnitState {
 
     public override void OnAcceptInput()
     {
-        if (MoveCursor.instance.transform.position == Machine.actor.transform.position)
+        if (MoveCursor.Instance.transform.position == Machine.actor.transform.position)
         {
             Machine.Push(new PlayerUnitSelectedState());
         }

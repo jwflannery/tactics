@@ -22,7 +22,7 @@ public class PlayerUnitSelectedState : UnitPathingState {
         findReachableTiles();
         foreach (Node reachableTile in closedTiles)
         {
-            createMoveTile(TilemapUtils.GetGridWorldPos(MoveCursor.instance.ground, (int)reachableTile.position.x, (int)reachableTile.position.y));
+            createMoveTile(TilemapUtils.GetGridWorldPos(MoveCursor.Instance.GroundTilemap, (int)reachableTile.position.x, (int)reachableTile.position.y));
         }
         openTiles.Clear();
         closedTiles.Clear();
@@ -31,15 +31,15 @@ public class PlayerUnitSelectedState : UnitPathingState {
 
     public override IEnumerator Tick()
     {
-        if (existingMoveTiles.Exists(t => MoveCursor.instance.transform.position == t.position))
+        if (existingMoveTiles.Exists(t => MoveCursor.Instance.transform.position == t.position))
         {
-            currentCursorTile = MoveCursor.instance.currentTile;
+            currentCursorTile = MoveCursor.Instance.CurrentTile;
             if (lastCursorTile != currentCursorTile)
             {
                 clearTiles(existingPathTiles);
                 pathToTarget.Clear();
             }
-            findPathToTarget(new Vector2(unitDetails.CurrentGridX, unitDetails.CurrentGridY), new Vector2(MoveCursor.instance.currentGridX, MoveCursor.instance.currentGridY));
+            findPathToTarget(new Vector2(unitDetails.CurrentGridX, unitDetails.CurrentGridY), new Vector2(MoveCursor.Instance.CurrentGridX, MoveCursor.Instance.CurrentGridY));
         }
         return base.Tick();
     }
@@ -73,7 +73,7 @@ public class PlayerUnitSelectedState : UnitPathingState {
         do
         {
             pathToTarget.Push(current);
-            var tile = GameObject.Instantiate(GameManager.instance.pathTilePrefab, TilemapUtils.GetGridWorldPos(MoveCursor.instance.ground, (int)current.position.x, (int)current.position.y), Quaternion.identity);
+            var tile = GameObject.Instantiate(GameManager.instance.pathTilePrefab, TilemapUtils.GetGridWorldPos(MoveCursor.Instance.GroundTilemap, (int)current.position.x, (int)current.position.y), Quaternion.identity);
             existingPathTiles.Add(tile.transform);
             current = current.parent;
         } while (current.parent != null);
@@ -92,7 +92,7 @@ public class PlayerUnitSelectedState : UnitPathingState {
     public override void OnAcceptInput()
     {
         base.OnAcceptInput();
-        if (!existingMoveTiles.Exists(t => MoveCursor.instance.transform.position == t.position))
+        if (!existingMoveTiles.Exists(t => MoveCursor.Instance.transform.position == t.position))
             return;
         clearTiles(existingMoveTiles);
         clearTiles(existingPathTiles);

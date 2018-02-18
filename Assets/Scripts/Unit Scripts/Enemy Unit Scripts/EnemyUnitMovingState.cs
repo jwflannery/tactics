@@ -15,7 +15,7 @@ public class EnemyUnitMovingState : UnitMovingState {
     {
         unitDetails = Machine.actor.GetComponent<EnemyUnit>();
         unitTilemap = Machine.actor.transform.parent.GetComponent<STETilemap>();
-        nextLocation = TilemapUtils.GetGridWorldPos(MoveCursor.instance.ground, (int)pathToTarget.Peek().position.x, (int)pathToTarget.Peek().position.y);
+        nextLocation = TilemapUtils.GetGridWorldPos(MoveCursor.Instance.GroundTilemap, (int)pathToTarget.Peek().position.x, (int)pathToTarget.Peek().position.y);
     }
 
     public override IEnumerator Tick()
@@ -29,7 +29,7 @@ public class EnemyUnitMovingState : UnitMovingState {
 
                 //TODO take this function call outside the loop. It's way too slow to be doing mid-movement. 
                 //Probably should compute them all in the previous state, and pass the stack of transforms.
-                nextLocation = TilemapUtils.GetGridWorldPos(MoveCursor.instance.ground, (int)nextTile.position.x, (int)nextTile.position.y);
+                nextLocation = TilemapUtils.GetGridWorldPos(MoveCursor.Instance.GroundTilemap, (int)nextTile.position.x, (int)nextTile.position.y);
             }
             else if (Vector2.Distance(unitDetails.gameObject.transform.position, nextLocation) < Mathf.Epsilon && pathToTarget.Count == 0)
                 Machine.ReplaceTop(new EnemyUnitAttackingState(target));

@@ -58,7 +58,7 @@ public class EnemyUnitPathingState : UnitPathingState {
         int originGridX = (int)n.position.x;
         int originGridY = (int)n.position.y;
 
-        foreach (GameObject u in GameManager.instance.playerTeam.teamUnits)
+        foreach (GameObject u in GameManager.instance.playerTeam.TeamUnits)
         {
             UnitDetails unitInfo = u.GetComponent<UnitDetails>();
             if (unitInfo.CurrentGridX == originGridX + 1 && unitInfo.CurrentGridY == originGridY && unitInfo.TeamNumber != unitDetails.TeamNumber)
