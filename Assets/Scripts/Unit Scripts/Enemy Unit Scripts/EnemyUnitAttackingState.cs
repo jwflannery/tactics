@@ -22,7 +22,6 @@ public class EnemyUnitAttackingState : UnitState
         unitTilemap = Machine.Actor.transform.parent.GetComponent<STETilemap>();
         originPos = unitDetails.gameObject.transform.position;
         targetPos = target.transform.position;
-        Debug.Log("Entered EnemyUnitAttackingState");
     }
 
     public override IEnumerator Tick()

@@ -19,6 +19,8 @@ public class TileInfo : MonoBehaviour {
 
     private void Update()
     {
+        if (GameManager.IsPaused)
+            return;
         currentTile = objectMap.GetTile(TilemapUtils.GetMouseGridX(objectMap, Camera.main), TilemapUtils.GetMouseGridY(objectMap, Camera.main));
         info = "";
         if (currentTile != null)

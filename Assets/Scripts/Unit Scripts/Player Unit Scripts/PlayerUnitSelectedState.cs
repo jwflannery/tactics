@@ -10,6 +10,8 @@ public class PlayerUnitSelectedState : UnitPathingState {
 
     public override void OnEnter()
     {
+
+        GameManager.CurrentlySelectedUnit = Machine.Actor.GetComponent<PlayerUnitStateManager>();
         base.OnEnter();
         foreach (Node reachableTile in closedTiles)
         {
@@ -49,6 +51,7 @@ public class PlayerUnitSelectedState : UnitPathingState {
     public override void OnCancelInput()
     {
         base.OnCancelInput();
+        GameManager.CurrentlySelectedUnit = null;
         Machine.ReplaceTop(new PlayerUnitFreshState());
     }
 }

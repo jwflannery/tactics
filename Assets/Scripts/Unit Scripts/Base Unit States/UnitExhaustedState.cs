@@ -12,8 +12,7 @@ public class UnitExhaustedState : UnitState {
         base.OnEnter();
         renderer = Machine.Actor.GetComponent<SpriteRenderer>();
         renderer.color = Color.grey;
-
-        Machine.Actor.GetComponent<UnitStateManager>().Active = false;
+        GameManager.CurrentlySelectedUnit = null;
     }
 
     public override void OnExit()

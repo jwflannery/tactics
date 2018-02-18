@@ -17,6 +17,9 @@ public class GameManager : MonoBehaviour {
     public Team EnemyTeam = new Team(1, "Enemy");
     public Team DialogueTeam = new Team(-1, "Dialogue"); //TODO get rid of this one, too.
 
+    public static bool IsPaused = false;
+    public static UnitStateManager CurrentlySelectedUnit = null;
+
     public GameObject MoveTilePrefab;
     public GameObject PathTilePrefab;
     public GameObject AttackTilePrefab;
@@ -74,12 +77,12 @@ public class GameManager : MonoBehaviour {
     //This whole function has gotta go.
     public void ToggleDialogue()
     {
-        if (CurrentActiveTeam != DialogueTeam)
+        if (!IsPaused)
         {
+
             Debug.Log("Entering Dialogue.");
+            TogglePause();
             DialogueHandler.ReadLines(DummyLines.lines);
-            prevTeam = CurrentActiveTeam;
-            CurrentActiveTeam = DialogueTeam;
         }
         else if (DialogueHandler.lineQueue.Count > 0)
         {
@@ -89,7 +92,23 @@ public class GameManager : MonoBehaviour {
         {
             Debug.Log("Exiting Dialogue");
             DialogueHandler.HidePanel();
-            CurrentActiveTeam = prevTeam;
+            TogglePause();
+        }
+    }
+
+    public void TogglePause()
+    {
+        if (IsPaused)
+        {
+            Debug.Log("Resuming...");
+            IsPaused = false;
+            Time.timeScale = 1;
+        }
+        else if (!IsPaused)
+        {
+            IsPaused = true;
+            Debug.Log("Pausing...");
+            Time.timeScale = 0;
         }
     }
 
@@ -113,6 +132,14 @@ public class GameManager : MonoBehaviour {
             ToggleDialogue();
         }
 
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            TogglePause();
+        }
+
+        if (GameManager.IsPaused)
+            return;
+
         if (PlayerTeam.TeamUnits.Count <= 0 || EnemyTeam.TeamUnits.Count <= 0)
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
@@ -128,12 +155,9 @@ public class GameManager : MonoBehaviour {
         {
             if (Input.GetMouseButtonDown(0))
             {
-                if (CurrentActiveTeam.TeamUnits.Exists(x => x.GetComponent<PlayerUnitStateManager>().Active))
+                if (CurrentlySelectedUnit != null)
                 {
-                    foreach (GameObject u in CurrentActiveTeam.TeamUnits.FindAll(x => x.GetComponent<PlayerUnitStateManager>().Active))
-                    {
-                        u.GetComponent<PlayerUnitStateManager>().StateMachine.OnAccept();
-                    }
+                     CurrentlySelectedUnit.StateMachine.OnAccept();
                 }
                 else
                 {

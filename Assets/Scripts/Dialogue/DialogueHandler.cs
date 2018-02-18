@@ -23,6 +23,7 @@ public class DialogueHandler : MonoBehaviour
 
     public void HidePanel()
     {
+        StopAllCoroutines();
         text.text = "";
         textPanel.SetAlpha(0);
     }

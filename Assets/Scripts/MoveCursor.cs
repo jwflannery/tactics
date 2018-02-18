@@ -22,6 +22,8 @@ public class MoveCursor : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
+        if (GameManager.IsPaused)
+            return;
         CurrentGridX = TilemapUtils.GetMouseGridX(GroundTilemap, Camera.main);
         CurrentGridY = TilemapUtils.GetMouseGridY(GroundTilemap, Camera.main);
         CurrentTile = GroundTilemap.GetTile(CurrentGridX, CurrentGridY);
