@@ -13,6 +13,9 @@ public class UnitExhaustedState : UnitState {
         renderer = Machine.Actor.GetComponent<SpriteRenderer>();
         renderer.color = Color.grey;
         GameManager.CurrentlySelectedUnit = null;
+
+        unitDetails.CurrentGridX = TilemapUtils.GetGridX(unitTilemap, unitDetails.transform.position);
+        unitDetails.CurrentGridY = TilemapUtils.GetGridY(unitTilemap, unitDetails.transform.position);
     }
 
     public override void OnExit()

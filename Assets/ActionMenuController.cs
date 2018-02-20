@@ -32,4 +32,10 @@ public class ActionMenuController : MonoBehaviour{
         if (UnitWaiting != null)
             UnitWaiting.OnWaitChosen();
     }
+
+    public void OnTalkClicked()
+    {
+        if (UnitWaiting != null)
+            UnitWaiting.OnTalkChosen();
+    }
 }

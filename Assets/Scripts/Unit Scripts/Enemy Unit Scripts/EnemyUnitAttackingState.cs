@@ -38,8 +38,6 @@ public class EnemyUnitAttackingState : UnitState
             target.gameObject.GetComponent<UnitDetails>().Health -= 10;
             OnExit();
             Machine.Clear();
-            unitDetails.CurrentGridX = TilemapUtils.GetGridX(unitTilemap, unitDetails.transform.position);
-            unitDetails.CurrentGridY = TilemapUtils.GetGridY(unitTilemap, unitDetails.transform.position);
             Machine.Push(new EnemyUnitExhaustedState());
         }
         yield return null;
