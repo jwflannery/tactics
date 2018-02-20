@@ -8,7 +8,8 @@ public class DialogueHandler : MonoBehaviour
 {
     public TMPro.TextMeshProUGUI text;
     public CanvasRenderer textPanel;
-    public Queue<string> lineQueue = new Queue<string>();
+    public Image portraitImage;
+    public Queue<DialogueLines.Line> lineQueue = new Queue<DialogueLines.Line>();
 
     private void Awake()
     {
@@ -19,6 +20,7 @@ public class DialogueHandler : MonoBehaviour
     private void ShowPanel()
     {
         textPanel.SetAlpha(128);
+        portraitImage.canvasRenderer.SetAlpha(128);
     }
 
     public void HidePanel()
@@ -26,12 +28,13 @@ public class DialogueHandler : MonoBehaviour
         StopAllCoroutines();
         text.text = "";
         textPanel.SetAlpha(0);
+        portraitImage.canvasRenderer.SetAlpha(0);
     }
 
-    public void ReadLines(string[] lineArray)
+    public void ReadLines(DialogueLines.Line[] lineArray)
     {
         lineQueue.Clear();
-        foreach (string line in lineArray)
+        foreach (DialogueLines.Line line in lineArray)
         {
             lineQueue.Enqueue(line);
         }
@@ -45,10 +48,12 @@ public class DialogueHandler : MonoBehaviour
         StartCoroutine(TypeSentence(lineQueue.Dequeue()));
     }
 
-    IEnumerator TypeSentence(string sentence)
+    IEnumerator TypeSentence(DialogueLines.Line line)
     {
         text.text = "";
-        foreach (char letter in sentence.ToCharArray())
+        if (line.PortaitImage != null)
+            portraitImage.sprite = line.PortaitImage;
+        foreach (char letter in line.LineString.ToCharArray())
         {
             text.text += letter;
             yield return null;
