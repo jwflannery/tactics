@@ -137,8 +137,15 @@ public class GameManager : MonoBehaviour {
             TogglePause();
         }
 
+
+
         if (GameManager.IsPaused)
+        {
+            if (Input.GetMouseButtonDown(0))
+                ToggleDialogue();
             return;
+        }
+
 
         if (PlayerTeam.TeamUnits.Count <= 0 || EnemyTeam.TeamUnits.Count <= 0)
         {
