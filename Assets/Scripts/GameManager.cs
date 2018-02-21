@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
+using InControl;
 
 public class GameManager : MonoBehaviour {
 
@@ -18,6 +19,7 @@ public class GameManager : MonoBehaviour {
     public Team DialogueTeam = new Team(-1, "Dialogue"); //TODO get rid of this one, too.
 
     public static bool IsPaused = false;
+    public static bool InDialogue = false;
     public static UnitStateManager CurrentlySelectedUnit = null;
 
     public GameObject MoveTilePrefab;
@@ -77,10 +79,10 @@ public class GameManager : MonoBehaviour {
     //This whole function has gotta go.
     public void ToggleDialogue()
     {
-        if (!IsPaused)
+        if (!InDialogue)
         {
-
-            Debug.Log("Entering Dialogue.");
+ 
+            InDialogue = true;
             TogglePause();
             DialogueHandler.ReadLines(DummyLines.lines);
         }
@@ -90,7 +92,7 @@ public class GameManager : MonoBehaviour {
         }
         else
         {
-            Debug.Log("Exiting Dialogue");
+            InDialogue = false;
             DialogueHandler.HidePanel();
             TogglePause();
         }
@@ -100,14 +102,12 @@ public class GameManager : MonoBehaviour {
     {
         if (IsPaused)
         {
-            Debug.Log("Resuming...");
             IsPaused = false;
             Time.timeScale = 1;
         }
         else if (!IsPaused)
         {
             IsPaused = true;
-            Debug.Log("Pausing...");
             Time.timeScale = 0;
         }
     }
@@ -136,10 +136,8 @@ public class GameManager : MonoBehaviour {
         {
             TogglePause();
         }
-
-
-
-        if (GameManager.IsPaused)
+        
+        if (GameManager.InDialogue)
         {
             if (Input.GetMouseButtonDown(0))
                 ToggleDialogue();
@@ -160,7 +158,7 @@ public class GameManager : MonoBehaviour {
 
         if (CurrentActiveTeam == PlayerTeam)
         {
-            if (Input.GetMouseButtonDown(0))
+            if (InputManager.ActiveDevice.Action1.WasPressed || Input.GetMouseButtonDown(0))
             {
                 if (CurrentlySelectedUnit != null)
                 {
@@ -174,7 +172,7 @@ public class GameManager : MonoBehaviour {
                     }
                 }
             }
-            if (Input.GetMouseButtonDown(1))
+            if (InputManager.ActiveDevice.Action2.WasPressed || Input.GetMouseButtonDown(1))
             {
                 if (CurrentActiveTeam.TeamUnits.Exists(x => x.GetComponent<PlayerUnitStateManager>().Active))
                 {

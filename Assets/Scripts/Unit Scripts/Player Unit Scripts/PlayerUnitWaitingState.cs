@@ -12,8 +12,15 @@ public class PlayerUnitWaitingState : UnitState {
         ActionMenuController.UnitWaiting = this;
 
         originalMenuPosition = ActionMenuController.Instance.transform.position;
-
         ActionMenuController.Instance.Panel.transform.position = Camera.main.WorldToScreenPoint(new Vector2(unitDetails.transform.position.x, unitDetails.transform.position.y - 0.1f));
+
+        GameManager.Instance.TogglePause();
+    }
+
+    public override void OnCancelInput()
+    {
+        Machine.Pop();
+        base.OnCancelInput();
     }
 
     public void OnAttackChosen()
@@ -28,7 +35,6 @@ public class PlayerUnitWaitingState : UnitState {
 
     public void OnTalkChosen()
     {
-        Debug.Log("TalkActionChosen.");
         GameManager.Instance.ToggleDialogue();
         Machine.ReplaceTop(new PlayerUnitExhaustedState());
 
@@ -36,6 +42,7 @@ public class PlayerUnitWaitingState : UnitState {
 
     public override void OnExit()
     {
+        GameManager.Instance.TogglePause();
         base.OnExit();
         ActionMenuController.UnitWaiting = null;
         ActionMenuController.Instance.transform.position = originalMenuPosition;
