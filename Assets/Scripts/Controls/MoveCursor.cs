@@ -28,8 +28,10 @@ public class MoveCursor : MonoBehaviour {
         if (GameManager.IsPaused)
             return;
 
-        if (DidMouseMove())
+        CheckMouseControl();
+        if (IsMouseControlling)
         {
+            Debug.Log("Mouse is active.");
             CurrentGridX = TilemapUtils.GetMouseGridX(GroundTilemap, Camera.main);
             CurrentGridY = TilemapUtils.GetMouseGridY(GroundTilemap, Camera.main);
             CurrentTile = GroundTilemap.GetTile(CurrentGridX, CurrentGridY);
@@ -67,12 +69,15 @@ public class MoveCursor : MonoBehaviour {
         CurrentLocation = transform.position;
     }
 
-    private bool DidMouseMove()
+    private void CheckMouseControl()
     {
-        if (Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0)
-            return true;
-        else
-            return false;
+        if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1))
+        {
+            IsMouseControlling = true;
+        }
+        else if (InputManager.ActiveDevice.AnyButton)
+            IsMouseControlling = false;
+
     }
 
 }

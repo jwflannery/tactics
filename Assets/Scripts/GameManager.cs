@@ -139,7 +139,7 @@ public class GameManager : MonoBehaviour {
         
         if (GameManager.InDialogue)
         {
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0) || InputManager.ActiveDevice.Action1.WasPressed)
                 ToggleDialogue();
             return;
         }
