@@ -15,8 +15,8 @@ public class GameManager : MonoBehaviour
     public Queue<Team> TeamOrder = new Queue<Team>();
     public Stack<GameObject> UnitOrder = new Stack<GameObject>();
 
-    public STETilemap foregroundTilemap;
-    public STETilemap backgroundTilemap;
+    private STETilemap foregroundTilemap;
+    private STETilemap backgroundTilemap;
     private Team prevTeam; //TODO get rid of this once game pauses upon dialogue.
 
     public Team PlayerTeam = new Team(0, "Player");
@@ -31,10 +31,10 @@ public class GameManager : MonoBehaviour
     public GameObject PathTilePrefab;
     public GameObject AttackTilePrefab;
 
-    public TurnTextScript TurnText;
+    private TurnTextScript TurnTextScript;
     public Team CurrentActiveTeam;
     public DialogueLines DummyLines; //TODO Get rid of this one once we've got some actual dialogue.
-    public DialogueHandler DialogueHandler;
+    private DialogueHandler DialogueHandler;
 
     public void AddUnitToTeam(GameObject unit, int teamNumber)
     {
@@ -55,7 +55,7 @@ public class GameManager : MonoBehaviour
     {
         UnitOrder.Clear();
         CurrentActiveTeam = TeamOrder.Dequeue();
-        TurnText.DisplayText(CurrentActiveTeam.TeamName);
+        TurnTextScript.DisplayText(CurrentActiveTeam.TeamName);
 
         foreach (GameObject unit in AllUnits)
         {
@@ -132,6 +132,14 @@ public class GameManager : MonoBehaviour
 
         CurrentActiveTeam = PlayerTeam;
         TeamOrder.Enqueue(EnemyTeam);
+    }
+
+    private void Start()
+    {
+        foregroundTilemap = ObjectReferences.Instance.ForegroundTilemap;
+        backgroundTilemap = ObjectReferences.Instance.BackgroundTilemap;
+        TurnTextScript = ObjectReferences.Instance.TurnTextScript;
+        DialogueHandler = ObjectReferences.Instance.DialogueHandlerScript;
     }
 
     void Update()

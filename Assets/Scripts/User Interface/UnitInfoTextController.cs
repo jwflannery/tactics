@@ -5,9 +5,14 @@ using UnityEngine.UI;
 
 public class UnitInfoTextController : MonoBehaviour {
 
-    public Text unitInfoText;
+    private Text unitInfoText;
     private string unitHealth = "";
     private string unitTeam = "";
+
+    private void Start()
+    {
+        unitInfoText = ObjectReferences.Instance.UnitInfoText;
+    }
 
     public void UpdateUnitInfo() 
     {

@@ -6,8 +6,8 @@ using CreativeSpore.SuperTilemapEditor;
 
 public class TileInfo : MonoBehaviour {
 
-    public STETilemap objectMap;
-    public Text InfoText;
+    private STETilemap foregroundTilemap;
+    private Text InfoText;
 
     private string[] parameters = new string[]
     {
@@ -17,11 +17,17 @@ public class TileInfo : MonoBehaviour {
     private string info;
     private Tile currentTile;
 
+    private void Start()
+    {
+        foregroundTilemap = ObjectReferences.Instance.ForegroundTilemap;
+        InfoText = ObjectReferences.Instance.TileInfoText;
+    }
+
     private void Update()
     {
         if (GameManager.IsPaused)
             return;
-        currentTile = objectMap.GetTile(TilemapUtils.GetMouseGridX(objectMap, Camera.main), TilemapUtils.GetMouseGridY(objectMap, Camera.main));
+        currentTile = foregroundTilemap.GetTile(TilemapUtils.GetMouseGridX(foregroundTilemap, Camera.main), TilemapUtils.GetMouseGridY(foregroundTilemap, Camera.main));
         info = "";
         if (currentTile != null)
         {

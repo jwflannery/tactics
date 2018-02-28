@@ -6,8 +6,20 @@ public class ActionMenuController : MonoBehaviour{
 
     public static PlayerUnitWaitingState UnitWaiting;
     public static ActionMenuController Instance;
-    public GameObject Panel;
-    public static Cursor Cursor;
+    private GameObject panel;
+
+    public GameObject Panel
+    {
+        get
+        {
+            return panel;
+        }
+
+        set
+        {
+            panel = value;
+        }
+    }
 
     private void Awake()
     {
@@ -15,9 +27,9 @@ public class ActionMenuController : MonoBehaviour{
         {
             Instance = this;
         }
-        if (Panel == null)
+        if (panel == null)
         {
-            Panel = transform.gameObject;
+            panel = transform.gameObject;
         }
     }
 

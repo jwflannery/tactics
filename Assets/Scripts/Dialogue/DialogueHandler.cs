@@ -6,14 +6,16 @@ using TMPro;
 
 public class DialogueHandler : MonoBehaviour
 {
-    public TMPro.TextMeshProUGUI text;
-    public CanvasRenderer textPanel;
-    public Image portraitImage;
+    private TextMeshProUGUI text;
+    private CanvasRenderer textPanel;
+    private Image portraitImage;
     public Queue<DialogueLines.Line> lineQueue = new Queue<DialogueLines.Line>();
 
-    private void Awake()
+    private void Start()
     {
         textPanel = GetComponent<CanvasRenderer>();
+        text = ObjectReferences.Instance.DialogueText;
+        portraitImage = ObjectReferences.Instance.PortraitImage;
         HidePanel();
     }
 

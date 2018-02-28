@@ -489,6 +489,99 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 114559502}
+--- !u!1 &187551415
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 187551418}
+  - component: {fileID: 187551417}
+  - component: {fileID: 187551416}
+  m_Layer: 0
+  m_Name: Brush
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &187551416
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 187551415}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 860611cc84144924c8a95e2a1670d236, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Offset: {x: 0, y: 0}
+  IsUndoEnabled: 1
+  m_brushTilemap: {fileID: 0}
+--- !u!114 &187551417
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 187551415}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4dec3ca0fe88506448df84e8bf55b2dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowGrid: 1
+  InnerPadding: 0
+  ColliderDepth: 0.1
+  ColliderType: 0
+  Collider2DType: 0
+  ShowColliderNormals: 1
+  ColliderDisplayMode: 0
+  IsUndoEnabled: 0
+  m_sortingLayer: 0
+  m_sortingLayerName: Default
+  m_orderInLayer: 0
+  m_material: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_tintColor: {r: 1, g: 1, b: 1, a: 1}
+  m_pixelSnap: 0
+  m_isVisible: 1
+  m_allowPaintingOutOfBounds: 1
+  m_autoShrink: 0
+  m_enableUndoWhilePainting: 1
+  m_isTrigger: 0
+  m_physicMaterial: {fileID: 0}
+  m_physicMaterial2D: {fileID: 0}
+  m_cellSize: {x: 0, y: 0}
+  m_mapBounds:
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 0, y: 0, z: 0}
+  m_tileset: {fileID: 0}
+  m_minGridX: 0
+  m_minGridY: 0
+  m_maxGridX: 0
+  m_maxGridY: 0
+  m_parentTilemapGroup: {fileID: 0}
+  m_parallaxFactor: {x: 1, y: 1}
+  m_chunkRendererProperties:
+    castShadows: 0
+    receiveShadows: 0
+    useLightProbes: 0
+    reflectionProbeUsage: 0
+    anchorOverride: {fileID: 0}
+--- !u!4 &187551418
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 187551415}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &249587852
 GameObject:
   m_ObjectHideFlags: 0
@@ -1539,7 +1632,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b69dca0ab1ca144c915bf1a429e3178, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tileMap: {fileID: 973772476}
 --- !u!1 &864667224
 GameObject:
   m_ObjectHideFlags: 0
@@ -2217,6 +2309,7 @@ GameObject:
   - component: {fileID: 1284119572}
   - component: {fileID: 1284119574}
   - component: {fileID: 1284119575}
+  - component: {fileID: 1284119576}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -2236,8 +2329,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AllUnits: []
-  foregroundTilemap: {fileID: 973772476}
-  backgroundTilemap: {fileID: 1078027762}
   MoveTilePrefab: {fileID: 1550904879648724, guid: cb785675b2958c147bdf443368c86983,
     type: 2}
   PathTilePrefab: {fileID: 1214826334653930, guid: 51bd067aeb1d1544faf705f12bbb2a71,
@@ -2300,6 +2391,25 @@ MonoBehaviour:
   nativeInputOverrideUpdateRate: 0
   nativeInputUpdateRate: 0
   customProfiles: []
+--- !u!114 &1284119576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1284119571}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 758dbbe17736f5241a9a00756fe57286, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ForegroundTilemap: {fileID: 0}
+  BackgroundTilemap: {fileID: 0}
+  UnitTilemap: {fileID: 0}
+  ColliderTilemap: {fileID: 0}
+  TileInfoText: {fileID: 0}
+  UnitInfoText: {fileID: 0}
+  DialogueText: {fileID: 0}
+  PortraitImage: {fileID: 0}
 --- !u!1 &1316342593
 GameObject:
   m_ObjectHideFlags: 1
@@ -2914,9 +3024,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afe5e4f3206c89040b3b4285ba721bd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  text: {fileID: 824575284}
-  textPanel: {fileID: 0}
-  portraitImage: {fileID: 114559504}
 --- !u!1 &1786374435
 GameObject:
   m_ObjectHideFlags: 0
@@ -3023,8 +3130,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2eddf22a72f3ac4d90a2509b4871865, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectMap: {fileID: 1078027762}
-  InfoText: {fileID: 110054012}
 --- !u!1 &2017126571 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1484657513128502, guid: cd29ce9bbced03b45abd956e96a1f9fd,

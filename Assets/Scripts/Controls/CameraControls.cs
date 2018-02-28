@@ -6,7 +6,7 @@ using CreativeSpore.SuperTilemapEditor;
 public class CameraControls : MonoBehaviour
 {
 
-    public STETilemap tileMap;
+    private STETilemap tileMap;
 
     private float mapX;
     private float mapY;
@@ -27,6 +27,8 @@ public class CameraControls : MonoBehaviour
     {
         var vertExtent = Camera.main.orthographicSize;
         var horzExtent = Camera.main.aspect * vertExtent;
+
+        tileMap = ObjectReferences.Instance.BackgroundTilemap;
 
         minX = tileMap.MapBounds.min.x + horzExtent;
         maxX = tileMap.MapBounds.max.x - horzExtent;

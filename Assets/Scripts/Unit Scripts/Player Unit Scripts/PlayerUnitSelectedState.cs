@@ -15,7 +15,7 @@ public class PlayerUnitSelectedState : UnitPathingState {
         base.OnEnter();
         foreach (Node reachableTile in closedTiles)
         {
-            CreateMoveTile(TilemapUtils.GetGridWorldPos(MoveCursor.Instance.GroundTilemap, (int)reachableTile.Position.x, (int)reachableTile.Position.y));
+            CreateMoveTile(TilemapUtils.GetGridWorldPos(ObjectReferences.Instance.BackgroundTilemap, (int)reachableTile.Position.x, (int)reachableTile.Position.y));
         }
         openTiles.Clear();
         closedTiles.Clear();

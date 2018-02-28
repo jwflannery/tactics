@@ -6,7 +6,7 @@ using InControl;
 
 public class MoveCursor : MonoBehaviour {
 
-    public STETilemap GroundTilemap;
+    private STETilemap backgroundTilemap;
     public Tile CurrentTile;
     public int CurrentGridX;
     public int CurrentGridY;
@@ -23,6 +23,11 @@ public class MoveCursor : MonoBehaviour {
         }
     }
 
+    private void Start()
+    {
+        backgroundTilemap = ObjectReferences.Instance.BackgroundTilemap;
+    }
+
     // Update is called once per frame
     void Update () {
         if (GameManager.IsPaused)
@@ -32,12 +37,12 @@ public class MoveCursor : MonoBehaviour {
         if (IsMouseControlling)
         {
             Debug.Log("Mouse is active.");
-            CurrentGridX = TilemapUtils.GetMouseGridX(GroundTilemap, Camera.main);
-            CurrentGridY = TilemapUtils.GetMouseGridY(GroundTilemap, Camera.main);
-            CurrentTile = GroundTilemap.GetTile(CurrentGridX, CurrentGridY);
+            CurrentGridX = TilemapUtils.GetMouseGridX(backgroundTilemap, Camera.main);
+            CurrentGridY = TilemapUtils.GetMouseGridY(backgroundTilemap, Camera.main);
+            CurrentTile = backgroundTilemap.GetTile(CurrentGridX, CurrentGridY);
             if (CurrentTile != null)
             {
-                transform.position = TilemapUtils.GetGridWorldPos(GroundTilemap, TilemapUtils.GetMouseGridX(GroundTilemap, Camera.main), TilemapUtils.GetMouseGridY(GroundTilemap, Camera.main));
+                transform.position = TilemapUtils.GetGridWorldPos(backgroundTilemap, TilemapUtils.GetMouseGridX(backgroundTilemap, Camera.main), TilemapUtils.GetMouseGridY(backgroundTilemap, Camera.main));
             }
         }
         else
@@ -58,10 +63,10 @@ public class MoveCursor : MonoBehaviour {
             {
                 CurrentGridY = CurrentGridY - 1;
             }
-            transform.position = TilemapUtils.GetGridWorldPos(GroundTilemap, CurrentGridX, CurrentGridY);
+            transform.position = TilemapUtils.GetGridWorldPos(backgroundTilemap, CurrentGridX, CurrentGridY);
         }
 
-        CurrentTile = GroundTilemap.GetTile(CurrentGridX, CurrentGridY);
+        CurrentTile = backgroundTilemap.GetTile(CurrentGridX, CurrentGridY);
         if (CurrentTile != null)
         {
             //transform.position = TilemapUtils.GetGridWorldPos(GroundTilemap, TilemapUtils.GetMouseGridX(GroundTilemap, Camera.main), TilemapUtils.GetMouseGridY(GroundTilemap, Camera.main));
