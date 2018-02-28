@@ -4,14 +4,19 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
 using InControl;
+using CreativeSpore.SuperTilemapEditor;
 
-public class GameManager : MonoBehaviour {
+public class GameManager : MonoBehaviour
+{
 
     public static GameManager Instance = null;
     public List<GameObject> AllUnits = new List<GameObject>();
     public List<Team> AllTeams = new List<Team>();
     public Queue<Team> TeamOrder = new Queue<Team>();
     public Stack<GameObject> UnitOrder = new Stack<GameObject>();
+
+    public STETilemap foregroundTilemap;
+    public STETilemap backgroundTilemap;
     private Team prevTeam; //TODO get rid of this once game pauses upon dialogue.
 
     public Team PlayerTeam = new Team(0, "Player");
@@ -30,7 +35,7 @@ public class GameManager : MonoBehaviour {
     public Team CurrentActiveTeam;
     public DialogueLines DummyLines; //TODO Get rid of this one once we've got some actual dialogue.
     public DialogueHandler DialogueHandler;
-          
+
     public void AddUnitToTeam(GameObject unit, int teamNumber)
     {
         GetTeamByNumber(teamNumber).TeamUnits.Add(unit);
@@ -55,6 +60,10 @@ public class GameManager : MonoBehaviour {
         foreach (GameObject unit in AllUnits)
         {
             unit.GetComponent<UnitStateManager>().RefreshUnit();
+        }
+
+        foreach (GameObject unit in CurrentActiveTeam.TeamUnits)
+        {
             UnitOrder.Push(unit);
         }
         if (CurrentActiveTeam == EnemyTeam)
@@ -63,7 +72,7 @@ public class GameManager : MonoBehaviour {
         }
         TeamOrder.Enqueue(oldTeam);
     }
-    
+
     public GameObject FindUnitOnTile(int gridX, int gridY)
     {
         GameObject unit = AllUnits.Find(x => x.GetComponent<UnitDetails>().CurrentGridX == gridX && x.GetComponent<UnitDetails>().CurrentGridY == gridY);
@@ -81,7 +90,7 @@ public class GameManager : MonoBehaviour {
     {
         if (!InDialogue)
         {
- 
+
             InDialogue = true;
             TogglePause();
             DialogueHandler.ReadLines(DummyLines.lines);
@@ -125,7 +134,8 @@ public class GameManager : MonoBehaviour {
         TeamOrder.Enqueue(EnemyTeam);
     }
 
-    void Update () {
+    void Update()
+    {
 
         if (Input.GetKeyDown(KeyCode.M))
         {
@@ -136,7 +146,7 @@ public class GameManager : MonoBehaviour {
         {
             TogglePause();
         }
-        
+
         if (GameManager.InDialogue)
         {
             if (Input.GetMouseButtonDown(0) || InputManager.ActiveDevice.Action1.WasPressed)
@@ -150,7 +160,7 @@ public class GameManager : MonoBehaviour {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
 
-		if (!CurrentActiveTeam.TeamUnits.Exists(u => !u.GetComponent<UnitStateManager>().StateMachine.TopState.GetType().IsSubclassOf(typeof(UnitExhaustedState))))
+        if (!CurrentActiveTeam.TeamUnits.Exists(u => !u.GetComponent<UnitStateManager>().StateMachine.TopState.GetType().IsSubclassOf(typeof(UnitExhaustedState))))
         {
             if (CurrentActiveTeam != DialogueTeam)
                 RefreshNextTeam(CurrentActiveTeam);
@@ -162,7 +172,7 @@ public class GameManager : MonoBehaviour {
             {
                 if (CurrentlySelectedUnit != null)
                 {
-                     CurrentlySelectedUnit.StateMachine.OnAccept();
+                    CurrentlySelectedUnit.StateMachine.OnAccept();
                 }
                 else
                 {
@@ -192,11 +202,11 @@ public class GameManager : MonoBehaviour {
         }
 
         else if (CurrentActiveTeam == EnemyTeam)
-        {            
+        {
             foreach (GameObject unit in EnemyTeam.TeamUnits)
             {
                 unit.GetComponent<EnemyUnitStateManager>();
             }
         }
-	}
+    }
 }

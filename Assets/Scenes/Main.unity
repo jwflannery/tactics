@@ -2236,6 +2236,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AllUnits: []
+  foregroundTilemap: {fileID: 973772476}
+  backgroundTilemap: {fileID: 1078027762}
   MoveTilePrefab: {fileID: 1550904879648724, guid: cb785675b2958c147bdf443368c86983,
     type: 2}
   PathTilePrefab: {fileID: 1214826334653930, guid: 51bd067aeb1d1544faf705f12bbb2a71,

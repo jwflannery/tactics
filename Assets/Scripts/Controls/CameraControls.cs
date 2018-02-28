@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using CreativeSpore.SuperTilemapEditor;
 
-public class CameraControls : MonoBehaviour {
+public class CameraControls : MonoBehaviour
+{
 
     public STETilemap tileMap;
 
@@ -20,7 +21,7 @@ public class CameraControls : MonoBehaviour {
     public static Vector3 Down = new Vector3(0, -1, 0);
     public static Vector3 Left = new Vector3(-1, 0, 0);
 
-    public static float PanSpeed = 1f;
+    public static float PanSpeed = 3f;
 
     void Start()
     {
@@ -33,8 +34,9 @@ public class CameraControls : MonoBehaviour {
         maxY = tileMap.MapBounds.max.y - vertExtent;
     }
 
-    void Update () {
-		if (Input.GetKey(KeyCode.UpArrow))
+    void Update()
+    {
+        if (Input.GetKey(KeyCode.UpArrow))
         {
             PanCamera(Up, PanSpeed);
         }
@@ -50,7 +52,14 @@ public class CameraControls : MonoBehaviour {
         {
             PanCamera(Left, PanSpeed);
         }
-	}
+
+        if (Input.GetAxis("Mouse ScrollWheel") != 0)
+        {
+            var direction = -Mathf.Sign(Input.GetAxis("Mouse ScrollWheel"));
+            Zoom(direction);
+        }
+
+    }
 
     public void PanCamera(Vector3 direction, float speed)
     {
@@ -60,5 +69,10 @@ public class CameraControls : MonoBehaviour {
         v3.x = Mathf.Clamp(v3.x, minX, maxX);
         v3.y = Mathf.Clamp(v3.y, minY, maxY);
         transform.position = v3;
+    }
+
+    public void Zoom(float direction)
+    {
+        Camera.main.orthographicSize += 0.1f * direction;
     }
 }
