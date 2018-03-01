@@ -134,7 +134,7 @@ public class GameManager : MonoBehaviour
         backgroundTilemap = ObjectReferences.Instance.BackgroundTilemap;
         TurnTextScript = ObjectReferences.Instance.TurnTextScript;
         DialogueHandler = ObjectReferences.Instance.DialogueHandlerScript;
-        MapDetails.InitialiseTiles();
+        MapDetails.InitialiseTiles(foregroundTilemap);
     }
 
     void Update()

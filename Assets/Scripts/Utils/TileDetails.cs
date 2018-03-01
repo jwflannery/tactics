@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using CreativeSpore.SuperTilemapEditor;
 
-public class TileDetails : MonoBehaviour {
+public class TileDetails {
 
     private Vector2 gridPos;
     private bool passable;
@@ -13,6 +14,11 @@ public class TileDetails : MonoBehaviour {
         Passable = true;
     }
 
+    public TileDetails(int gridX, int gridY, bool passable)
+    {
+        GridPos = new Vector2(gridX, gridY);
+        Passable = passable;
+    }
 
     public bool Passable
     {

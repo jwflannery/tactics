@@ -77,28 +77,39 @@ public abstract class UnitPathingState : UnitState
         {
             var newPos = new Vector2(centre.Position.x, centre.Position.y - 1);
             var tile = MapDetails.GetTileDetails((int)newPos.x, (int)newPos.y);
-            var impassable = (tile != null && !tile.Passable || MapUtils.FindUnitOnTile((int)newPos.x, (int)newPos.y));
+            if (tile == null)
+                tile = new TileDetails(-1000, -1000, false);
+            var impassable = (!tile.Passable || MapUtils.FindUnitOnTile((int)newPos.x, (int)newPos.y));
             if (!closedTiles.Exists(t => t.Position == newPos) && !impassable)
             {
                 openTiles.Add(new Node(newPos, centre, centre.Cost + 1));
             }
+
             newPos = new Vector2(centre.Position.x, centre.Position.y + 1);
             tile = MapDetails.GetTileDetails((int)newPos.x, (int)newPos.y);
-            impassable = (tile != null && !tile.Passable || MapUtils.FindUnitOnTile((int)newPos.x, (int)newPos.y));
+            if (tile == null)
+                tile = new TileDetails(-1000, -1000, false);
+            impassable = (!tile.Passable || MapUtils.FindUnitOnTile((int)newPos.x, (int)newPos.y));
             if (!closedTiles.Exists(t => t.Position == newPos) && !impassable)
             {
                 openTiles.Add(new Node(newPos, centre, centre.Cost + 1));
             }
+
             newPos = new Vector2(centre.Position.x + 1, centre.Position.y);
             tile = MapDetails.GetTileDetails((int)newPos.x, (int)newPos.y);
-            impassable = (tile != null && !tile.Passable || MapUtils.FindUnitOnTile((int)newPos.x, (int)newPos.y));
+            if (tile == null)
+                tile = new TileDetails(-1000, -1000, false);
+            impassable = (!tile.Passable || MapUtils.FindUnitOnTile((int)newPos.x, (int)newPos.y));
             if (!closedTiles.Exists(t => t.Position == newPos) && !impassable)
             {
                 openTiles.Add(new Node(newPos, centre, centre.Cost + 1));
             }
+
             newPos = new Vector2(centre.Position.x - 1, centre.Position.y);
             tile = MapDetails.GetTileDetails((int)newPos.x, (int)newPos.y);
-            impassable = (tile != null && !tile.Passable || MapUtils.FindUnitOnTile((int)newPos.x, (int)newPos.y));
+            if (tile == null)
+                tile = new TileDetails(-1000, -1000, false);
+            impassable = (!tile.Passable || MapUtils.FindUnitOnTile((int)newPos.x, (int)newPos.y));
             if (!closedTiles.Exists(t => t.Position == newPos) && !impassable)
             {
                 openTiles.Add(new Node(newPos, centre, centre.Cost + 1));
