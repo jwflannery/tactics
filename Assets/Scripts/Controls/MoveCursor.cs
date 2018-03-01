@@ -4,7 +4,6 @@ using InControl;
 
 public class MoveCursor : MonoBehaviour {
 
-    private STETilemap backgroundTilemap;
     public TileDetails CurrentTile;
     public int CurrentGridX;
     public int CurrentGridY;
@@ -18,11 +17,6 @@ public class MoveCursor : MonoBehaviour {
         {
             Instance = this;
         }
-    }
-
-    private void Start()
-    {
-        backgroundTilemap = ObjectReferences.Instance.BackgroundTilemap;
     }
 
     // Update is called once per frame
