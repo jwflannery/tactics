@@ -13,7 +13,7 @@ public class PlayerUnitConfirmTargetState : UnitState {
     public override void OnEnter()
     {
         unitDetails = Machine.Actor.GetComponent<UnitDetails>();
-        unitTilemap = Machine.Actor.transform.parent.GetComponent<STETilemap>();
+        unitTilemap = ObjectReferences.Instance.UnitTilemap;
         tempGridX = MapUtils.GetGridX(unitDetails.transform.position);
         tempGridY = MapUtils.GetGridY(unitDetails.transform.position);
         unitsInRange = FindUnitsInRange(unitDetails.AttackRange, tempGridX, tempGridY);

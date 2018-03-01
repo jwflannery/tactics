@@ -33,7 +33,6 @@ public class MoveCursor : MonoBehaviour {
         CheckMouseControl();
         if (IsMouseControlling)
         {
-            Debug.Log("Mouse is active.");
             CurrentGridX = MapUtils.GetMouseGridX();
             CurrentGridY = MapUtils.GetMouseGridY();
             CurrentTile = backgroundTilemap.GetTile(CurrentGridX, CurrentGridY);

@@ -43,6 +43,7 @@ public class ObjectReferences : MonoBehaviour {
     {
         ForegroundTilemap = GameObject.Find("/TilemapGroup/Foreground").GetComponent<STETilemap>();
         BackgroundTilemap = GameObject.Find("/TilemapGroup/Background").GetComponent<STETilemap>();
+        UnitTilemap = GameObject.Find("/TilemapGroup/Foreground").GetComponent<STETilemap>();
     }
 
     void GetUserInterfaceReferences()

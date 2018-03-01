@@ -66,7 +66,7 @@ public class UnitDetails : MonoBehaviour
         healthText = GetComponentInChildren<TextMeshPro>();
         animator = GetComponent<Animator>();
 
-        unitTilemap = transform.parent.gameObject.GetComponent<STETilemap>();
+        unitTilemap = ObjectReferences.Instance.UnitTilemap;
         unitLayerMask = LayerMask.GetMask("Units");
         GameManager.Instance.AllUnits.Add(gameObject);
         GameManager.Instance.AddUnitToTeam(transform.gameObject, TeamNumber);
