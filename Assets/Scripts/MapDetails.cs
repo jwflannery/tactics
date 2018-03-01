@@ -18,15 +18,20 @@ public class MapDetails {
 
     public static void InitialiseTiles(STETilemap tilemap)
     {
-        for (int x = xMin; x < xMax; x++)
+        for (int x = xMin; x < xMax + 1; x++)
         {
-            for (int y = yMin; y < yMax; y++)
+            for (int y = yMin; y < yMax + 1; y++)
             {
-                var tile = tilemap.GetTile(x, y);
-                var passable = !(tile != null && tile.collData.type != eTileCollider.None);
+                var passable = CheckForCollider(x, y, tilemap);
                 Tiles.Add(new MapKey(x, y), new TileDetails(x, y, passable));
             }
         }
+    }
+
+    private static bool CheckForCollider(int x, int y, STETilemap tilemap)
+    {
+        var tile = tilemap.GetTile(x, y);
+        return !(tile != null && tile.collData.type != eTileCollider.None);
     }
 
     public static TileDetails GetTileDetails(int gridX, int gridY)
