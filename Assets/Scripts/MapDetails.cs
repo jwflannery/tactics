@@ -6,9 +6,9 @@ using CreativeSpore.SuperTilemapEditor;
 public class MapDetails {
 
     public static int xMin = 0;
-    public static int yMin = 0;
+    public static int yMin = -50;
     public static int xMax = 50;
-    public static int yMax = 50;
+    public static int yMax = 0;
 
 
     public static Dictionary<MapKey, TileDetails> Tiles = new Dictionary<MapKey, TileDetails>();
@@ -16,9 +16,9 @@ public class MapDetails {
 
     public static void InitialiseTiles(GameObject tilemap)
     {
-        for (int x = xMin; x < xMax + 1; x++)
+        for (int x = xMin; x < xMax; x++)
         {
-            for (int y = yMin; y < yMax + 1; y++)
+            for (int y = yMin; y < yMax; y++)
             {
                 var passable = !CheckForCollider(x, y, tilemap);
                 Tiles.Add(new MapKey(x, y), new TileDetails(x, y, passable));
