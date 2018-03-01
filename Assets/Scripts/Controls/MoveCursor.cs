@@ -37,8 +37,10 @@ public class MoveCursor : MonoBehaviour {
         if (IsMouseControlling)
         {
             Debug.Log("Mouse is active.");
-            CurrentGridX = TilemapUtils.GetMouseGridX(backgroundTilemap, Camera.main);
-            CurrentGridY = TilemapUtils.GetMouseGridY(backgroundTilemap, Camera.main);
+            //CurrentGridX = TilemapUtils.GetMouseGridX(backgroundTilemap, Camera.main);
+            CurrentGridX = MouseGridX();
+            //CurrentGridY = TilemapUtils.GetMouseGridY(backgroundTilemap, Camera.main);
+            CurrentGridY = MouseGridY();
             CurrentTile = backgroundTilemap.GetTile(CurrentGridX, CurrentGridY);
             if (CurrentTile != null)
             {
@@ -72,6 +74,18 @@ public class MoveCursor : MonoBehaviour {
             //transform.position = TilemapUtils.GetGridWorldPos(GroundTilemap, TilemapUtils.GetMouseGridX(GroundTilemap, Camera.main), TilemapUtils.GetMouseGridY(GroundTilemap, Camera.main));
         }
         CurrentLocation = transform.position;
+    }
+
+    private int MouseGridX()
+    {
+        Vector2 locPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        return Mathf.FloorToInt((locPos.x + Vector2.kEpsilon) / 0.16f);
+    }
+
+    private int MouseGridY()
+    {
+        Vector2 locPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        return Mathf.FloorToInt((locPos.y + Vector2.kEpsilon) / 0.16f);
     }
 
     private void CheckMouseControl()

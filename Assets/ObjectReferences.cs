@@ -28,13 +28,14 @@ public class ObjectReferences : MonoBehaviour {
         {
             Instance = this;
         }
+        GetTilemapReferences();
+        GetUserInterfaceReferences();
+        GetDialogueReferences();
     }
 
     // Use this for initialization
     void Start () {
-        GetTilemapReferences();
-        GetUserInterfaceReferences();
-        GetDialogueReferences();
+
     }
 
     void GetTilemapReferences()
