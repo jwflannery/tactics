@@ -5,8 +5,8 @@ using CreativeSpore.SuperTilemapEditor;
 
 public class PlayerUnitSelectedState : UnitPathingState {
 
-    private Tile lastCursorTile;
-    private Tile currentCursorTile;
+    private TileDetails lastCursorTile;
+    private TileDetails currentCursorTile;
 
     public override void OnEnter()
     {

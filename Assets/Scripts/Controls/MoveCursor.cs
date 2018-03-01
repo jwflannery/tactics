@@ -5,7 +5,7 @@ using InControl;
 public class MoveCursor : MonoBehaviour {
 
     private STETilemap backgroundTilemap;
-    public Tile CurrentTile;
+    public TileDetails CurrentTile;
     public int CurrentGridX;
     public int CurrentGridY;
     public Vector2 CurrentLocation;
@@ -35,7 +35,7 @@ public class MoveCursor : MonoBehaviour {
         {
             CurrentGridX = MapUtils.GetMouseGridX();
             CurrentGridY = MapUtils.GetMouseGridY();
-            CurrentTile = backgroundTilemap.GetTile(CurrentGridX, CurrentGridY);
+            CurrentTile = MapDetails.GetTileDetails(CurrentGridX, CurrentGridY);
             if (CurrentTile != null)
             {
                 transform.position = MapUtils.GetGridWorldPos(MapUtils.GetMouseGridX(), MapUtils.GetMouseGridY());
@@ -62,7 +62,7 @@ public class MoveCursor : MonoBehaviour {
             transform.position = MapUtils.GetGridWorldPos(CurrentGridX, CurrentGridY);
         }
 
-        CurrentTile = backgroundTilemap.GetTile(CurrentGridX, CurrentGridY);
+        CurrentTile = MapDetails.GetTileDetails(CurrentGridX, CurrentGridY);
         if (CurrentTile != null)
         {
             //transform.position = TilemapUtils.GetGridWorldPos(GroundTilemap, TilemapUtils.GetMouseGridX(GroundTilemap, Camera.main), TilemapUtils.GetMouseGridY(GroundTilemap, Camera.main));
