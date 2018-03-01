@@ -73,12 +73,6 @@ public class GameManager : MonoBehaviour
         TeamOrder.Enqueue(oldTeam);
     }
 
-    public GameObject FindUnitOnTile(int gridX, int gridY)
-    {
-        GameObject unit = AllUnits.Find(x => x.GetComponent<UnitDetails>().CurrentGridX == gridX && x.GetComponent<UnitDetails>().CurrentGridY == gridY);
-        return unit;
-    }
-
     public void ActivateNextEnemyUnit()
     {
         if (UnitOrder.Count > 0)

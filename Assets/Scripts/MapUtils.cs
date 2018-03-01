@@ -31,4 +31,10 @@ public class MapUtils
         Vector2 locPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         return Mathf.FloorToInt((locPos.y + Vector2.kEpsilon) / ObjectReferences.CellSize.y);
     }
+
+    public static GameObject FindUnitOnTile(int gridX, int gridY)
+    {
+        GameObject unit = GameManager.Instance.AllUnits.Find(x => x.GetComponent<UnitDetails>().CurrentGridX == gridX && x.GetComponent<UnitDetails>().CurrentGridY == gridY);
+        return unit;
+    }
 }
