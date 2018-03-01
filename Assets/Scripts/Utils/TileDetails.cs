@@ -1,12 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using CreativeSpore.SuperTilemapEditor;
 
 public class TileDetails {
 
     private Vector2 gridPos;
     private bool passable;
+    private string tileName;
+    private Tile tileData;
 
     public TileDetails(int gridX, int gridY)
     {
@@ -43,5 +44,37 @@ public class TileDetails {
         {
             gridPos = value;
         }
+    }
+
+    public string TileName
+    {
+        get
+        {
+            return tileName;
+        }
+
+        set
+        {
+            tileName = value;
+        }
+    }
+
+    public Tile TileData
+    {
+        get
+        {
+            return tileData;
+        }
+
+        set
+        {
+            tileData = value;
+        }
+    }
+
+    public void ParseTileData(Tile tileData)
+    {
+        this.tileData = tileData;
+        TileName = tileData.TileName;
     }
 }

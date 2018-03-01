@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using CreativeSpore.SuperTilemapEditor;
+
 
 public class PlayerUnitWaitingState : UnitState {
     private Vector2 originalMenuPosition;

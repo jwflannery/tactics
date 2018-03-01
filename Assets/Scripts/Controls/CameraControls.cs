@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Tiled2Unity;
-using CreativeSpore.SuperTilemapEditor;
 
 public class CameraControls : MonoBehaviour
 {

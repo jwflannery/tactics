@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using CreativeSpore.SuperTilemapEditor;
 using InControl;
 
 public class MoveCursor : MonoBehaviour {

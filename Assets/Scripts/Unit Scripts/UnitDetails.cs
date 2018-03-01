@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using CreativeSpore.SuperTilemapEditor;
 
 public class UnitDetails : MonoBehaviour
 {
@@ -14,7 +13,7 @@ public class UnitDetails : MonoBehaviour
     protected int currentGridX;
     protected int currentGridY;
 
-    protected Tile currentTile;
+
     protected TextMeshPro healthText;
     protected GameObject unitTilemap;
     protected LayerMask unitLayerMask;

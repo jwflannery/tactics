@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using CreativeSpore.SuperTilemapEditor;
+
 
 public class EnemyUnitMovingState : UnitMovingState {
     private GameObject target;

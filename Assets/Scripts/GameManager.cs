@@ -4,7 +4,6 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
 using InControl;
-using CreativeSpore.SuperTilemapEditor;
 
 public class GameManager : MonoBehaviour
 {

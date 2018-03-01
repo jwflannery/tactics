@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using CreativeSpore.SuperTilemapEditor;
 
 public class MapDetails {
 
@@ -11,6 +10,7 @@ public class MapDetails {
     public static int yMax = 0;
 
     public static PolygonCollider2D mapCollider;
+    public static List<Tile> TileDatas = new List<Tile>();
 
 
     public static Dictionary<MapKey, TileDetails> Tiles = new Dictionary<MapKey, TileDetails>();
@@ -18,7 +18,6 @@ public class MapDetails {
 
     public static void InitialiseTiles(GameObject tilemap)
     {
-
         mapCollider = GameObject.Find("/RW_Level1/Colliders/Collision").GetComponent<PolygonCollider2D>();
 
         for (int x = xMin; x < xMax; x++)
@@ -29,6 +28,10 @@ public class MapDetails {
                 Tiles.Add(new MapKey(x, y), new TileDetails(x, y, passable));
             }
         }
+        foreach (Tile tileData in TileDatas)
+        {
+            tileData.AttachToMap();
+        }
     }
 
     private static bool CheckForCollider(int x, int y, GameObject tilemap)
@@ -37,6 +40,7 @@ public class MapDetails {
         {
             return true;
         }
+
         return false;
     }
 

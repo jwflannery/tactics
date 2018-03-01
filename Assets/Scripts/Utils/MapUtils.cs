@@ -37,5 +37,5 @@ public class MapUtils
         GameObject unit = GameManager.Instance.AllUnits.Find(x => x.GetComponent<UnitDetails>().CurrentGridX == gridX && x.GetComponent<UnitDetails>().CurrentGridY == gridY);
         return unit;
     }
-
+    
 }
