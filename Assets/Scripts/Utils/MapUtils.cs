@@ -4,7 +4,7 @@ using UnityEngine;
 
 
 public class MapUtils
-{
+{      
     public static Vector3 GetGridWorldPos(int gridX, int gridY)
     {
         return new Vector2((gridX + .5f) * ObjectReferences.CellSize.x, (gridY + .5f) * ObjectReferences.CellSize.y);
@@ -37,4 +37,5 @@ public class MapUtils
         GameObject unit = GameManager.Instance.AllUnits.Find(x => x.GetComponent<UnitDetails>().CurrentGridX == gridX && x.GetComponent<UnitDetails>().CurrentGridY == gridY);
         return unit;
     }
+
 }
