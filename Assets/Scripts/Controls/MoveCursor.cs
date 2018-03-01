@@ -39,7 +39,7 @@ public class MoveCursor : MonoBehaviour {
             CurrentTile = backgroundTilemap.GetTile(CurrentGridX, CurrentGridY);
             if (CurrentTile != null)
             {
-                transform.position = MapUtils.GetGridWorldPos(MapUtils.GetMouseGridX(), MapUtils.GetMouseGridY(), ObjectReferences.CellSize);
+                transform.position = MapUtils.GetGridWorldPos(MapUtils.GetMouseGridX(), MapUtils.GetMouseGridY());
             }
         }
         else
@@ -60,7 +60,7 @@ public class MoveCursor : MonoBehaviour {
             {
                 CurrentGridY = CurrentGridY - 1;
             }
-            transform.position = MapUtils.GetGridWorldPos(CurrentGridX, CurrentGridY, ObjectReferences.CellSize);
+            transform.position = MapUtils.GetGridWorldPos(CurrentGridX, CurrentGridY);
         }
 
         CurrentTile = backgroundTilemap.GetTile(CurrentGridX, CurrentGridY);

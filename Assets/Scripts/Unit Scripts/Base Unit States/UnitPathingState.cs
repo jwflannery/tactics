@@ -54,8 +54,8 @@ public abstract class UnitPathingState : UnitState
         Node current = target;
         do
         {
-            pathToTarget.Push(TilemapUtils.GetGridWorldPos(unitTilemap, (int)current.Position.x, (int)current.Position.y));
-            var tile = GameObject.Instantiate(GameManager.Instance.PathTilePrefab, TilemapUtils.GetGridWorldPos(ObjectReferences.Instance.BackgroundTilemap, (int)current.Position.x, (int)current.Position.y), Quaternion.identity);
+            pathToTarget.Push(MapUtils.GetGridWorldPos((int)current.Position.x, (int)current.Position.y));
+            var tile = GameObject.Instantiate(GameManager.Instance.PathTilePrefab, MapUtils.GetGridWorldPos((int)current.Position.x, (int)current.Position.y), Quaternion.identity);
             existingPathTiles.Add(tile.transform);
             current = current.Parent;
         } while (current.Parent != null);

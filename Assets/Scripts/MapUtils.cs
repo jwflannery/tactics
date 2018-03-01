@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class MapUtils
 {
-    public static Vector3 GetGridWorldPos(int gridX, int gridY, Vector2 cellSize)
+    public static Vector3 GetGridWorldPos(int gridX, int gridY)
     {
-        return new Vector2((gridX + .5f) * cellSize.x, (gridY + .5f) * cellSize.y);
+        return new Vector2((gridX + .5f) * ObjectReferences.CellSize.x, (gridY + .5f) * ObjectReferences.CellSize.y);
     }
 
     public static int GetGridX(Vector2 position)

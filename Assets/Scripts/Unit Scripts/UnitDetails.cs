@@ -71,8 +71,8 @@ public class UnitDetails : MonoBehaviour
         GameManager.Instance.AllUnits.Add(gameObject);
         GameManager.Instance.AddUnitToTeam(transform.gameObject, TeamNumber);
 
-        CurrentGridX = TilemapUtils.GetGridX(unitTilemap, transform.position);
-        CurrentGridY = TilemapUtils.GetGridY(unitTilemap, transform.position);
+        CurrentGridX = MapUtils.GetGridX(transform.position);
+        CurrentGridY = MapUtils.GetGridY(transform.position);
 
         team = GameManager.Instance.GetTeamByNumber(TeamNumber);
     }

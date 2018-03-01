@@ -14,8 +14,8 @@ public class PlayerUnitConfirmTargetState : UnitState {
     {
         unitDetails = Machine.Actor.GetComponent<UnitDetails>();
         unitTilemap = Machine.Actor.transform.parent.GetComponent<STETilemap>();
-        tempGridX = TilemapUtils.GetGridX(unitTilemap, unitDetails.transform.position);
-        tempGridY = TilemapUtils.GetGridY(unitTilemap, unitDetails.transform.position);
+        tempGridX = MapUtils.GetGridX(unitDetails.transform.position);
+        tempGridY = MapUtils.GetGridY(unitDetails.transform.position);
         unitsInRange = FindUnitsInRange(unitDetails.AttackRange, tempGridX, tempGridY);
 
         if (unitsInRange.Exists(u => u != null))
@@ -67,8 +67,8 @@ public class PlayerUnitConfirmTargetState : UnitState {
     {
         if (existingAttackTiles.Count == 0)
         {
-            unitDetails.CurrentGridX = TilemapUtils.GetGridX(unitTilemap, unitDetails.transform.position);
-            unitDetails.CurrentGridY = TilemapUtils.GetGridY(unitTilemap, unitDetails.transform.position);
+            unitDetails.CurrentGridX = MapUtils.GetGridX(unitDetails.transform.position);
+            unitDetails.CurrentGridY = MapUtils.GetGridY(unitDetails.transform.position);
             Machine.Push(new PlayerUnitExhaustedState());
         }
 
@@ -76,8 +76,8 @@ public class PlayerUnitConfirmTargetState : UnitState {
         {
             var target = GameManager.Instance.AllUnits.Find(
                 x => x.GetComponent<UnitDetails>().CurrentGridX == MoveCursor.Instance.CurrentGridX && x.GetComponent<UnitDetails>().CurrentGridY == MoveCursor.Instance.CurrentGridY);
-            unitDetails.CurrentGridX = TilemapUtils.GetGridX(unitTilemap, unitDetails.transform.position);
-            unitDetails.CurrentGridY = TilemapUtils.GetGridY(unitTilemap, unitDetails.transform.position);
+            unitDetails.CurrentGridX = MapUtils.GetGridX(unitDetails.transform.position);
+            unitDetails.CurrentGridY = MapUtils.GetGridY(unitDetails.transform.position);
             Machine.Push(new PlayerUnitAttackingState(target));
         }
     }
