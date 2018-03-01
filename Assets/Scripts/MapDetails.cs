@@ -6,9 +6,11 @@ using CreativeSpore.SuperTilemapEditor;
 public class MapDetails {
 
     public static int xMin = 0;
-    public static int yMin = -50;
-    public static int xMax = 50;
+    public static int yMin = -30;
+    public static int xMax = 30;
     public static int yMax = 0;
+
+    public static PolygonCollider2D mapCollider;
 
 
     public static Dictionary<MapKey, TileDetails> Tiles = new Dictionary<MapKey, TileDetails>();
@@ -16,6 +18,9 @@ public class MapDetails {
 
     public static void InitialiseTiles(GameObject tilemap)
     {
+
+        mapCollider = GameObject.Find("/RW_Level1/Colliders/Collision").GetComponent<PolygonCollider2D>();
+
         for (int x = xMin; x < xMax; x++)
         {
             for (int y = yMin; y < yMax; y++)
@@ -28,8 +33,10 @@ public class MapDetails {
 
     private static bool CheckForCollider(int x, int y, GameObject tilemap)
     {
-        //var tile = tilemap.GetTile(x, y);
-        //return !(tile != null && tile.collData.type != eTileCollider.None);
+        if (mapCollider.OverlapPoint(MapUtils.GetGridWorldPos(x, y)))
+        {
+            return true;
+        }
         return false;
     }
 

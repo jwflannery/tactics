@@ -41,7 +41,7 @@ public class ObjectReferences : MonoBehaviour {
 
     void GetTilemapReferences()
     {
-        ForegroundTilemap = GameObject.Find("/Test Map");
+        ForegroundTilemap = GameObject.Find("/RW_Level1");
         BackgroundTilemap = ForegroundTilemap;
         UnitTilemap = ForegroundTilemap;
     }

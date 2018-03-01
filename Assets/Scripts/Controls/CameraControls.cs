@@ -32,8 +32,8 @@ public class CameraControls : MonoBehaviour
         tileMap = ObjectReferences.Instance.BackgroundTilemap;
 
         minX = 0 + horzExtent;
-        maxX = tileMap.GetComponent<TiledMap>().MapWidthInPixels/100 - horzExtent;
-        minY = -tileMap.GetComponent<TiledMap>().MapHeightInPixels/100 + vertExtent;
+        maxX = tileMap.GetComponent<TiledMap>().MapWidthInPixels/100f - horzExtent;
+        minY = -tileMap.GetComponent<TiledMap>().MapHeightInPixels/100f + vertExtent;
         maxY = 0 - vertExtent;        
     }
 
