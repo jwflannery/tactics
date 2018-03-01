@@ -5,33 +5,32 @@ using CreativeSpore.SuperTilemapEditor;
 
 public class MapDetails {
 
-    public static int xMin = -5;
-    public static int yMin = -6;
-    public static int xMax = 15;
-    public static int yMax = 6;
+    public static int xMin = 0;
+    public static int yMin = 0;
+    public static int xMax = 50;
+    public static int yMax = 50;
 
-    public static int xOffset;
-    public static int yOffset;
 
     public static Dictionary<MapKey, TileDetails> Tiles = new Dictionary<MapKey, TileDetails>();
     //Tiles = new TileDetails[ObjectReferences.Instance.BackgroundTilemap.GridWidth, ObjectReferences.Instance.BackgroundTilemap.GridHeight];
 
-    public static void InitialiseTiles(STETilemap tilemap)
+    public static void InitialiseTiles(GameObject tilemap)
     {
         for (int x = xMin; x < xMax + 1; x++)
         {
             for (int y = yMin; y < yMax + 1; y++)
             {
-                var passable = CheckForCollider(x, y, tilemap);
+                var passable = !CheckForCollider(x, y, tilemap);
                 Tiles.Add(new MapKey(x, y), new TileDetails(x, y, passable));
             }
         }
     }
 
-    private static bool CheckForCollider(int x, int y, STETilemap tilemap)
+    private static bool CheckForCollider(int x, int y, GameObject tilemap)
     {
-        var tile = tilemap.GetTile(x, y);
-        return !(tile != null && tile.collData.type != eTileCollider.None);
+        //var tile = tilemap.GetTile(x, y);
+        //return !(tile != null && tile.collData.type != eTileCollider.None);
+        return false;
     }
 
     public static TileDetails GetTileDetails(int gridX, int gridY)

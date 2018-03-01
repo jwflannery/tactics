@@ -8,10 +8,10 @@ using CreativeSpore.SuperTilemapEditor;
 public class ObjectReferences : MonoBehaviour {
 
     public static ObjectReferences Instance;
-    public STETilemap ForegroundTilemap;
-    public STETilemap BackgroundTilemap;
-    public STETilemap UnitTilemap;
-    public STETilemap ColliderTilemap;
+    public GameObject ForegroundTilemap;
+    public GameObject BackgroundTilemap;
+    public GameObject UnitTilemap;
+    public GameObject ColliderTilemap;
 
     public Text TileInfoText;
     public Text UnitInfoText;
@@ -41,9 +41,9 @@ public class ObjectReferences : MonoBehaviour {
 
     void GetTilemapReferences()
     {
-        ForegroundTilemap = GameObject.Find("/TilemapGroup/Foreground").GetComponent<STETilemap>();
-        BackgroundTilemap = GameObject.Find("/TilemapGroup/Background").GetComponent<STETilemap>();
-        UnitTilemap = GameObject.Find("/TilemapGroup/Foreground").GetComponent<STETilemap>();
+        ForegroundTilemap = GameObject.Find("/Test Map");
+        BackgroundTilemap = ForegroundTilemap;
+        UnitTilemap = ForegroundTilemap;
     }
 
     void GetUserInterfaceReferences()

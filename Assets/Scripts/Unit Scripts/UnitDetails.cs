@@ -16,7 +16,7 @@ public class UnitDetails : MonoBehaviour
 
     protected Tile currentTile;
     protected TextMeshPro healthText;
-    protected STETilemap unitTilemap;
+    protected GameObject unitTilemap;
     protected LayerMask unitLayerMask;
     protected Animator animator;
 

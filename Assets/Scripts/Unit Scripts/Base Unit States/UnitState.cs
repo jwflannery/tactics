@@ -6,7 +6,7 @@ using CreativeSpore.SuperTilemapEditor;
 public class UnitState : State {
 
     protected UnitDetails unitDetails;
-    protected STETilemap unitTilemap;
+    protected GameObject unitTilemap;
 
     public UnitState() : base()
     {

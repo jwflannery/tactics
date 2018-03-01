@@ -15,8 +15,8 @@ public class GameManager : MonoBehaviour
     public Queue<Team> TeamOrder = new Queue<Team>();
     public Stack<GameObject> UnitOrder = new Stack<GameObject>();
 
-    private STETilemap foregroundTilemap;
-    private STETilemap backgroundTilemap;
+    private GameObject foregroundTilemap;
+    private GameObject backgroundTilemap;
     private Team prevTeam; //TODO get rid of this once game pauses upon dialogue.
 
     public Team PlayerTeam = new Team(0, "Player");

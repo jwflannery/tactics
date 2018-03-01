@@ -1,12 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Tiled2Unity;
 using CreativeSpore.SuperTilemapEditor;
 
 public class CameraControls : MonoBehaviour
 {
 
-    private STETilemap tileMap;
+    private GameObject tileMap;
 
     private float mapX;
     private float mapY;
@@ -30,10 +31,10 @@ public class CameraControls : MonoBehaviour
 
         tileMap = ObjectReferences.Instance.BackgroundTilemap;
 
-        minX = tileMap.MapBounds.min.x + horzExtent;
-        maxX = tileMap.MapBounds.max.x - horzExtent;
-        minY = tileMap.MapBounds.min.y + vertExtent;
-        maxY = tileMap.MapBounds.max.y - vertExtent;
+        minX = 0 + horzExtent;
+        maxX = tileMap.GetComponent<TiledMap>().MapWidthInPixels/100 - horzExtent;
+        minY = -tileMap.GetComponent<TiledMap>().MapHeightInPixels/100 + vertExtent;
+        maxY = 0 - vertExtent;        
     }
 
     void Update()

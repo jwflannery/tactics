@@ -6,7 +6,7 @@ using CreativeSpore.SuperTilemapEditor;
 
 public class TileInfo : MonoBehaviour {
 
-    private STETilemap foregroundTilemap;
+    private GameObject foregroundTilemap;
     private Text InfoText;
 
     private string[] parameters = new string[]
@@ -25,20 +25,20 @@ public class TileInfo : MonoBehaviour {
 
     private void Update()
     {
-        if (GameManager.IsPaused)
-            return;
-        currentTile = foregroundTilemap.GetTile(TilemapUtils.GetMouseGridX(foregroundTilemap, Camera.main), TilemapUtils.GetMouseGridY(foregroundTilemap, Camera.main));
-        info = "";
-        if (currentTile != null)
-        {
-            for (int i = 0; i < parameters.Length; i++)
-            {
-                if (currentTile.paramContainer.FindParam(parameters[i]) != null)
-                {
-                    info += parameters[i] + ": " + currentTile.paramContainer.FindParam(parameters[i]).ToString() + "\n";
-                }
-            }
-        }
-        InfoText.text = info;
+    //    if (GameManager.IsPaused)
+    //        return;
+    //    currentTile = foregroundTilemap.GetTile(TilemapUtils.GetMouseGridX(foregroundTilemap, Camera.main), TilemapUtils.GetMouseGridY(foregroundTilemap, Camera.main));
+    //    info = "";
+    //    if (currentTile != null)
+    //    {
+    //        for (int i = 0; i < parameters.Length; i++)
+    //        {
+    //            if (currentTile.paramContainer.FindParam(parameters[i]) != null)
+    //            {
+    //                info += parameters[i] + ": " + currentTile.paramContainer.FindParam(parameters[i]).ToString() + "\n";
+    //            }
+    //        }
+    //    }
+    //    InfoText.text = info;
     }
 }
