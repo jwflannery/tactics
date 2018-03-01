@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using CreativeSpore.SuperTilemapEditor;
 using InControl;
 
@@ -13,7 +11,6 @@ public class MoveCursor : MonoBehaviour {
     public Vector2 CurrentLocation;
     public static MoveCursor Instance = null;
     public bool IsMouseControlling = false;
-
 
     private void Awake()
     {
@@ -37,14 +34,12 @@ public class MoveCursor : MonoBehaviour {
         if (IsMouseControlling)
         {
             Debug.Log("Mouse is active.");
-            //CurrentGridX = TilemapUtils.GetMouseGridX(backgroundTilemap, Camera.main);
-            CurrentGridX = MouseGridX();
-            //CurrentGridY = TilemapUtils.GetMouseGridY(backgroundTilemap, Camera.main);
-            CurrentGridY = MouseGridY();
+            CurrentGridX = MapUtils.GetMouseGridX();
+            CurrentGridY = MapUtils.GetMouseGridY();
             CurrentTile = backgroundTilemap.GetTile(CurrentGridX, CurrentGridY);
             if (CurrentTile != null)
             {
-                transform.position = TilemapUtils.GetGridWorldPos(backgroundTilemap, TilemapUtils.GetMouseGridX(backgroundTilemap, Camera.main), TilemapUtils.GetMouseGridY(backgroundTilemap, Camera.main));
+                transform.position = MapUtils.GetGridWorldPos(MapUtils.GetMouseGridX(), MapUtils.GetMouseGridY(), ObjectReferences.CellSize);
             }
         }
         else
@@ -65,7 +60,7 @@ public class MoveCursor : MonoBehaviour {
             {
                 CurrentGridY = CurrentGridY - 1;
             }
-            transform.position = TilemapUtils.GetGridWorldPos(backgroundTilemap, CurrentGridX, CurrentGridY);
+            transform.position = MapUtils.GetGridWorldPos(CurrentGridX, CurrentGridY, ObjectReferences.CellSize);
         }
 
         CurrentTile = backgroundTilemap.GetTile(CurrentGridX, CurrentGridY);
@@ -76,18 +71,6 @@ public class MoveCursor : MonoBehaviour {
         CurrentLocation = transform.position;
     }
 
-    private int MouseGridX()
-    {
-        Vector2 locPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        return Mathf.FloorToInt((locPos.x + Vector2.kEpsilon) / 0.16f);
-    }
-
-    private int MouseGridY()
-    {
-        Vector2 locPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        return Mathf.FloorToInt((locPos.y + Vector2.kEpsilon) / 0.16f);
-    }
-
     private void CheckMouseControl()
     {
         if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1))
@@ -96,7 +79,5 @@ public class MoveCursor : MonoBehaviour {
         }
         else if (InputManager.ActiveDevice.AnyButton)
             IsMouseControlling = false;
-
     }
-
 }

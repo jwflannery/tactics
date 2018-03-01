@@ -16,11 +16,12 @@ public class ObjectReferences : MonoBehaviour {
     public Text TileInfoText;
     public Text UnitInfoText;
     public TurnTextScript TurnTextScript;
-
-
+    
     public TextMeshProUGUI DialogueText;
     public Image PortraitImage;
     public DialogueHandler DialogueHandlerScript;
+
+    public static Vector2 CellSize = new Vector2(0.16f, 0.16f);
 
     private void Awake()
     {
