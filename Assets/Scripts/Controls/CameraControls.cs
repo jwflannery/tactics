@@ -6,7 +6,7 @@ using Tiled2Unity;
 public class CameraControls : MonoBehaviour
 {
 
-    private GameObject tileMap;
+    private TiledMap tileMap;
 
     private float mapX;
     private float mapY;
@@ -25,15 +25,9 @@ public class CameraControls : MonoBehaviour
 
     void Start()
     {
-        var vertExtent = Camera.main.orthographicSize;
-        var horzExtent = Camera.main.aspect * vertExtent;
 
-        tileMap = ObjectReferences.Instance.BackgroundTilemap;
-
-        minX = 0 + horzExtent;
-        maxX = tileMap.GetComponent<TiledMap>().MapWidthInPixels/100f - horzExtent;
-        minY = -tileMap.GetComponent<TiledMap>().MapHeightInPixels/100f + vertExtent;
-        maxY = 0 - vertExtent;        
+        tileMap = ObjectReferences.Instance.BackgroundTilemap.GetComponent<TiledMap>();
+        SetCameraBounds();
     }
 
     void Update()
@@ -60,13 +54,27 @@ public class CameraControls : MonoBehaviour
             var direction = -Mathf.Sign(Input.GetAxis("Mouse ScrollWheel"));
             Zoom(direction);
         }
-
     }
 
     public void PanCamera(Vector3 direction, float speed)
     {
         Camera.main.transform.position += direction * speed * Time.deltaTime;
+        ClampCameraToBounds();
+    }
+    private void SetCameraBounds()
+    {
+        var vertExtent = Camera.main.orthographicSize;
+        var horzExtent = Camera.main.aspect * vertExtent;
 
+        minX = 0 + horzExtent;
+        maxX = tileMap.MapWidthInPixels / 100f - horzExtent;
+        minY = -tileMap.MapHeightInPixels / 100f + vertExtent;
+        maxY = 0 - vertExtent;
+    }
+
+
+    private void ClampCameraToBounds()
+    {
         var v3 = transform.position;
         v3.x = Mathf.Clamp(v3.x, minX, maxX);
         v3.y = Mathf.Clamp(v3.y, minY, maxY);
@@ -75,6 +83,14 @@ public class CameraControls : MonoBehaviour
 
     public void Zoom(float direction)
     {
+        var testVertExtent = Camera.main.orthographicSize + 0.1f * direction;
+        var testHorzExtent = Camera.main.aspect * testVertExtent;
+
+        if (testVertExtent * 2f >= tileMap.MapHeightInPixels / 100f || testHorzExtent * 2f >= tileMap.MapWidthInPixels / 100f)
+            return;
+
         Camera.main.orthographicSize += 0.1f * direction;
+        SetCameraBounds();
+        ClampCameraToBounds();
     }
 }
