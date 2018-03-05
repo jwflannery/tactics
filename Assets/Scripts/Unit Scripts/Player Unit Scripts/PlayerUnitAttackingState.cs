@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
+//TODO Create Parent AttackingState class
 public class PlayerUnitAttackingState : UnitState {
 
     private GameObject target;
@@ -10,6 +11,10 @@ public class PlayerUnitAttackingState : UnitState {
     private Vector3 targetPos;
     private float distanceToTarget;
     private int direction = 1;
+
+    private Weapon unitWeapon;
+
+
     public PlayerUnitAttackingState(GameObject _target)
     {
         target = _target;
@@ -21,6 +26,7 @@ public class PlayerUnitAttackingState : UnitState {
         unitTilemap = ObjectReferences.Instance.UnitTilemap;
         originPos = unitDetails.gameObject.transform.position;
         targetPos = target.transform.position;
+        unitWeapon = unitDetails.UnitWeapon;
     }
 
     public override IEnumerator Tick()
@@ -34,7 +40,7 @@ public class PlayerUnitAttackingState : UnitState {
         }
         if (unitDetails.gameObject.transform.position == originPos)
         {
-            target.gameObject.GetComponent<UnitDetails>().Health -= 10;
+            unitWeapon.DealDamage(target.gameObject.GetComponent<UnitDetails>());
             OnExit();
             Machine.Clear();
             Machine.Push(new PlayerUnitExhaustedState());

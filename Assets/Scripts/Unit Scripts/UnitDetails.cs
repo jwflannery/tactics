@@ -13,6 +13,7 @@ public class UnitDetails : MonoBehaviour
     protected int currentGridX;
     protected int currentGridY;
 
+    public Weapon UnitWeapon;
 
     protected TextMeshPro healthText;
     protected GameObject unitTilemap;
@@ -57,6 +58,7 @@ public class UnitDetails : MonoBehaviour
         get { return attackRange; }
         set { attackRange = value; }
     }
+
 
     #endregion
     // Use this for initialization

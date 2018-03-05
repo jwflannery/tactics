@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-[CreateAssetMenu(fileName = "Data", menuName = "Dialogue/Lines", order = 1)]
+[CreateAssetMenu(fileName = "Data", menuName = "LittleFire/Lines", order = 1)]
 public class DialogueLines : ScriptableObject {
 
     [System.Serializable]
