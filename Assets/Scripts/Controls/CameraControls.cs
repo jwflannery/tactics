@@ -54,6 +54,13 @@ public class CameraControls : MonoBehaviour
             var direction = -Mathf.Sign(Input.GetAxis("Mouse ScrollWheel"));
             Zoom(direction);
         }
+
+        if (Input.GetMouseButton(1))
+        {
+            float x = Input.GetAxis("Mouse X") * Time.deltaTime;
+            float y = Input.GetAxis("Mouse Y") * Time.deltaTime;
+            PanCamera(new Vector3(-x, -y, 0), PanSpeed * 50f);
+        }
     }
 
     public void PanCamera(Vector3 direction, float speed)
