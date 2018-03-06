@@ -11,6 +11,9 @@ public class Weapon : ScriptableObject {
     public int normalDamage = 10;
     public int criticalDamage = 20;
 
+    public int minRange = 1;
+    public int maxRange = 1;
+
     public void DealDamage(UnitDetails target)
     {
         int hit = Random.Range(0, 100);

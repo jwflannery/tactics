@@ -16,3 +16,5 @@ MonoBehaviour:
   glanceDamage: 5
   normalDamage: 10
   criticalDamage: 20
+  minRange: 1
+  maxRange: 2
